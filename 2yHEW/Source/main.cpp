@@ -46,7 +46,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	}
 
 	//メインループ
-	App.MainLoop();
+	App.AppLoop();
 
 	//終了処理
 	App.UnInit();

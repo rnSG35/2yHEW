@@ -125,10 +125,10 @@
   <ItemGroup>
     <ClCompile Include="Source\Framework\Application\Application.cpp" />
     <ClCompile Include="Source\Framework\Application\Window.cpp" />
-    <ClCompile Include="Source\Framework\Audio\sound.cpp" />
+    <ClCompile Include="Source\Framework\Audio\AudioManager.cpp" />
     <ClCompile Include="Source\Framework\Graphics\Graphics.cpp" />
     <ClCompile Include="Source\Framework\Graphics\Shader\Shader.cpp" />
-    <ClCompile Include="Source\Framework\Input\input.cpp" />
+    <ClCompile Include="Source\Framework\Input\Input.cpp" />
     <ClCompile Include="Source\Framework\Texture\Texture.cpp" />
     <ClCompile Include="Source\Framework\Texture\TextureManager.cpp" />
     <ClCompile Include="Source\main.cpp" />
@@ -136,15 +136,12 @@
   <ItemGroup>
     <ClInclude Include="Source\Framework\Application\Application.h" />
     <ClInclude Include="Source\Framework\Application\Window.h" />
-    <ClInclude Include="Source\Framework\Audio\sound.h" />
+    <ClInclude Include="Source\Framework\Audio\AudioManager.h" />
     <ClInclude Include="Source\Framework\Graphics\Graphics.h" />
     <ClInclude Include="Source\Framework\Graphics\Shader\Shader.h" />
-    <ClInclude Include="Source\Framework\Input\input.h" />
+    <ClInclude Include="Source\Framework\Input\Input.h" />
     <ClInclude Include="Source\Framework\Texture\Texture.h" />
     <ClInclude Include="Source\Framework\Texture\TextureManager.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Source\Framework\Texture\TextureManager.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

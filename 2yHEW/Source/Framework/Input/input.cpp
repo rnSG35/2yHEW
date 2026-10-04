@@ -1,9 +1,9 @@
-﻿#include "input.h"
+﻿#include "Input.h"
 
 //コンストラクタ
 Input::Input()
 {
-	VibrationTime = 0;
+	m_vibrationTime = 0;
 }
 
 //デストラクタ
@@ -30,9 +30,9 @@ void Input::Update()
 	XInputGetState(0, &controllerState);
 
 	//振動継続時間をカウント
-	if (VibrationTime > 0) {
-		VibrationTime--;
-		if (VibrationTime == 0) { //振動継続時間が経った時に振動を止める
+	if (m_vibrationTime > 0) {
+		m_vibrationTime--;
+		if (m_vibrationTime == 0) { //振動継続時間が経った時に振動を止める
 			XINPUT_VIBRATION vibration;
 			ZeroMemory(&vibration, sizeof(XINPUT_VIBRATION));
 			vibration.wLeftMotorSpeed = 0;
@@ -107,18 +107,18 @@ bool Input::GetButtonRelease(WORD btn) //リリース
 }
 
 //振動
-void Input::SetVibration(int frame, float powor)
+void Input::SetVibration(int frame, float power)
 {
 	// XINPUT_VIBRATION構造体のインスタンスを作成
 	XINPUT_VIBRATION vibration;
 	ZeroMemory(&vibration, sizeof(XINPUT_VIBRATION));
 
 	// モーターの強度を設定（0～65535）
-	vibration.wLeftMotorSpeed = (WORD)(powor * 65535.0f);
-	vibration.wRightMotorSpeed = (WORD)(powor * 65535.0f);
+	vibration.wLeftMotorSpeed = (WORD)(power * 65535.0f);
+	vibration.wRightMotorSpeed = (WORD)(power * 65535.0f);
 	XInputSetState(0, &vibration);
 
 	//振動継続時間を代入
-	VibrationTime = frame;
+	m_vibrationTime = frame;
 }
 

@@ -1,0 +1,122 @@
+画像ファイルの読み込みと管理を担当するクラス
+
+TextureManagerが画像全体を管理するのに対して、
+Textureは画像1枚を管理するクラス
+
+例えば
+	Player.png
+	Enemy.png
+	Title.png	のような画像1枚を扱う
+
+
+
+bool Load(①)
+	画像ファイルを読み込み、
+	GPUで使用できるテクスチャを生成する関数
+
+	①const std::string&	型	読み込む画像ファイルのパス
+
+	対応形式
+
+		PNG
+		JPG
+		BMP
+
+	内部では
+		・画像ファイル読み込み
+		・RGBA変換
+		・画像サイズ取得
+		・GPUテクスチャ生成
+		・ShaderResourceView生成	を行う
+
+	ゲーム開始時や画像初回使用時に呼び出す
+
+	成功したらtrue、失敗したらfalseを返す
+
+	例
+		Texture texture;
+
+		texture.Load(
+			"Asset/Texture/Player.png");
+
+
+
+void SetPS(①)
+	PixelShaderへテクスチャを設定する関数
+
+	①UINT型		テクスチャスロット番号
+			t0なら0
+			t1なら1
+			t2なら2
+				を指定する
+
+	描画前に呼び出す
+
+	例
+		texture.SetPS(0);
+
+
+ID3D11ShaderResourceView* GetSRV()
+	ShaderResourceViewを取得する関数
+
+	主な用途
+		・シェーダー設定
+		・描画処理
+		・複数テクスチャ管理
+
+	通常はTexture内部で使用するため、
+	直接呼ぶ機会は少ない
+
+
+【DirectX11用語】
+
+Texture
+
+	GPU上に保持される画像データ
+
+	実際の描画には
+	PNGやJPGをそのまま使うのではなく、
+	GPU用のTextureへ変換する必要がある
+
+
+ShaderResourceView(SRV)
+
+	シェーダーからTextureへアクセスするためのオブジェクト
+
+	Texture単体ではシェーダーから参照できないため、
+
+	SRV
+
+	を作成して利用する
+
+
+PixelShader
+
+	ピクセルごとの色を決定するプログラム
+
+	Textureは主にPixelShader内で参照される
+
+
+WIC
+	(Windows Imaging Component)
+
+	Windows標準の画像読み込みライブラリ
+
+	PNG
+	JPG
+	BMP
+
+	などを読み込むために使用する
+
+
+RGBA
+
+	R = 赤
+	G = 緑
+	B = 青
+	A = 透明度
+
+	の4要素を持つ色形式
+
+	DirectXで扱いやすいため、
+	読み込み時にRGBA形式へ変換している

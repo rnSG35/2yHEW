@@ -1,4 +1,4 @@
-#include "sound.h"
+#include "AudioManager.h"
 
 #ifdef _XBOX //Big-Endian
 #define fourccRIFF 'RIFF'
@@ -20,7 +20,7 @@
 //=============================================================================
 // 初期化
 //=============================================================================
-HRESULT Sound::Init()
+HRESULT AudioManager::Initialize()
 {
 	HRESULT hr;
 
@@ -101,7 +101,7 @@ HRESULT Sound::Init()
 //=============================================================================
 // 開放処理
 //=============================================================================
-void Sound::Uninit(void)
+void AudioManager::UnInit(void)
 {
 	for (int i = 0; i < eSOUND_LABEL_MAX; i++)
 	{
@@ -125,7 +125,7 @@ void Sound::Uninit(void)
 //=============================================================================
 // 再生
 //=============================================================================
-void Sound::Play(SOUND_LABEL label)
+void AudioManager::Play(SOUND_LABEL label)
 {
 	IXAudio2SourceVoice*& pSV = m_pSourceVoice[(int)label];
 
@@ -147,7 +147,7 @@ void Sound::Play(SOUND_LABEL label)
 //=============================================================================
 // 停止
 //=============================================================================
-void Sound::Stop(SOUND_LABEL label)
+void AudioManager::Stop(SOUND_LABEL label)
 {
 	if (m_pSourceVoice[(int)label] == NULL) return;
 
@@ -162,7 +162,7 @@ void Sound::Stop(SOUND_LABEL label)
 //=============================================================================
 // 一時停止
 //=============================================================================
-void Sound::Resume(SOUND_LABEL label)
+void AudioManager::Resume(SOUND_LABEL label)
 {
 	IXAudio2SourceVoice*& pSV = m_pSourceVoice[(int)label];
 	pSV->Start();
@@ -171,7 +171,7 @@ void Sound::Resume(SOUND_LABEL label)
 //=============================================================================
 // マスターボリューム設定
 //=============================================================================
-void Sound::SetMasterVolume(float volume)
+void AudioManager::SetMasterVolume(float volume)
 {
 	if (m_pMasteringVoice)
 	{
@@ -184,7 +184,7 @@ void Sound::SetMasterVolume(float volume)
 //=============================================================================
 // ユーティリティ関数群
 //=============================================================================
-HRESULT Sound::FindChunk(HANDLE hFile, DWORD fourcc, DWORD& dwChunkSize, DWORD& dwChunkDataPosition)
+HRESULT AudioManager::FindChunk(HANDLE hFile, DWORD fourcc, DWORD& dwChunkSize, DWORD& dwChunkDataPosition)
 {
 	HRESULT hr = S_OK;
 	if (INVALID_SET_FILE_POINTER == SetFilePointer(hFile, 0, NULL, FILE_BEGIN))
@@ -227,7 +227,7 @@ HRESULT Sound::FindChunk(HANDLE hFile, DWORD fourcc, DWORD& dwChunkSize, DWORD& 
 	return S_OK;
 }
 
-HRESULT Sound::ReadChunkData(HANDLE hFile, void* buffer, DWORD buffersize, DWORD bufferoffset)
+HRESULT AudioManager::ReadChunkData(HANDLE hFile, void* buffer, DWORD buffersize, DWORD bufferoffset)
 {
 	HRESULT hr = S_OK;
 	if (INVALID_SET_FILE_POINTER == SetFilePointer(hFile, bufferoffset, NULL, FILE_BEGIN))

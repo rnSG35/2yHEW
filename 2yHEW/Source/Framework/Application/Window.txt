@@ -1,0 +1,47 @@
+ウィンドウ関連の処理を担当するクラス
+
+bool Create(①、②、③)
+	①int型			ウィンドウの横幅
+	②int型			ウィンドウの縦幅
+	③const wchar_t*型	ウィンドウタイトル名
+		ゲームで使用するウィンドウを生成する関数
+		・Windowsにウィンドウクラス登録
+		・ウィンドウサイズ補正
+		・ウィンドウ生成
+		・ウィンドウ表示		失敗したらfalse、成功したらtrueを返す
+
+
+
+HWND GetHwnd() const
+	Windowクラスが保持しているHWNDを取得する関数
+	HWNDはWindows上のウィンドウを管理するためのハンドル、IDのようなもの
+
+
+
+static LRESULT CALLBACK WndProc(①、②、③、④)
+	①HWND型	メッセージを受け取ったウィンドウ
+	②UINT型	Windowsから送られてきたメッセージ
+	③WPARAM型	追加情報１
+	④LPARAM型	追加情報２
+		よく使うメッセージ
+
+		WM_CREATE
+			ウィンドウ生成時
+
+		WM_DESTROY
+		ウィンドウ破棄時
+
+		WM_CLOSE
+			×ボタン押下時
+
+		WM_KEYDOWN
+			キーを押した時
+
+		WM_KEYUP
+			キーを離した時
+
+		WM_MOUSEMOVE
+			マウス移動時
+
+		WM_SIZE
+			ウィンドウサイズ変更時

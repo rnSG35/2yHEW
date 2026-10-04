@@ -33,7 +33,7 @@ bool Application::AppInit(int nShowCmd, bool isFullScreen, int screenWidth, int 
 //---------------------------------------------------------
 //ÉÅÉCÉìÉãÅ[Év
 //---------------------------------------------------------
-void Application::MainLoop()
+void Application::AppLoop()
 {
 	MSG msg{};
 

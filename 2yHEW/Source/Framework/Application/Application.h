@@ -14,7 +14,7 @@ public:
 	}
 
 	bool AppInit(int nShowCmd,bool isFullScreen,int screenWidth,int screenHeight);
-	void MainLoop();
+	void AppLoop();
 	void UnInit();
 
 	//---------------------------------------------------------

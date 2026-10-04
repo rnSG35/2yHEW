@@ -67,7 +67,7 @@ private:
 	XINPUT_STATE controllerState = {};
 	XINPUT_STATE controllerState_old = {};
 
-	int VibrationTime; //振動継続時間をカウントする変数
+	int m_vibrationTime; //振動継続時間をカウントする変数
 
 public:
 
@@ -96,6 +96,6 @@ public:
 	//振動(コントローラー)
 	//flame：振動を継続する時間(単位：フレーム)
 	//powoe：振動の強さ(0～1)
-	void SetVibration(int frame = 1, float powor = 1);
+	void SetVibration(int frame = 1, float power = 1);
 };
 

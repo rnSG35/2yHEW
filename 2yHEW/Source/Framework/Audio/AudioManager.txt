@@ -1,0 +1,52 @@
+ゲーム内で使用するBGMやSEの管理を行うクラス
+typedef enum SOUND_LABEL
+	サウンドを識別するための列挙型
+	プログラムで使用する変数名を作る(e○○)
+
+	eSOUND_LABE_MAXはどれだけのファイルがあるか判別するために使用するので消さないように。
+
+AudioManagerクラスのPARAM配列に上記の列挙型に対応するサウンドファイルを登録、ファイルの場所だけ注意。
+	構造体の第二変数をtrueにするとループする、falseにすると単発になる。
+
+
+
+HRESULT Init()
+	オーディオシステムの初期化を行う関数
+		内部ではCOM初期化、XAudio2生成、MasteringVoice生成、wavファイル読み込み、SourceVoice生成。
+	ゲーム開始時に１度だけ呼び出す。
+	成功したらS_OK、失敗したらエラーコードを返す。
+
+
+
+void UnInit()
+	オーディオシステムの解放処理を行う関数
+		内部ではSouceVoice解放、wavデータ解放、MasteringVoice解放、XAudio2解放、COM終了
+	ゲーム終了時に１度だけ
+
+
+
+void Play(①)
+	①列挙型　SOUND_LABELで作成した変数名
+	指定した音声を再生
+
+
+
+void Stop(①)
+	①列挙型　SOUND_LABELで作成した変数名
+	指定した音声を停止
+
+
+void Resume(①)
+	①列挙型　SOUND_LABELで作成した変数名
+	停止した音声を再開、BGMに使うことが多い？
+
+
+
+void SetMasterVolume(①)
+	①float型　 1.0fを通常音量とした音量設定用の変数
+	0.0f=無音	2.0f=2倍
+
+
+
+HRESULT FindChunk
+HRESULT ReadChunkData	これらはInit()内部でのみ使用するので基本ノータッチ

@@ -1,13 +1,90 @@
-TextureManagerについて
-<何をするクラスか？>
-ゲーム内で使用するテクスチャを一括管理する。
+ゲーム内で使用するテクスチャを管理するクラス
 
-<なぜ必要か>
-例えばPlayer.pngをプレイヤー・敵・UIが使用する場合、毎回画像ファイルを読み込むと同じデータが複数個メモリに存在してしまう。
-そこでTextureManagerが「すでに読み込まれているか」を確認して再利用する。
+同じ画像ファイルを何度も読み込まないように管理する。
 
-結果として
-	１読み込み高速化
-	２メモリ節約
-	３管理しやすい
-		という利点がある。
+例えば
+	Player.pngを
+
+	プレイヤー
+	敵
+	UI
+
+で使用する場合、毎回画像を読み込むとメモリを無駄に消費してしまうため、
+	TextureManager
+		が読み込み済みか確認して再利用する。
+
+
+
+static TextureManager& GetInstance()
+	TextureManagerクラスの唯一のインスタンスを取得する
+
+	ゲーム全体で1つだけあれば十分なため、
+	シングルトンとして管理している
+
+	例
+		TextureManager::GetInstance();
+
+
+std::shared_ptr<Texture> LoadTexture(①)
+	指定した画像ファイルを読み込む関数
+
+	①const std::string&
+		読み込む画像ファイルのパス
+
+	処理の流れ
+		・読み込み済みか確認
+		・読み込み済みなら再利用
+		・未読み込みなら新規生成
+		・Textureへ画像を読み込む
+		・管理テーブルへ登録
+
+	成功したらTextureを返す、失敗したらnullptrを返す
+
+	例
+		auto texture =
+			TextureManager::GetInstance()
+			.LoadTexture(
+				"Asset/Texture/Player.png");
+
+
+【管理方法】
+
+TextureManagerでは
+
+	std::unordered_map　を使用している
+
+	Key：画像ファイルパス
+	Value：Texture情報
+		を保存している
+
+これにより
+	"Player.png"
+	を再度読み込もうとした場合、
+
+既に存在しているTextureを再利用できる
+
+
+【shared_ptrとは】
+
+複数のクラスが同じTextureを共有するための仕組み
+
+	Player
+	Enemy
+	UI
+
+	が同じ画像を使用していても、
+
+Texture本体は1つだけ存在する
+
+誰も使用しなくなったときに
+自動で解放される
+
+
+【weak_ptrとは】
+
+TextureManager側で使用する参照方式
+
+TextureManagerがTextureを所有し続けないようにするために使用している
+
+誰も使っていないTextureは
+自動でメモリから解放される

@@ -1,0 +1,33 @@
+ウィンドウを作成したあとのメインループなど
+bool AppInit(①、②、③、④)
+	①int型　 アプリケーションの起動時にウィンドウをどのように表示するか（通常表示、最大化、最小化、非表示など）を制御するために使用する。
+	②bool型  フルスクリーンかどうか(まだ使用していない)
+	③int型   スクリーン横幅
+	④int型   スクリーン縦幅
+		ウィンドウを生成する関数と、DirectXを初期化する関数を呼び出す。
+		失敗したらfalse,成功したらtrueを返す。
+
+
+
+void AppLoop()
+	Windowsからのメッセージを受け取るmsg変数を使ってゲームループを作成。
+	シーン遷移を追加するなら「if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))」のelse文のところにswitch文を追加してシーン分け。
+
+
+
+void UnInit()
+	まだ何も記述していないが、将来はここにRendererやInput、Sound、Resourceの解放処理を行う。
+
+
+
+Window& GetWindow()
+	Applicationクラスが管理しているWindowクラスを取得。
+	Windowクラスの関数を使いたいときに利用。
+	今後Windowクラスにウィンドウサイズ取得やフルスクリーン切り替えなどの機能を追加した場合、その機能を利用するために使う。
+
+
+
+HWND GetHwnd()
+	Windowsが管理しているウィンドウハンドル(HWND)を取得する。
+	HWNDはWindows上のウィンドウを識別するためのIDのようなもの。
+	DirectX初期化やWindowsAPIを使用する際に必要。

@@ -1,1 +1,175 @@
-DirectX11の初期化担当
+DirectX11の初期化と描画処理を担当するクラス
+
+DirectX11では
+
+	Device
+	Context
+	SwapChain
+
+など多くのオブジェクトが必要になるため、それらを1つにまとめて管理している
+
+
+static Graphics& GetInstance()
+
+	Graphicsクラスの唯一のインスタンスを取得する
+
+	DirectXのDeviceやContextは複数作る必要がないため、
+	シングルトンとして管理している
+
+	例
+		Graphics::GetInstance().Initialize(...);
+
+
+
+bool Initialize(①、②、③)
+
+	DirectX11の初期化を行う関数
+
+	①HWND型　描画先となるウィンドウ
+		　Windowクラスから取得したHWNDを渡す
+
+	②UINT型　画面横幅
+	③UINT型　画面縦幅
+	
+	内部では
+	・Device生成
+	・DeviceContext生成
+	・SwapChain生成
+	・RenderTargetView生成
+	・DepthStencilView生成
+	・Viewport設定
+	を行う
+
+	ゲーム開始時に1回だけ呼ぶ	成功時はtrue、失敗時はfalseを返す
+
+
+
+void UnInitialize()
+
+	DirectX関連リソースの解放を行う
+
+	内部では
+	・DepthStencilView解放
+	・RenderTargetView解放
+	・SwapChain解放
+	・Context解放
+	・Device解放
+	を行う
+
+	ゲーム終了時に1回だけ呼ぶ
+
+
+
+void BeginFrame()
+
+	描画開始処理
+	毎フレーム最初に呼び出す
+	
+	内部では
+	・画面クリア
+	・深度バッファクリア
+	を行う
+
+	画面を消さずに描画すると前フレームの絵が残ってしまうため、
+	毎フレーム実行する必要がある
+
+	3D描画では深度情報もリセットする必要がある
+
+
+
+void EndFrame()
+
+	描画終了処理
+
+	毎フレーム最後に呼び出す
+
+	内部ではPresent関数を呼び出し、
+	バックバッファに描画した内容を実際の画面へ表示する
+
+	BeginFrameとEndFrameは必ずセットで使用する
+
+
+
+ID3D11Device* GetDevice()
+
+	Deviceを取得する関数
+
+	主な用途
+	・Texture生成
+	・VertexBuffer生成
+	・IndexBuffer生成
+	・Shader生成
+	DirectXリソース作成時に使用する
+
+	例
+		Graphics::GetInstance().GetDevice();
+
+
+
+ID3D11DeviceContext* GetContext()
+
+	Contextを取得する関数
+
+	主な用途
+	・描画命令発行
+	・定数バッファ更新
+	・テクスチャ設定
+	・シェーダー設定
+	ゲーム中に描画するときによく使用する
+
+	例
+		Graphics::GetInstance().GetContext();
+
+
+
+【DirectX11用語】
+
+Device
+
+	GPU資源を作成するためのオブジェクト
+
+	テクスチャ
+	頂点バッファ
+	シェーダー
+
+	などを生成するときに使用する
+
+
+DeviceContext
+
+	GPUへ描画命令を送るためのオブジェクト
+
+	Draw()
+	Clear()
+	Shader設定
+		などを担当する
+
+
+SwapChain
+
+	画面表示を管理するオブジェクト
+
+	DirectXは裏画面(バックバッファ)へ描画し、
+	Presentで表画面へ表示する
+
+
+RenderTargetView(RTV)
+
+	描画先
+
+	「どこに描画するか」を指定する
+
+
+DepthStencilView(DSV)
+
+	奥行き情報を管理する
+
+	3Dモデル同士が重なった時に、
+	手前のモデルを正しく表示するために使用する
+
+
+Viewport
+
+	描画範囲
+
+	通常は画面全体を設定する

@@ -11,7 +11,7 @@ typedef enum
 	eSOUND_LABEL_MAX,
 } SOUND_LABEL;
 
-class Sound {
+class AudioManager {
 private:
 	// パラメータ構造体
 	typedef struct
@@ -41,10 +41,10 @@ private:
 
 public:
 	// ゲームループ開始前に呼び出すサウンドの初期化処理
-	HRESULT Init(void);
+	HRESULT Initialize(void);
 
 	// ゲームループ終了後に呼び出すサウンドの解放処理
-	void Uninit(void);
+	void UnInit(void);
 
 	// 引数で指定したサウンドを再生する
 	void Play(SOUND_LABEL label);
