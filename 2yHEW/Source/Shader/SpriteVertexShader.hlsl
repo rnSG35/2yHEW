@@ -28,6 +28,8 @@ cbuffer ConstBuffer : register(b0)
     matrix matrixProj;
     //ワールド変換行列
     matrix matrixWorld;
+    //カメラ中心の4x4正方行列
+    matrix matrixView;
 }
 
 
@@ -41,6 +43,8 @@ VS_OUT main(VS_IN input)
     output.pos = mul(input.pos, matrixWorld);
     //頂点座標に投影行列を掛けて、平面上の座標にする
     output.pos = mul(output.pos, matrixProj);
+    //
+    output.pos = mul(output.pos, matrixView);
     
     //UV座標を移動させる
     float4 uv;

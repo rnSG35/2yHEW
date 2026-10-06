@@ -42,6 +42,12 @@
     <ClCompile Include="Source\Framework\Audio\AudioManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="thirdParty\stb_image\stb_image.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\Graphics\Shader\ShaderManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Framework\Input\Input.h">
@@ -68,5 +74,16 @@
     <ClInclude Include="Source\Framework\Audio\AudioManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="thirdParty\stb_image\stb_image.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\Graphics\Shader\ShaderManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Source\Shader\SpritePixelShader.hlsl" />
+    <FxCompile Include="Source\Shader\SpriteVertexShader.hlsl" />
+    <FxCompile Include="Source\Shader\ModelPixelShader.hlsl" />
   </ItemGroup>
 </Project>
