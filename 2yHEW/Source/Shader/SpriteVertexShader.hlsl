@@ -28,8 +28,6 @@ cbuffer ConstBuffer : register(b0)
     matrix matrixProj;
     //ワールド変換行列
     matrix matrixWorld;
-    //カメラ中心の4x4正方行列
-    matrix matrixView;
 }
 
 
@@ -43,17 +41,15 @@ VS_OUT main(VS_IN input)
     output.pos = mul(input.pos, matrixWorld);
     //頂点座標に投影行列を掛けて、平面上の座標にする
     output.pos = mul(output.pos, matrixProj);
-    //
-    output.pos = mul(output.pos, matrixView);
     
     //UV座標を移動させる
     float4 uv;
-    uv.xy = input.tex;  //行列掛け算のため、float4型に移す
+    uv.xy = input.tex; //行列掛け算のため、float4型に移す
     uv.z = 0.0f;
     uv.w = 1.0f;
-    uv = mul(uv, matrixTex);    //UV座標と移動行列を掛け算
-    output.tex = uv.xy;         //掛け算の結果を送信用変数にセット
+    uv = mul(uv, matrixTex); //UV座標と移動行列を掛け算
+    output.tex = uv.xy; //掛け算の結果を送信用変数にセット
     
-   output.col = input.col * vertexColor;
+    output.col = input.col * vertexColor;
     return output;
 }
