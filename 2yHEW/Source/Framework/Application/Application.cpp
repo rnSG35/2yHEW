@@ -27,6 +27,7 @@ bool Application::AppInit(int nShowCmd, bool isFullScreen, int screenWidth, int 
 	{
 		return false;
 	}
+
 	return true;
 }
 

@@ -1,5 +1,5 @@
 #include "Graphics.h"
-
+#include "../DebugSystem/DebugLog.h"
 #pragma comment(lib,"d3d11.lib")
 
 using Microsoft::WRL::ComPtr;
@@ -233,7 +233,7 @@ void Graphics::EndFrame()
 	//---------------------------------------------------------
 	HRESULT hr = m_swapChain->Present(1, 0);
 
-	if (FAILED(hr)) { OutputDebugStringA("Present¸”s\n"); }
+	if (FAILED(hr)) { DebugLogWrite("Present¸”s"); }
 
 	//---------------------------------------------------------
 	//Present‚ª‚ ‚é——R

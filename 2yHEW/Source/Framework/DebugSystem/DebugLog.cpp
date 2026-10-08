@@ -1,5 +1,5 @@
 #include "DebugLog.h"
-
+#ifdef _DEBUG
 #include <fstream>
 
 namespace
@@ -29,3 +29,13 @@ void DebugLog::Write(const char* text)
 
 	file.close();
 }
+
+//---------------------------------------------------------
+//ÉçÉOçÌèú
+//---------------------------------------------------------
+void DebugLog::Clear()
+{
+	std::ofstream file(FILE_PATH, std::ios::trunc);
+}
+
+#endif

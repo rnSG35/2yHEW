@@ -1,6 +1,7 @@
 #include "Texture.h"
 #include "../Graphics/Graphics.h"
 #include "../../../thirdParty/stb_image/stb_image.h"
+#include "../DebugSystem/DebugLog.h"
 using Microsoft::WRL::ComPtr;
 
 //---------------------------------------------------------
@@ -20,7 +21,7 @@ bool Texture::Load(const std::string& filePath)
 
 	if (!imageData)
 	{
-		OutputDebugStringA("‰æ‘œ“Ç¸”s\n");
+		DebugLogWrite("‰æ‘œ“Ç¸”s");
 		return false;
 	}
 	m_width = width;
