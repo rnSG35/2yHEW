@@ -82,7 +82,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Source\Shader\ModelPixelShader.hlsl" />
     <FxCompile Include="Source\Shader\SpritePixelShader.hlsl" />
     <FxCompile Include="Source\Shader\SpriteVertexShader.hlsl" />
   </ItemGroup>

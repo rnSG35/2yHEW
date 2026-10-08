@@ -1,8 +1,6 @@
 #include "Texture.h"
 #include "../Graphics/Graphics.h"
-#include <wincodec.h>
-#include <vector>
-#pragma comment(lib,"windowscodecs.lib")
+#include "../../../thirdParty/stb_image/stb_image.h"
 using Microsoft::WRL::ComPtr;
 
 //---------------------------------------------------------
@@ -10,90 +8,23 @@ using Microsoft::WRL::ComPtr;
 //---------------------------------------------------------
 bool Texture::Load(const std::string& filePath)
 {
-	//---------------------------------------------------------
-	//WICファクトリ生成、PNG JPG BMPなどの画像を読み込むために使用
-	//---------------------------------------------------------
-	ComPtr<IWICImagingFactory> factory;
-
-	HRESULT hr =
-		CoCreateInstance(
-			CLSID_WICImagingFactory,
-			nullptr,
-			CLSCTX_INPROC_SERVER,
-			IID_PPV_ARGS(factory.GetAddressOf()));
-
-	if (FAILED(hr)) { return false; }
+	int width = 0;
+	int height = 0;
+	int channels = 0;
 
 	//---------------------------------------------------------
-	//文字列変換、WICはstringを使うためstring->wstring変換する
+	//stb_imageで画像読み込み
 	//---------------------------------------------------------
-	std::wstring wPath(filePath.begin(), filePath.end());
+	unsigned char* imageData;
+	imageData = stbi_load(filePath.c_str(), &width, &height, &channels, STBI_rgb_alpha);
 
-	//---------------------------------------------------------
-	//画像ファイル読み込み
-	//---------------------------------------------------------
-	ComPtr<IWICBitmapDecoder> decoder;
-	hr = factory->CreateDecoderFromFilename(
-		wPath.c_str(),
-		nullptr,
-		GENERIC_READ,
-		WICDecodeMetadataCacheOnLoad,
-		decoder.GetAddressOf());
-
-	if (FAILED(hr)) { return false; }
-
-	//---------------------------------------------------------
-	//画像の戦闘フレーム取得・pngやjpgは通所１フレーム
-	//---------------------------------------------------------
-	ComPtr<IWICBitmapFrameDecode> frame;
-	hr = decoder->GetFrame(0, frame.GetAddressOf());
-
-	if (FAILED(hr)) { return false; }
-
-
-
-	//---------------------------------------------------------
-	//RGBAに変換、GPUに転送しやすくするため
-	//---------------------------------------------------------
-	ComPtr<IWICFormatConverter> converter;
-
-	hr = factory->CreateFormatConverter(converter.GetAddressOf());
-
-	if (FAILED(hr)) { return false; }
-
-	hr = converter->Initialize(
-		frame.Get(),
-		GUID_WICPixelFormat32bppRGBA,
-		WICBitmapDitherTypeNone,
-		nullptr,
-		0.0f,
-		WICBitmapPaletteTypeCustom);
-
-	if (FAILED(hr)) { return false; }
-
-
-	//---------------------------------------------------------
-	//画像サイズ取得
-	//---------------------------------------------------------
-	UINT width = 0;
-	UINT height = 0;
-	hr = converter->GetSize(&width, &height);
-
-	if (FAILED(hr)) { return false; }
-
-	//---------------------------------------------------------
-	//RGBAデータ取得
-	//---------------------------------------------------------
-	std::vector<unsigned char>pixels;
-	pixels.resize(width * height * 4);
-
-	hr = converter->CopyPixels(
-		nullptr,
-		width * 4,
-		static_cast<UINT>(pixels.size()),
-		pixels.data());
-
-	if (FAILED(hr)) { return false; }
+	if (!imageData)
+	{
+		OutputDebugStringA("画像読込失敗\n");
+		return false;
+	}
+	m_width = width;
+	m_height = height;
 
 	//---------------------------------------------------------
 	//GPUテクスチャ生成
@@ -102,46 +33,41 @@ bool Texture::Load(const std::string& filePath)
 
 	texDesc.Width = width;
 	texDesc.Height = height;
-
 	texDesc.MipLevels = 1;
 	texDesc.ArraySize = 1;
-
 	texDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-
 	texDesc.SampleDesc.Count = 1;
-
+	texDesc.Usage = D3D11_USAGE_DEFAULT;
 	texDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
 
 	//---------------------------------------------------------
-	//画像をGPUに転送
+	//画像をCPUに転送
 	//---------------------------------------------------------
 	D3D11_SUBRESOURCE_DATA initData = {};
-	initData.pSysMem = pixels.data();
+	initData.pSysMem = imageData;
 	initData.SysMemPitch = width * 4;
 
-	hr = Graphics::GetInstance().
-		GetDevice()->
-		CreateTexture2D(
-			&texDesc,
-			&initData,
-			m_texture.GetAddressOf()
-		);	if (FAILED(hr)) { return false; }
+	HRESULT hr = Graphics::GetInstance().GetDevice()->CreateTexture2D(
+		&texDesc,
+		&initData,
+		m_texture.GetAddressOf());
+
+	if (FAILED(hr)) { stbi_image_free(imageData); return false; }
 
 	//---------------------------------------------------------
 	//SRV作成、PixelShaderから参照するために必要
 	//---------------------------------------------------------
-	hr = Graphics::GetInstance().
-		GetDevice()->
-		CreateShaderResourceView(
-			m_texture.Get(),
-			nullptr,
-			m_srv.GetAddressOf()
-		);
-	if (FAILED(hr)) { return false; }
+	hr = Graphics::GetInstance().GetDevice()->CreateShaderResourceView(
+		m_texture.Get(),
+		nullptr,
+		m_srv.GetAddressOf());
+
+	if (FAILED(hr)) { stbi_image_free(imageData); return false; }
 
 	//---------------------------------------------------------
 	//全処理が成功したら成功を返す
 	//---------------------------------------------------------
+	stbi_image_free(imageData);
 	return true;
 }
 
@@ -150,11 +76,8 @@ bool Texture::Load(const std::string& filePath)
 //---------------------------------------------------------
 void Texture::SetPS(UINT slot)
 {
-	Graphics::GetInstance().
-		GetContext()->
-		PSSetShaderResources(
-			slot,
-			1,
-			m_srv.GetAddressOf()
-		);
+	Graphics::GetInstance().GetContext()->PSSetShaderResources(
+		slot,
+		1,
+		m_srv.GetAddressOf());
 }
