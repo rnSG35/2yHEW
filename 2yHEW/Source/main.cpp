@@ -4,7 +4,7 @@
 //Application.hをインクルード
 #include "Framework/Application/Application.h"
 #include <combaseapi.h>
-
+#include "../Source/Framework/DebugSystem/DebugLog.h"
 // NVIDIA Optimus 対応：dGPUを優先
 extern "C" {
 	__declspec(dllexport) DWORD NvOptimusEnablement = 0x00000001;
