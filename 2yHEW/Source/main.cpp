@@ -15,8 +15,8 @@ extern "C" {
 	__declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
 }
 
-static const int g_nWindowWidth = 1920;
-static const int g_nWindowHeight = 1080;
+static const int g_nWindowWidth = 1280;
+static const int g_nWindowHeight = 720;
 
 //---------------------------------------------------------
 //エントリーポイント
