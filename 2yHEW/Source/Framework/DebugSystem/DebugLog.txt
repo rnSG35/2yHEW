@@ -5,3 +5,4 @@
 
 ①ログを出したいところのcppファイルにDebugLog.hをインクルード
 ②「DebugLogWrite("○○失敗");」と記述
+③2yHEW/2yHEW/DebugLog/log.txtに書かれる
