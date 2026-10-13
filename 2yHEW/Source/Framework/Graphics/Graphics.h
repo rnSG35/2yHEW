@@ -79,6 +79,16 @@ private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain> m_swapChain;
 	//描画先
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_renderTargetView;
-	//深度バッファ
+	//深度情報を保存するバッファ
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> m_depthBuffer;
+	//深度バッファを描画処理から使うためのビュー
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> m_depthStencilView;
+
+
+	bool CreateDeviceAndSwapChain(HWND hwnd, UINT width, UINT height);
+	bool CreateRenderTargetView(UINT width, UINT height);
+	bool CreateDepthBuffer(UINT width, UINT height);
+	bool CreateDepthStencilView();
+	bool SetRenderTargets();
+	bool SetViewPort(UINT width, UINT height);
 };
