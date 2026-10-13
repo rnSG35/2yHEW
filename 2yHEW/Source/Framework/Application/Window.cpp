@@ -7,15 +7,15 @@
 bool Window::Create(int width, int height, const wchar_t* title)
 {
 	//ウィンドウクラス情報
-	WNDCLASSEX wc{};
+	WNDCLASSEX windowClass{};
 
-	wc.cbSize = sizeof(WNDCLASSEX);				//構造体サイズを設定
-	wc.lpfnWndProc = WndProc;					//メッセージ処理関数
-	wc.hInstance = GetModuleHandle(nullptr);	//実行中のアプリケーション情報
-	wc.lpszClassName = L"WindowClass";			//ウィンドウクラス名
+	windowClass.cbSize = sizeof(WNDCLASSEX);				//構造体サイズを設定
+	windowClass.lpfnWndProc = WndProc;					//メッセージ処理関数
+	windowClass.hInstance = GetModuleHandle(nullptr);	//実行中のアプリケーション情報
+	windowClass.lpszClassName = L"WindowClass";			//ウィンドウクラス名
 
 	//Windowsにウィンドウクラスを登録
-	if (RegisterClassEx(&wc) == 0)
+	if (RegisterClassEx(&windowClass) == 0)
 	{
 		return false;
 	}

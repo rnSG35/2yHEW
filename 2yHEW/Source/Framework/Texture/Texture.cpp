@@ -16,10 +16,10 @@ bool Texture::Load(const std::string& filePath)
 	//---------------------------------------------------------
 	//stb_imageで画像読み込み
 	//---------------------------------------------------------
-	unsigned char* imageData;
-	imageData = stbi_load(filePath.c_str(), &width, &height, &channels, STBI_rgb_alpha);
+	unsigned char* textureData;
+	textureData = stbi_load(filePath.c_str(), &width, &height, &channels, STBI_rgb_alpha);
 
-	if (!imageData)
+	if (!textureData)
 	{
 		DebugLogWrite("画像読込失敗");
 		return false;
@@ -45,30 +45,30 @@ bool Texture::Load(const std::string& filePath)
 	//画像をCPUに転送
 	//---------------------------------------------------------
 	D3D11_SUBRESOURCE_DATA initData = {};
-	initData.pSysMem = imageData;
+	initData.pSysMem = textureData;
 	initData.SysMemPitch = width * 4;
 
-	HRESULT hr = Graphics::GetInstance().GetDevice()->CreateTexture2D(
+	HRESULT createTexture2DResult = Graphics::GetInstance().GetDevice()->CreateTexture2D(
 		&texDesc,
 		&initData,
 		m_texture.GetAddressOf());
 
-	if (FAILED(hr)) { stbi_image_free(imageData); return false; }
+	if (FAILED(createTexture2DResult)) { stbi_image_free(textureData); return false; }
 
 	//---------------------------------------------------------
 	//SRV作成、PixelShaderから参照するために必要
 	//---------------------------------------------------------
-	hr = Graphics::GetInstance().GetDevice()->CreateShaderResourceView(
+	HRESULT createSrvResult = Graphics::GetInstance().GetDevice()->CreateShaderResourceView(
 		m_texture.Get(),
 		nullptr,
 		m_srv.GetAddressOf());
 
-	if (FAILED(hr)) { stbi_image_free(imageData); return false; }
+	if (FAILED(createSrvResult)) { stbi_image_free(textureData); return false; }
 
 	//---------------------------------------------------------
 	//全処理が成功したら成功を返す
 	//---------------------------------------------------------
-	stbi_image_free(imageData);
+	stbi_image_free(textureData);
 	return true;
 }
 

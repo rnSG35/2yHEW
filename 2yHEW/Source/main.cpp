@@ -15,8 +15,8 @@ extern "C" {
 	__declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
 }
 
-static const int g_nWindowWidth = 1280;
-static const int g_nWindowHeight = 720;
+static const int WINDOW_WIDTH = 1280;
+static const int WINDOW_HEIGHT = 720;
 
 //---------------------------------------------------------
 //エントリーポイント
@@ -40,7 +40,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	Application& App = Application::GetInstance();
 
 	//ウィンドウ作成
-	if (!App.AppInit(nShowCmd, false, g_nWindowWidth, g_nWindowHeight))
+	if (!App.AppInit(nShowCmd, false, WINDOW_WIDTH, WINDOW_HEIGHT))
 	{
 		CoUninitialize();
 		return 0;

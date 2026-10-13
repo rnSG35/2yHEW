@@ -34,22 +34,22 @@ bool Graphics::Initialize(
 	//スワップチェイン設定
 	//バックバッファの設定を行う
 	//---------------------------------------------------------
-	DXGI_SWAP_CHAIN_DESC sd = {};
+	DXGI_SWAP_CHAIN_DESC swapChainDesc = {};
 
-	sd.BufferCount = 1;
+	swapChainDesc.BufferCount = 1;
 
-	sd.BufferDesc.Width = width;
-	sd.BufferDesc.Height = height;
+	swapChainDesc.BufferDesc.Width = width;
+	swapChainDesc.BufferDesc.Height = height;
 
-	sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;	//RGBA 8bit
+	swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;	//RGBA 8bit
 
-	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;	//描画先として使うバッファ
+	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;	//描画先として使うバッファ
 
-	sd.OutputWindow = hwnd;
+	swapChainDesc.OutputWindow = hwnd;
 
-	sd.SampleDesc.Count = 1;	//MSAAナシ
+	swapChainDesc.SampleDesc.Count = 1;	//MSAAナシ
 
-	sd.Windowed = true;
+	swapChainDesc.Windowed = true;
 
 	//---------------------------------------------------------
 	//DirectX11生成
@@ -58,7 +58,7 @@ bool Graphics::Initialize(
 	//SwapChain 画面表示を管理
 	//	をまとめて生成
 	//---------------------------------------------------------
-	HRESULT hr =
+	HRESULT createDeviceResult =
 		D3D11CreateDeviceAndSwapChain(
 			nullptr,
 			D3D_DRIVER_TYPE_HARDWARE,
@@ -71,13 +71,13 @@ bool Graphics::Initialize(
 			nullptr,
 			0,
 			D3D11_SDK_VERSION,
-			&sd,
+			& swapChainDesc,
 			m_swapChain.GetAddressOf(),
 			m_device.GetAddressOf(),
 			nullptr,
 			m_context.GetAddressOf()
 		);
-	if (FAILED(hr)) { return false; }
+	if (FAILED(createDeviceResult)) { return false; }
 
 	//---------------------------------------------------------
 	//バックバッファ取得
@@ -87,60 +87,60 @@ bool Graphics::Initialize(
 	//---------------------------------------------------------
 	ComPtr<ID3D11Texture2D> backBuffer;
 
-	hr = m_swapChain->GetBuffer(
+	HRESULT getBackBUfferResult= m_swapChain->GetBuffer(
 		0,
 		_uuidof(ID3D11Texture2D),
 		reinterpret_cast<void**>(
 			backBuffer.GetAddressOf()));
-	if (FAILED(hr)) { return false; }
+	if (FAILED(getBackBUfferResult)) { return false; }
 
 
 	//---------------------------------------------------------
 	//RenderTargetView作成
 	//このRTVに向かって描画
 	//---------------------------------------------------------
-	hr = m_device->CreateRenderTargetView(
+	HRESULT createRenderTargetViewResult= m_device->CreateRenderTargetView(
 		backBuffer.Get(),
 		nullptr,
 		m_renderTargetView.GetAddressOf());
-	if (FAILED(hr)) { return false; }
+	if (FAILED(createRenderTargetViewResult)) { return false; }
 
 	//---------------------------------------------------------
 	//DepthBuffer作成
 	//奥行き判定に必要
 	//---------------------------------------------------------
-	D3D11_TEXTURE2D_DESC depthDesc = {};
+	D3D11_TEXTURE2D_DESC depthTextureDesc = {};
 
-	depthDesc.Width = width;
-	depthDesc.Height = height;
+	depthTextureDesc.Width = width;
+	depthTextureDesc.Height = height;
 
-	depthDesc.MipLevels = 1;
-	depthDesc.ArraySize = 1;
+	depthTextureDesc.MipLevels = 1;
+	depthTextureDesc.ArraySize = 1;
 
-	depthDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	depthTextureDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 
-	depthDesc.SampleDesc.Count = 1;
+	depthTextureDesc.SampleDesc.Count = 1;
 
-	depthDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	depthTextureDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 
 	ComPtr<ID3D11Texture2D>depthBuffer;
 
-	hr = m_device->CreateTexture2D(
-		&depthDesc,
+	HRESULT createDepthBufferResult = m_device->CreateTexture2D(
+		&depthTextureDesc,
 		nullptr,
 		depthBuffer.GetAddressOf());
-	if (FAILED(hr)) { return false; }
+	if (FAILED(createDepthBufferResult)) { return false; }
 
 	//---------------------------------------------------------
 	//DepthStencilView作成
 	//震度バッファをGPUから使えるようにする
 	// 壁、プレイヤーなどが重なったときに奥にあるものを隠すため
 	//---------------------------------------------------------
-	hr = m_device->CreateDepthStencilView(
+	HRESULT createDepthStencilViewResult= m_device->CreateDepthStencilView(
 		depthBuffer.Get(),
 		nullptr,
 		m_depthStencilView.GetAddressOf());
-	if (FAILED(hr)) { return false; }
+	if (FAILED(createDepthStencilViewResult)) { return false; }
 
 	//---------------------------------------------------------
 	//描画先設定
@@ -156,16 +156,16 @@ bool Graphics::Initialize(
 	//画面全体に描画
 	//ミニマップや分割画面を作る場合はここを変更
 	//---------------------------------------------------------
-	D3D11_VIEWPORT viewport = {};
+	D3D11_VIEWPORT mainViewport = {};
 
-	viewport.Width = static_cast<float>(width);
-	viewport.Height = static_cast<float>(height);
-	viewport.MinDepth = 0.0f;
-	viewport.MaxDepth = 1.0f;
+	mainViewport.Width = static_cast<float>(width);
+	mainViewport.Height = static_cast<float>(height);
+	mainViewport.MinDepth = 0.0f;
+	mainViewport.MaxDepth = 1.0f;
 
 	m_context->RSSetViewports(
 		1,
-		&viewport);
+		&mainViewport);
 	return true;
 }
 
@@ -231,9 +231,9 @@ void Graphics::EndFrame()
 	//バックバッファ表示
 	//今書いた内容を実際の画面に出力
 	//---------------------------------------------------------
-	HRESULT hr = m_swapChain->Present(1, 0);
+	HRESULT presentResult = m_swapChain->Present(1, 0);
 
-	if (FAILED(hr)) { DebugLogWrite("Present失敗"); }
+	if (FAILED(presentResult)) { DebugLogWrite("Present失敗"); }
 
 	//---------------------------------------------------------
 	//Presentがある理由
