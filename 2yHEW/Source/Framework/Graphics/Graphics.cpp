@@ -30,8 +30,6 @@ bool Graphics::Initialize(
 	UINT width,
 	UINT height)
 {
-
-
 	//Device・Context・SwapChain作成
 	//ここがないと以降の処理ができない
 	if (CreateDeviceAndSwapChain(hwnd, width, height))
@@ -39,151 +37,37 @@ bool Graphics::Initialize(
 		DebugLogWrite("Device・Context・SwapChain作成失敗 / Failed to create Device, Context, and SwapChain");
 		return false;
 	}
-
-	
-	
-	
-	//bool Graphics::CreateDeviceAndSwapChain(HWND hwnd, UINT width, UINT height)
-
-	
-//	//---------------------------------------------------------
-//	//スワップチェイン設定
-//	//バックバッファの設定を行う
-//	//---------------------------------------------------------
-//	DXGI_SWAP_CHAIN_DESC swapChainDesc = {};
-//	swapChainDesc.BufferCount = 1;
-//	swapChainDesc.BufferDesc.Width = width;
-//	swapChainDesc.BufferDesc.Height = height;
-//	swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;	//RGBA 8bit
-//	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;	//描画先として使うバッファ
-//	swapChainDesc.OutputWindow = hwnd;
-//	swapChainDesc.SampleDesc.Count = 1;	//MSAAナシ
-//	swapChainDesc.Windowed = true;
-//	//---------------------------------------------------------
-//	//DirectX11生成
-//	//Device	GPU資源を作成
-//	//context	GPUに命令を送る
-//	//SwapChain 画面表示を管理
-//	//	をまとめて生成
-//	//---------------------------------------------------------
-//	HRESULT createDeviceResult =
-//		D3D11CreateDeviceAndSwapChain(
-//			nullptr,
-//			D3D_DRIVER_TYPE_HARDWARE,
-//			nullptr,
-//#ifdef _DEBUG
-//			D3D11_CREATE_DEVICE_DEBUG,
-//#else
-//			0,
-//#endif
-//			nullptr,
-//			0,
-//			D3D11_SDK_VERSION,
-//			&swapChainDesc,
-//			m_swapChain.GetAddressOf(),
-//			m_device.GetAddressOf(),
-//			nullptr,
-//			m_context.GetAddressOf());
-//	if (FAILED(createDeviceResult)) { return false; }
-
-
-
-
-	CreateRenderTargetView(width, height);
-	
-	////---------------------------------------------------------
-	////バックバッファ取得
-	////SwapChainの描画先を取得
-	////GPUに「どこに書くのか」と聞かれたときに答えるためのオブジェクト
-	////今回はバックバッファに
-	////---------------------------------------------------------
-	//ComPtr<ID3D11Texture2D> backBuffer;
-	//HRESULT getBackBUfferResult = m_swapChain->GetBuffer(
-	//	0,
-	//	_uuidof(ID3D11Texture2D),
-	//	reinterpret_cast<void**>(
-	//		backBuffer.GetAddressOf()));
-	//if (FAILED(getBackBUfferResult)) { return false; }
-	////---------------------------------------------------------
-	////RenderTargetView作成
-	////このRTVに向かって描画
-	////---------------------------------------------------------
-	//HRESULT createRenderTargetViewResult = m_device->CreateRenderTargetView(
-	//	backBuffer.Get(),
-	//	nullptr,
-	//	m_renderTargetView.GetAddressOf());
-	//if (FAILED(createRenderTargetViewResult)) { return false; }
-
-
-
-	CreateDepthBuffer(width, height);
-	
-	////---------------------------------------------------------
-	////DepthBuffer作成
-	////奥行き判定に必要
-	////---------------------------------------------------------
-	//D3D11_TEXTURE2D_DESC depthTextureDesc = {};
-	//depthTextureDesc.Width = width;
-	//depthTextureDesc.Height = height;
-	//depthTextureDesc.MipLevels = 1;
-	//depthTextureDesc.ArraySize = 1;
-	//depthTextureDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-	//depthTextureDesc.SampleDesc.Count = 1;
-	//depthTextureDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-	//ComPtr<ID3D11Texture2D>depthBuffer;
-	//HRESULT createDepthBufferResult = m_device->CreateTexture2D(
-	//	&depthTextureDesc,
-	//	nullptr,
-	//	depthBuffer.GetAddressOf());
-	//if (FAILED(createDepthBufferResult)) { return false; }
-
-
-
-	CreateDepthStencilView();
-	
-	////---------------------------------------------------------
-	////DepthStencilView作成
-	////震度バッファをGPUから使えるようにする
-	//// 壁、プレイヤーなどが重なったときに奥にあるものを隠すため
-	////---------------------------------------------------------
-	//HRESULT createDepthStencilViewResult = m_device->CreateDepthStencilView(
-	//	depthBuffer.Get(),
-	//	nullptr,
-	//	m_depthStencilView.GetAddressOf());
-	//if (FAILED(createDepthStencilViewResult)) { return false; }
-
-
-
-	SetRenderTargets();
-
-	////---------------------------------------------------------
-	////描画先設定
-	////RenderTargetとDepthBuferをDirectXに登録
-	////---------------------------------------------------------
-	//m_context->OMSetRenderTargets(
-	//	1,
-	//	m_renderTargetView.GetAddressOf(),
-	//	m_depthStencilView.Get());
-
-
-
-	SetViewPort(width, height);
-	
-	////---------------------------------------------------------
-	////ビューポート設定
-	////画面全体に描画
-	////ミニマップや分割画面を作る場合はここを変更
-	////---------------------------------------------------------
-	//D3D11_VIEWPORT mainViewport = {};
-
-	//mainViewport.Width = static_cast<float>(width);
-	//mainViewport.Height = static_cast<float>(height);
-	//mainViewport.MinDepth = 0.0f;
-	//mainViewport.MaxDepth = 1.0f;
-
-	//m_context->RSSetViewports(
-	//	1,
-	//	&mainViewport);
+	//RenderTargetView作成
+	if (!CreateRenderTargetView(width,height))
+	{
+		DebugLogWrite("RenderTargetView作成失敗 / Failed to create a RenderTargetView");
+		return false;
+	}
+	//DepthBuffer作成
+	if (CreateDepthBuffer(width, height))
+	{
+		DebugLogWrite("DepthBuffer作成失敗 / Failed to create depth buffer");
+		return false;
+	}
+	//DepthStencilView作成
+	//DepthBufferの後に呼ぶこと
+	if (CreateDepthStencilView())
+	{
+		DebugLogWrite("DepthStencilView作成失敗 / Failed to create DepthStencilView");
+		return false;
+	}
+	//描画先設定
+	if (SetRenderTargets())
+	{
+		DebugLogWrite("描画先設定失敗 / Failed to set the output destination");
+		return false;
+	}
+	//ビューポート設定
+	if (!SetViewPort(width, height))
+	{
+		DebugLogWrite("ビューポート設定失敗 / Viewport Configuration Failed");
+		return false;
+	}
 
 	DebugLogWrite("Graphics初期化成功 / Graphics Initialization Successful");
 	return true;
@@ -225,18 +109,18 @@ void Graphics::BeginFrame()
 {
 	if (!m_context)
 	{
-		DebugLogWrite("BeginFrame時にm_contextがnullptr");
+		DebugLogWrite("BeginFrame時にm_contextがnullptr / m_context is nullptr at BeginFrame");
 		return;
 	}
 
 	if (!m_renderTargetView)
 	{
-		DebugLogWrite("BeginFrame時にm_renderTargetViewがnullptr");
+		DebugLogWrite("BeginFrame時にm_renderTargetViewがnullptr / m_renderTargetView is nullptr at BeginFrame");
 		return;
 	}
 	if (!m_depthStencilView)
 	{
-		DebugLogWrite("BeginFrame時にm_depthStencilViewがnullptr");
+		DebugLogWrite("BeginFrame時にm_depthStencilViewがnullptr / m_depthStencilView is nullptr at BeginFrame");
 		return;
 	}
 
@@ -281,7 +165,7 @@ void Graphics::EndFrame()
 {
 	if (!m_swapChain)
 	{
-		DebugLogWrite("EndFrame時にm_swapChainがnullptr");
+		DebugLogWrite("EndFrame時にm_swapChainがnullptr / m_swapChain is nullptr at EndFrame");
 		return;
 	}
 
@@ -291,7 +175,7 @@ void Graphics::EndFrame()
 	//---------------------------------------------------------
 	HRESULT presentResult = m_swapChain->Present(1, 0);
 
-	if (FAILED(presentResult)) { DebugLogWrite("Present失敗"); }
+	if (FAILED(presentResult)) { DebugLogWrite("Present失敗 / Failed to Present"); }
 
 	//---------------------------------------------------------
 	//Presentがある理由
@@ -305,7 +189,7 @@ bool Graphics::CreateDeviceAndSwapChain(HWND hwnd, UINT width, UINT height)
 	//渡されたウィンドウハンドルを確認する
 	if (hwnd == nullptr)
 	{
-		DebugLogWrite("ウィンドウハンドルがnullptr");
+		DebugLogWrite("ウィンドウハンドルがnullptr / The WindowHandle is nullptr");
 		return false;
 	}
 
@@ -351,24 +235,24 @@ bool Graphics::CreateDeviceAndSwapChain(HWND hwnd, UINT width, UINT height)
 		);
 	if (FAILED(createDeviceResult))
 	{
-		DebugLogWrite("DiD11CreateDeviceAndSwapChain失敗");
+		DebugLogWrite("D3D11CreateDeviceAndSwapChain失敗 / D3D11 CreateDeviceAndSwapChain Failed");
 		return false;
 	}
 
 	//念のためポインタを確認
 	if (!m_swapChain)
 	{
-		DebugLogWrite("m_swapChainがnullptr");
+		DebugLogWrite("m_swapChainがnullptr / m_swapChain is nullptr");
 		return false;
 	}
 	if (!m_device)
 	{
-		DebugLogWrite("m_deviceがnullptr");
+		DebugLogWrite("m_deviceがnullptr / m_device is nullptr");
 		return false;
 	}
 	if (!m_context)
 	{
-		DebugLogWrite("m_contextがnullptr");
+		DebugLogWrite("m_contextがnullptr / m_context is nullptr");
 		return false;
 	}
 }
@@ -378,13 +262,13 @@ bool Graphics::CreateRenderTargetView(UINT width, UINT height)
 	//SwapChainが作られているか確認
 	if (!m_swapChain)
 	{
-		DebugLogWrite("CreateRenderTargetView時にm_swapChainがnullptr");
+		DebugLogWrite("CreateRenderTargetView時にm_swapChainがnullptr / m_swapChain is nullptr when calling CreateRenderTargetView");
 		return false;
 	}
 	//Deviceが作られているか確認
 	if (!m_device)
 	{
-		DebugLogWrite("CreateRenderTargetView時にm_deviceがnullptr");
+		DebugLogWrite("CreateRenderTargetView時にm_deviceがnullptr / m_device is nullptr when calling CreateRenderTargetView");
 		return false;
 	}
 
@@ -398,12 +282,12 @@ bool Graphics::CreateRenderTargetView(UINT width, UINT height)
 			backBuffer.GetAddressOf()));
 	if (FAILED(getBackBUfferResult))
 	{
-		DebugLogWrite("CreateRenderTargetView時にバックバッファ取得失敗");
+		DebugLogWrite("CreateRenderTargetView時にバックバッファ取得失敗 / Failed to retrieve the back buffer when creating a RenderTargetView");
 		return false;
 	}
 	if (!backBuffer)
 	{
-		DebugLogWrite("CreateRenderTargetView時にバックバッファがnullptr");
+		DebugLogWrite("CreateRenderTargetView時にバックバッファがnullptr / The back buffer is nullptr when calling CreateRenderTargetView");
 		return false;
 	}
 	//RenderTargetView作成
@@ -413,7 +297,7 @@ bool Graphics::CreateRenderTargetView(UINT width, UINT height)
 		m_renderTargetView.GetAddressOf());
 	if (FAILED(createRenderTargetViewResult))
 	{
-		DebugLogWrite("CreateRenderTargetView失敗");
+		DebugLogWrite("CreateRenderTargetView失敗 / CreateRenderTargetView Failed");
 		return false;
 	}
 	return true;
@@ -427,7 +311,7 @@ bool Graphics::CreateDepthBuffer(UINT width, UINT height)
 {
 	if (!m_device)
 	{
-		DebugLogWrite("CreateDepthBuffer時にm_deviceがnullptr");
+		DebugLogWrite("CreateDepthBuffer時にm_deviceがnullptr / m_device is nullptr when calling CreateDepthBuffer");
 		return false;
 	}
 
@@ -457,7 +341,7 @@ bool Graphics::CreateDepthBuffer(UINT width, UINT height)
 		m_depthBuffer.GetAddressOf());
 	if (FAILED(createDepthBufferResult))
 	{
-		DebugLogWrite("DepthBufferのTexture2D作成失敗");
+		DebugLogWrite("DepthBufferのTexture2D作成失敗 / Failed to create Texture2D for the DepthBuffer");
 		return false;
 	}
 
@@ -472,14 +356,14 @@ bool Graphics::CreateDepthStencilView()
 {
 	if (!m_device)
 	{
-		DebugLogWrite("CreateDepthStencilView時にm_deviceがnullptr");
+		DebugLogWrite("CreateDepthStencilView時にm_deviceがnullptr / m_device is nullptr when calling CreateDepthStencilView");
 		return false;
 	}
 
 	//CreateDepthBufferで作ったものがあるか確認
 	if (!m_depthBuffer)
 	{
-		DebugLogWrite("m_depthBufferがnullptr");
+		DebugLogWrite("m_depthBufferがnullptr / m_depthBuffer is nullptr");
 		return false;
 	}
 
@@ -490,7 +374,7 @@ bool Graphics::CreateDepthStencilView()
 		m_depthStencilView.GetAddressOf());
 	if (FAILED(createDepthStencilViewResult))
 	{
-		DebugLogWrite("CreateDepthStencilView作成失敗");
+		DebugLogWrite("CreateDepthStencilView作成失敗 / Failed to create CreateDepthStencilView");
 		return false;
 	}
 
@@ -505,17 +389,17 @@ bool Graphics::SetRenderTargets()
 {
 	if (!m_context)
 	{
-		DebugLogWrite("SetRenderTargets時にm_contextがnullptr");
+		DebugLogWrite("SetRenderTargets時にm_contextがnullptr / m_context is nullptr when calling SetRenderTargets");
 		return false;
 	}
 	if (!m_renderTargetView)
 	{
-		DebugLogWrite("SetRenderTargets時にm_renderTargetViewがnullptr");
+		DebugLogWrite("SetRenderTargets時にm_renderTargetViewがnullptr / m_renderTargetView is nullptr when calling SetRenderTargets");
 		return false;
 	}
 	if (!m_depthStencilView)
 	{
-		DebugLogWrite("SetRenderTargets時にm_depthStencilViewがnullptr");
+		DebugLogWrite("SetRenderTargets時にm_depthStencilViewがnullptr / m_depthStencilView is nullptr when calling SetRenderTargets");
 		return false;
 	}
 
@@ -536,13 +420,13 @@ bool Graphics::SetViewPort(UINT width, UINT height)
 {
 	if (!m_context)
 	{
-		DebugLogWrite("SetViewPort時にm_contextがnullptr");
+		DebugLogWrite("SetViewPort時にm_contextがnullptr / m_context is nullptr when calling SetViewPort");
 		return false;
 	}
 
 	if (width == 0 || height == 0)
 	{
-		DebugLogWrite("ビューポートのサイズが0");
+		DebugLogWrite("ビューポートのサイズが0 / The viewport size is 0");
 		return false;
 	}
 

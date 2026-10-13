@@ -21,7 +21,7 @@ bool Texture::Load(const std::string& filePath)
 
 	if (!textureData)
 	{
-		DebugLogWrite("‰æ‘œ“Ç¸”s");
+		DebugLogWrite("‰æ‘œ“Ç¸”s / Failed to load image");
 		return false;
 	}
 	m_width = width;
