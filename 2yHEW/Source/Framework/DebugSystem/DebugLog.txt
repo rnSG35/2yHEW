@@ -4,5 +4,5 @@
 まだ変数の表示には対応していない(2026/10/09時点)
 
 ①ログを出したいところのcppファイルにDebugLog.hをインクルード
-②「DebugLogWrite("○○失敗");」と記述
+②「DebugLogWrite("○○失敗 / Failed to ○○");」と記述
 ③2yHEW/2yHEW/DebugLog/log.txtに書かれる
