@@ -1,0 +1,69 @@
+<命名全体のルール>
+原則として小文字で書くこと。
+名前から意味が分かるようにする。
+回数を取るだけの変数は「○○Cnt」などにする。(例：跳躍回数はjumpCntなど)
+
+(if内の回数をとったり、for分の条件式になるような「i」など、スコープを絞ったものは除く)
+言葉同士のつなぎ目は頭文字を大文字にして区切る。<変数のスールを参照>
+大文字が続く場合、"_"を挟む
+数字は大文字扱いとする
+
+
+<変数のルール>
+変数名は頭文字を小文字にする
+
+例:
+int number
+float moveForward
+bool stingTrapFlg
+
+
+<変数以外のルール>
+関数名・クラス名は頭文字を大文字
+構造体名・列挙型名など、変数名以外は頭文字を型名+大文字にする
+
+例:
+void Jump()
+class ObjectBase
+struct sStatus
+enum eScene
+
+
+
+<定数のルール>
+定数となるもの(const変数,マクロ定義,列挙型識別子など)はすべて大文字で書く
+
+例:
+const int MAX = 255
+const bool DUMMY_FLG = false
+#define SPEED_MAX (50)
+enum eColor = {
+    RED,
+    GREEN,
+    BLUE
+    
+}
+
+
+<配列のルール>
+配列名は、頭文字を小文字にし、複数形にして書く
+
+例:
+int[] numbers
+Object[] enemies
+Vector2[] moveAxis
+Vector3[] vector3_Presets
+
+
+
+
+
+<特別ルール>
+フォルダ名などファイルとして置くものは、名前の競合を避けるため、はじめに"製作者の頭文字の小文字"+"_"を書く
+
+例:
+s_SceneManager
+h_TestPlayer
+m_Prefabs
+y_EffectImage02
+
