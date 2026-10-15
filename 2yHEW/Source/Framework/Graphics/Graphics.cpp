@@ -32,7 +32,7 @@ bool Graphics::Initialize(
 {
 	//DeviceEContextESwapChainì¬
 	//‚±‚±‚ª‚È‚¢‚ÆˆÈ~‚Ìˆ—‚ª‚Å‚«‚È‚¢
-	if (CreateDeviceAndSwapChain(hwnd, width, height))
+	if (!CreateDeviceAndSwapChain(hwnd, width, height))
 	{
 		DebugLogWrite("DeviceEContextESwapChainì¬Ž¸”s / Failed to create Device, Context, and SwapChain");
 		return false;
@@ -44,20 +44,20 @@ bool Graphics::Initialize(
 		return false;
 	}
 	//DepthBufferì¬
-	if (CreateDepthBuffer(width, height))
+	if (!CreateDepthBuffer(width, height))
 	{
 		DebugLogWrite("DepthBufferì¬Ž¸”s / Failed to create depth buffer");
 		return false;
 	}
 	//DepthStencilViewì¬
 	//DepthBuffer‚ÌŒã‚ÉŒÄ‚Ô‚±‚Æ
-	if (CreateDepthStencilView())
+	if (!CreateDepthStencilView())
 	{
 		DebugLogWrite("DepthStencilViewì¬Ž¸”s / Failed to create DepthStencilView");
 		return false;
 	}
 	//•`‰ææÝ’è
-	if (SetRenderTargets())
+	if (!SetRenderTargets())
 	{
 		DebugLogWrite("•`‰ææÝ’èŽ¸”s / Failed to set the output destination");
 		return false;
@@ -255,6 +255,8 @@ bool Graphics::CreateDeviceAndSwapChain(HWND hwnd, UINT width, UINT height)
 		DebugLogWrite("m_context‚ªnullptr / m_context is nullptr");
 		return false;
 	}
+
+	return true;
 }
 
 bool Graphics::CreateRenderTargetView(UINT width, UINT height)
@@ -300,6 +302,7 @@ bool Graphics::CreateRenderTargetView(UINT width, UINT height)
 		DebugLogWrite("CreateRenderTargetViewŽ¸”s / CreateRenderTargetView Failed");
 		return false;
 	}
+
 	return true;
 }
 
@@ -329,9 +332,12 @@ bool Graphics::CreateDepthBuffer(UINT width, UINT height)
 	depthTextureDesc.SampleDesc.Count = 1;
 	depthTextureDesc.SampleDesc.Quality = 0;
 
-	depthTextureDesc.CPUAccessFlags = 0;
-	depthTextureDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	depthTextureDesc.Usage = D3D11_USAGE_DEFAULT;
 
+	depthTextureDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	
+	depthTextureDesc.CPUAccessFlags = 0;
+	depthTextureDesc.MiscFlags = 0;
 
 	//[“xƒoƒbƒtƒ@ì¬
 	//ƒ[ƒJƒ‹•Ï”‚Å‚Í‚È‚­Aƒƒ“ƒo•Ï”(m_depthBuffer)‚É•Û‘¶‚·‚é
@@ -345,6 +351,7 @@ bool Graphics::CreateDepthBuffer(UINT width, UINT height)
 		return false;
 	}
 
+	return true;
 }
 
 //---------------------------------------------------------
@@ -378,7 +385,7 @@ bool Graphics::CreateDepthStencilView()
 		return false;
 	}
 
-
+	return true;
 }
 
 //---------------------------------------------------------
@@ -408,7 +415,8 @@ bool Graphics::SetRenderTargets()
 		1,
 		m_renderTargetView.GetAddressOf(),
 		m_depthStencilView.Get());
-	return false;
+
+	return true;
 }
 
 //---------------------------------------------------------
@@ -444,4 +452,6 @@ bool Graphics::SetViewPort(UINT width, UINT height)
 	m_context->RSSetViewports(
 		1,
 		&mainViewport);
+
+	return true;
 }
