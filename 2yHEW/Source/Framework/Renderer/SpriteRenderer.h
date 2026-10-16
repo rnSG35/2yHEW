@@ -40,6 +40,9 @@ private:
 	//頂点バッファ作成
 	bool CreateVertexBuffer();
 
+	//サンプラーステート作成
+	bool CreateSamplerState();
+
 	//ブレンドステート作成
 	bool CreateBlendState();
 
@@ -47,7 +50,7 @@ private:
 	//頂点シェーダー
 	Microsoft::WRL::ComPtr<ID3D11VertexShader> m_vertexShader;
 	//ピクセルシェーダー
-	Microsoft::WRL::ComPtr<ID3D11PixelShader> m_PixelShader;
+	Microsoft::WRL::ComPtr<ID3D11PixelShader> m_pixelShader;
 	//頂点の並び方をDirectXに伝える
 	Microsoft::WRL::ComPtr<ID3D11InputLayout> m_inputLayout;
 	//四角形の頂点を保存する

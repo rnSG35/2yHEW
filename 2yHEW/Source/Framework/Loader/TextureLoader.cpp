@@ -20,6 +20,7 @@ std::shared_ptr<Texture> TextureLoader::Load(const std::string& filePath)
 	unsigned char* imageData;
 	imageData = stbi_load(filePath.c_str(), &width, &height, &channelsCount, STBI_rgb_alpha);
 
+	DebugLogWrite(filePath.c_str());
 	if (imageData == nullptr)
 	{
 		DebugLogWrite("‰æ‘œ“Ç¸”s / Failed to load image");
@@ -68,7 +69,7 @@ std::shared_ptr<Texture> TextureLoader::Load(const std::string& filePath)
 	//---------------------------------------------------------
 	stbi_image_free(imageData);
 	if (FAILED(createTexture2DResult))
-	{ 
+	{
 		DebugLogWrite("Texture2Dì¬¸”s / Failed to create Texture2D");
 		return nullptr;
 	}

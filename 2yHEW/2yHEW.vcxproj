@@ -137,6 +137,7 @@
     <ClCompile Include="Source\Framework\Loader\TextureLoader.cpp" />
     <ClCompile Include="Source\Framework\Texture\Texture.cpp" />
     <ClCompile Include="Source\Framework\Texture\TextureManager.cpp" />
+    <ClCompile Include="Source\Game\Core\Game.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Game\SpriteObject\SpriteObjectBase.cpp" />
     <ClCompile Include="Source\Game\SpriteObject\test\test.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="Source\Framework\Loader\TextureLoader.h" />
     <ClInclude Include="Source\Framework\Texture\Texture.h" />
     <ClInclude Include="Source\Framework\Texture\TextureManager.h" />
+    <ClInclude Include="Source\Game\Core\Game.h" />
     <ClInclude Include="Source\Game\SpriteObject\SpriteObjectBase.h" />
     <ClInclude Include="Source\Game\SpriteObject\test\test.h" />
     <ClInclude Include="Source\Framework\Renderer\SpriteRenderer.h" />

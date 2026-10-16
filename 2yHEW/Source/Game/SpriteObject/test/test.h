@@ -5,6 +5,7 @@ class test :
 {
 public:
     test();
+    ~test() override = default;
 
 private:
     void OnInit() override;

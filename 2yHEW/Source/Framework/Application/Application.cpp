@@ -1,5 +1,7 @@
 #include "Application.h"
 #include "../Graphics/Graphics.h"
+#include "../../Game/Core/Game.h"
+#include "../DebugSystem/DebugLog.h"
 //---------------------------------------------------------
 //アプリケーション初期化
 // Window生成
@@ -38,6 +40,14 @@ void Application::AppLoop()
 {
 	MSG msg{};
 
+	Game game;
+
+	if (!game.Init())
+	{
+		DebugLogWrite("Game初期化失敗 / Failed to Initialize Game class");
+		return;
+	}
+
 	//WM_QUITが送られるまでループ
 	while (msg.message != WM_QUIT)
 	{
@@ -55,11 +65,16 @@ void Application::AppLoop()
 			//ここにゲームの更新処理や描画処理を追加する
 			//Update
 			//Draw
+			game.Update();
+
 			Graphics::GetInstance().BeginFrame();
+
+			game.Draw();
 
 			Graphics::GetInstance().EndFrame();
 		}
 	}
+	game.Exit();
 }
 
 
