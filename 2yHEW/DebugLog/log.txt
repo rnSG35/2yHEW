@@ -1,6 +1,5 @@
 Graphics初期化成功 / Graphics Initialization Successful
 Gameクラス初期化開始 / GameInit start
 SpriteRenderer初期化成功 / SpriteRenderer initialization successful
-LoadTexture : AppData/Assets/Textures/test.png
 AppData/Assets/Textures/test.png
 Texture読み込み成功
