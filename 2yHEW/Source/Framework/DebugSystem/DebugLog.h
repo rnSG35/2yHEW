@@ -1,5 +1,7 @@
 #pragma once
 
+//クラッシュ直前の情報を見れるようにするためにテキストファイルに書き込み
+
 #ifdef _DEBUG
 
 class DebugLog
