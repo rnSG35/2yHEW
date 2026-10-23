@@ -1,11 +1,10 @@
 Graphics初期化成功 / Graphics Initialization Successful
 Gameクラス初期化開始 / GameInit start
-VertexShader.cso読み込み成功 / VertexShader.cso loaded successfully
-VertexShader.cso読み込み成功 / VertexShader.cso loaded successfully
+VertexShader.csoが無いためHLSLをコンパイル / Compile HLSL because VertexShader.cso is missing
+VertexShaderコンパイル成功 / Vertex Shader Compilation Successful
+PixelShader.csoが無いためHLSLをコンパイル / Compile HLSL because PixelShader.cso is missing
 Spriteシェーダー作成成功 / Sprite Shader Created Successfully
 SpriteRenderer初期化成功 / SpriteRenderer initialization successful
 AppData/Assets/Textures/test.png
 Texture読み込み成功
 Gameクラス初期化成功 / GameInit Suscess
-TextureManager解放完了
-SpriteRenderer終了処理完了 / SpriteRenderer Cleanup Complete
