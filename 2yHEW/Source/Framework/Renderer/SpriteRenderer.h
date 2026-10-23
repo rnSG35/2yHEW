@@ -34,7 +34,17 @@ private:
 	SpriteRenderer(const SpriteRenderer&) = delete;
 	SpriteRenderer& operator=(const SpriteRenderer&) = delete;
 
-	//シェーダー作成
+	//シェーダーファイル読み込み
+	bool LoadVertexShaderBlob(
+		const wchar_t* csoPath,
+		const wchar_t* hlslPath,
+		Microsoft::WRL::ComPtr<ID3DBlob>& shaderBlob);
+	bool LoadPixelShaderBlob(
+		const wchar_t* csoPath,
+		const wchar_t* hlslPath,
+		Microsoft::WRL::ComPtr<ID3DBlob>& shaderBlob);
+
+	//csoからシェーダー作成
 	bool CreateShaders();
 
 	//頂点バッファ作成

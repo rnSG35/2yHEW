@@ -80,6 +80,84 @@ bool SpriteRenderer::Initialize(UINT screenWidth, UINT screenHeight)
 	return true;
 }
 
+bool SpriteRenderer::LoadVertexShaderBlob(const wchar_t* csoPath, const wchar_t* hlslPath, ComPtr<ID3DBlob>& shaderBlob)
+{
+	//CSOがあるか確認
+	HRESULT readShaderResult = D3DReadFileToBlob(
+		csoPath, shaderBlob.GetAddressOf());
+	if (SUCCEEDED(readShaderResult))
+	{
+		DebugLogWrite("VertexShader.cso読み込み成功 / VertexShader.cso loaded successfully");
+		return true;
+	}
+	DebugLogWrite("VertexShader.csoが無いためHLSLをコンパイル / Compile HLSL because VertexShader.cso is missing");
+	//HLSLをコンパイル
+	ComPtr<ID3DBlob> errorBlob;
+	HRESULT compileShaderResult = D3DCompileFromFile(
+		hlslPath,
+		nullptr,
+		D3D_COMPILE_STANDARD_FILE_INCLUDE,
+		"main",
+		"vs_5_0",
+#ifdef _DEBUG
+		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION,
+#else
+		D3DCOMPILE_OPTIMIZATION_LEVEL3,
+#endif
+		0,
+		shaderBlob.GetAddressOf(),
+		errorBlob.GetAddressOf());
+
+	if (FAILED(compileShaderResult))
+	{
+		if (errorBlob)
+		{
+			DebugLogWrite(static_cast<const char*>(errorBlob->GetBufferPointer()));
+		}
+		DebugLogWrite("VertexShaderコンパイル失敗 / Vertex Shader Compilation Failed");
+		return false;
+	}
+	DebugLogWrite("VertexShaderコンパイル成功 / Vertex Shader Compilation Successful");
+	return true;
+}
+
+bool SpriteRenderer::LoadPixelShaderBlob(const wchar_t* csoPath, const wchar_t* hlslPath, ComPtr<ID3DBlob>& shaderBlob)
+{
+	//csoファイルが存在するか確認
+	HRESULT readShaderResult = D3DReadFileToBlob(csoPath,
+		shaderBlob.GetAddressOf());
+	if (SUCCEEDED(readShaderResult))
+	{
+		DebugLogWrite("VertexShader.cso読み込み成功 / VertexShader.cso loaded successfully");
+		return true;
+	}
+	DebugLogWrite("PixelShader.csoが無いためHLSLをコンパイル / Compile HLSL because PixelShader.cso is missing");
+	ComPtr<ID3DBlob> errorBlob;
+	HRESULT compileShaderResult = D3DCompileFromFile(
+		hlslPath,
+		nullptr,
+		D3D_COMPILE_STANDARD_FILE_INCLUDE,
+		"main",
+		"ps_5_0",
+#ifdef _DEBUG
+		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION,
+#else
+		D3DCOMPILE_OPTIMIZATION_LEVEL3,
+#endif
+		0,
+		shaderBlob.GetAddressOf(),
+		errorBlob.GetAddressOf());
+		if (FAILED(compileShaderResult))
+		{
+			if (errorBlob)
+			{
+				DebugLogWrite(static_cast<const char*>(errorBlob->GetBufferPointer()));
+			}
+			return false;
+		}
+	return true;
+}
+
 //---------------------------------------------------------
 //シェーダー作成
 //---------------------------------------------------------
@@ -96,36 +174,13 @@ bool SpriteRenderer::CreateShaders()
 	//コンパイルの頂点シェーダーを受け取る
 	ComPtr<ID3DBlob> vertexShaderBlob;
 
-	//シェーダーのエラー内容を受け取る
-	ComPtr<ID3DBlob> errorBlob;
-
-	//頂点シェーダーをコンパイル
-	HRESULT compilerVertexShaderResult = D3DCompileFromFile(
+	if (!LoadVertexShaderBlob(
+		L"Source/Shader/SpriteVertexShader.cso",
 		L"Source/Shader/SpriteVertexShader.hlsl",
-		nullptr,
-		D3D_COMPILE_STANDARD_FILE_INCLUDE,
-		"main",
-		"vs_5_0",
-#ifdef _DEBUG
-		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION,
-#else
-		D3DCOMPILE_OPTIMIZATION_LEVEL3,
-#endif
-		0,
-		vertexShaderBlob.GetAddressOf(),
-		errorBlob.GetAddressOf());
-
-	if (FAILED(compilerVertexShaderResult))
+		vertexShaderBlob))
 	{
-		//HLSL側にエラーがある場合、VSの出力ウィンドウにも表示
-		if (errorBlob)
-		{
-			OutputDebugStringA(static_cast<const char*>(errorBlob->GetBufferPointer()));
-		}
-		DebugLogWrite("SpriteVertexShaderコンパイル失敗 / SpriteVertexShader Compilation Failed");
 		return false;
 	}
-
 	//コンパイル結果から頂点シェーダーを作成
 	HRESULT createVertexShaderResult = device->CreateVertexShader(
 		vertexShaderBlob->GetBufferPointer(),
@@ -139,6 +194,7 @@ bool SpriteRenderer::CreateShaders()
 		return false;
 	}
 
+	//InputLayout作成
 	//頂点データの構造を設定
 	D3D11_INPUT_ELEMENT_DESC inputElementDesc[] =
 	{
@@ -148,7 +204,8 @@ bool SpriteRenderer::CreateShaders()
 
 	//C++側の頂点とHLSL側の頂点を関連付ける
 	HRESULT createInputLayoutResult = device->CreateInputLayout(
-		inputElementDesc, 2,
+		inputElementDesc, 
+		ARRAYSIZE(inputElementDesc),
 		vertexShaderBlob->GetBufferPointer(),
 		vertexShaderBlob->GetBufferSize(),
 		m_inputLayout.GetAddressOf());
@@ -161,29 +218,12 @@ bool SpriteRenderer::CreateShaders()
 
 	//ピクセルシェーダーをコンパイル
 	ComPtr<ID3DBlob> pixelShaderBlob;
-	errorBlob.Reset();
-	HRESULT compilePixelShaderResult = D3DCompileFromFile(
-		L"Source/Shader/SpritePixelShader.hlsl",
-		nullptr,
-		D3D_COMPILE_STANDARD_FILE_INCLUDE,
-		"main",
-		"ps_5_0",
-#ifdef _DEBUG
-		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION,
-#else
-		D3DCOMPILE_OPTIMIZATION_LEVEL3,
-#endif
-		0,
-		pixelShaderBlob.GetAddressOf(),
-		errorBlob.GetAddressOf());
 
-	if (FAILED(compilePixelShaderResult))
+	if (!LoadPixelShaderBlob(
+		L"Source/Shader/SpritePixelShader.cso",
+		L"Source/Shader/SpritePixelShader.hlsl",
+		pixelShaderBlob))
 	{
-		if (errorBlob)
-		{
-			OutputDebugStringA(static_cast<const char*>(errorBlob->GetBufferPointer()));
-		}
-		DebugLogWrite("SpritePixelShaderコンパイル失敗 / SpritePixelShader Compilation Failed");
 		return false;
 	}
 
@@ -200,8 +240,11 @@ bool SpriteRenderer::CreateShaders()
 		return false;
 	}
 
+
+	DebugLogWrite("Spriteシェーダー作成成功 / Sprite Shader Created Successfully");
 	return true;
 }
+
 
 //---------------------------------------------------------
 //頂点バッファ作成

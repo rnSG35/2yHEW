@@ -42,6 +42,8 @@ bool Game::Init()
 		return false;
 	}
 
+	DebugLogWrite("GameƒNƒ‰ƒX‰Šú‰»¬Œ÷ / GameInit Suscess");
+
 	return true;
 }
 

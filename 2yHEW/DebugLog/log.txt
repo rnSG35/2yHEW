@@ -1,5 +1,11 @@
 Graphics初期化成功 / Graphics Initialization Successful
 Gameクラス初期化開始 / GameInit start
+VertexShader.cso読み込み成功 / VertexShader.cso loaded successfully
+VertexShader.cso読み込み成功 / VertexShader.cso loaded successfully
+Spriteシェーダー作成成功 / Sprite Shader Created Successfully
 SpriteRenderer初期化成功 / SpriteRenderer initialization successful
 AppData/Assets/Textures/test.png
 Texture読み込み成功
+Gameクラス初期化成功 / GameInit Suscess
+TextureManager解放完了
+SpriteRenderer終了処理完了 / SpriteRenderer Cleanup Complete
