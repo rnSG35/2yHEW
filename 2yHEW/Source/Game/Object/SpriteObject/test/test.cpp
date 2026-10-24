@@ -3,9 +3,9 @@
 //---------------------------------------------------------
 //コンストラクタ
 //---------------------------------------------------------
-test::test()
+test::test() : SpriteObjectBase("AppData/Assets/Textures/test.png")
 {
-	m_filePath = "AppData/Assets/Textures/test.png";
+
 }
 
 void test::OnInit()

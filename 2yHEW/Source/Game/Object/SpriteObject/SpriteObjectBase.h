@@ -1,17 +1,22 @@
 #pragma once
+
+#include "../GameObject.h"
+
 #include <memory>
 #include <string>
 
 class Texture;
 
-class SpriteObjectBase
+class SpriteObjectBase :
+	public GameObject
 {
 public:
-	SpriteObjectBase() = default;
+	//使用する画像パスを受け取る
+	SpriteObjectBase(const std::string& filePath);
 	virtual ~SpriteObjectBase() = default;
 
 	//初期化
-	bool Init();
+	bool Initialize();
 
 	//更新
 	void Update();
@@ -32,12 +37,15 @@ protected:
 	virtual void OnDraw() {};
 
 protected:	
-	//派生クラスのコンストラクタで設定する画像パス
-	std::string m_filePath;
+	////派生クラスのコンストラクタで設定する画像パス
+	//std::string m_filePath;
 	
 private:
 	//読み込んだTexture
 	std::shared_ptr<Texture> m_texture;
+
+	//派生クラスのコンストラクタで設定する画像パス
+	std::string m_filePath;
 
 	//画像左上の表示位置
 	float m_x = 0.0f;

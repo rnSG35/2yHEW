@@ -1,7 +1,7 @@
 #include "Game.h"
 
 #include "../../Framework/Renderer/SpriteRenderer.h"
-#include "../../Game/SpriteObject/test/test.h"
+#include "../../Game/Object/SpriteObject/test/test.h"
 #include "../../Framework/Texture/TextureManager.h"
 #include "../../Framework/DebugSystem/DebugLog.h"
 
@@ -34,7 +34,7 @@ bool Game::Init()
 	m_testSpriteObject =
 		std::make_unique<test>();
 
-	if (!m_testSpriteObject->Init())
+	if (!m_testSpriteObject->Initialize())
 	{
 		DebugLogWrite(
 			"TestSpriteObjectèâä˙âªé∏îs");

@@ -8,3 +8,5 @@ SpriteRenderer‰Šú‰»¬Œ÷ / SpriteRenderer initialization successful
 AppData/Assets/Textures/test.png
 Texture“Ç‚İ‚İ¬Œ÷
 GameƒNƒ‰ƒX‰Šú‰»¬Œ÷ / GameInit Suscess
+TextureManager‰ğ•úŠ®—¹
+SpriteRendererI—¹ˆ—Š®—¹ / SpriteRenderer Cleanup Complete
