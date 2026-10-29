@@ -1,5 +1,5 @@
 #pragma once
-
+//コンポーネントを持つ側
 #include "../Component/Base/ComponentBase.h"
 
 #include <memory>

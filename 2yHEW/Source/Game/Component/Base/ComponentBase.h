@@ -1,5 +1,6 @@
 #pragma once
 //全コンポーネントの基底クラス
+// GameObjectに付けられる機能の基底
 //将来的にCTransform、CMove、CCollider、CAnimationなどをここから派生できるように
 class ComponentBase
 {

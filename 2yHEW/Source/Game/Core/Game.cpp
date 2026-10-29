@@ -52,9 +52,16 @@ bool Game::Init()
 //---------------------------------------------------------
 void Game::Update()
 {
+	m_input.Update();
+
 	if (m_testSpriteObject)
 	{
 		m_testSpriteObject->Update();
+	}
+
+	if (m_input.GetKeyTrigger(VK_SPACE))
+	{
+		
 	}
 }
 

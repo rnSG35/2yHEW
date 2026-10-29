@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "../../Framework/Input/input.h"
+
 #include <memory>
 #include "../../Game/Object/SpriteObject/test/test.h"
 
@@ -20,6 +22,8 @@ public:
 	void Exit();
 
 private:
+
+	Input m_input;
 
 	//---------------------------------------------------------
 	// 表示確認用オブジェクト
