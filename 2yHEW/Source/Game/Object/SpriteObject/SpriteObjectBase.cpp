@@ -4,7 +4,7 @@
 #include "../../../Framework/Renderer/SpriteRenderer.h"
 #include "../../../Framework/Texture/Texture.h"
 #include "../../../Framework/Texture/TextureManager.h"
-#include "../../../Framework/DebugSystem/DebugLog.h"
+#include "DebugLog.h"
 
 //---------------------------------------------------------
 //コンストラクタ

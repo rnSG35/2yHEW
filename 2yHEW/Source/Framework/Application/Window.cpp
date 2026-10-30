@@ -1,6 +1,6 @@
 #include "Window.h"
 #include "Application.h"
-#include "../DebugSystem/DebugLog.h"
+#include "DebugLog.h"
 //---------------------------------------------------------
 //ウィンドウ生成
 //---------------------------------------------------------

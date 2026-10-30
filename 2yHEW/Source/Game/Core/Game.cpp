@@ -3,7 +3,8 @@
 #include "../../Framework/Renderer/SpriteRenderer.h"
 #include "../../Game/Object/SpriteObject/test/test.h"
 #include "../../Framework/Texture/TextureManager.h"
-#include "../../Framework/DebugSystem/DebugLog.h"
+//#include "../../Framework/DebugSystem/DebugLog.h"
+#include "DebugLog.h"
 
 //---------------------------------------------------------
 // èâä˙âª

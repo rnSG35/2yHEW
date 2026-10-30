@@ -1,7 +1,7 @@
 #include "Texture.h"
 #include "../Graphics/Graphics.h"
 #include "../../../thirdParty/stb_image/stb_image.h"
-#include "../DebugSystem/DebugLog.h"
+#include "DebugLog.h"
 using Microsoft::WRL::ComPtr;
 
 //---------------------------------------------------------
