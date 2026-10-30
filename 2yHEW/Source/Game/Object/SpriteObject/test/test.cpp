@@ -1,4 +1,5 @@
 #include "test.h"
+#include "ShowObject/CShowObject.h"
 
 //---------------------------------------------------------
 //コンストラクタ
@@ -15,6 +16,8 @@ void test::OnInit()
 
 	//画面に表示する大きさ
 	SetSize(256.0f, 256.0f);
+
+	AddComponent<CShowObject>();
 }
 
 void test::OnUpdate()

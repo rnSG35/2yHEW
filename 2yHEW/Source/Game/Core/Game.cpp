@@ -1,9 +1,10 @@
 #include "Game.h"
 
 #include "SpriteRenderer.h"
-#include "../../Game/Object/SpriteObject/test/test.h"
 #include "TextureManager.h"
 #include "DebugLog.h"
+#include "../../Game/Object/SpriteObject/test/test.h"
+#include "ShowObject/CShowObject.h"
 
 //---------------------------------------------------------
 // èâä˙âª
@@ -61,7 +62,12 @@ void Game::Update()
 
 	if (m_input.GetKeyTrigger(VK_SPACE))
 	{
-		
+		std::shared_ptr<CShowObject> showComponent = m_testSpriteObject->GetComponent<CShowObject>();
+
+		if (showComponent)
+		{
+			showComponent->SetVisible(!showComponent->IsVisible());
+		}
 	}
 }
 
