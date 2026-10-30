@@ -1,9 +1,9 @@
 #include "TextureLoader.h"
 
 #include "DebugLog.h"
-#include "../Graphics/Graphics.h"
-#include "../Texture/Texture.h"
-#include "../../../thirdParty/stb_image/stb_image.h"
+#include "Graphics.h"
+#include "Texture.h"
+#include "stb_image.h"
 
 //---------------------------------------------------------
 //テクスチャ読み込み

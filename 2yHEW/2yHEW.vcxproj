@@ -71,7 +71,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\hqaug\source\repos\2yHEW\2yHEW\Source\Game\Component;C:\Users\hqaug\source\repos\2yHEW\2yHEW\Source\Game\Object\SpriteObject;C:\Users\hqaug\source\repos\2yHEW\2yHEW\Source\Framework\Input;C:\Users\hqaug\source\repos\2yHEW\2yHEW\Source\Framework\Renderer;C:\Users\hqaug\source\repos\2yHEW\2yHEW\Source\Game\Component\Base;C:\Users\hqaug\source\repos\2yHEW\2yHEW\Source\Framework\Loader;C:\Users\hqaug\source\repos\2yHEW\2yHEW\Source\Framework\Texture;C:\Users\hqaug\source\repos\2yHEW\2yHEW\thirdParty\stb_image;C:\Users\hqaug\source\repos\2yHEW\2yHEW\Source\Framework\Graphics;C:\Users\hqaug\source\repos\2yHEW\2yHEW\Source\Framework\DebugSystem;C:\Users\hqaug\source\repos\2yHEW\2yHEW\Source\Game\Core;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

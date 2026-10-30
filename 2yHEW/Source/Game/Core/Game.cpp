@@ -1,9 +1,8 @@
 #include "Game.h"
 
-#include "../../Framework/Renderer/SpriteRenderer.h"
+#include "SpriteRenderer.h"
 #include "../../Game/Object/SpriteObject/test/test.h"
-#include "../../Framework/Texture/TextureManager.h"
-//#include "../../Framework/DebugSystem/DebugLog.h"
+#include "TextureManager.h"
 #include "DebugLog.h"
 
 //---------------------------------------------------------

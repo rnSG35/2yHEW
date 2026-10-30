@@ -1,5 +1,5 @@
 #pragma once
-#include "../SpriteObjectBase.h"
+#include "SpriteObjectBase.h"
 class test :
     public SpriteObjectBase
 {

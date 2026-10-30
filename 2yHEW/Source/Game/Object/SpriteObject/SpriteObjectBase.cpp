@@ -1,9 +1,9 @@
 #include "SpriteObjectBase.h"
 
-#include "../../Component/ShowObject/CShowObject.h"
-#include "../../../Framework/Renderer/SpriteRenderer.h"
-#include "../../../Framework/Texture/Texture.h"
-#include "../../../Framework/Texture/TextureManager.h"
+#include "ShowObject/CShowObject.h"
+#include "SpriteRenderer.h"
+#include "Texture.h"
+#include "TextureManager.h"
 #include "DebugLog.h"
 
 //---------------------------------------------------------

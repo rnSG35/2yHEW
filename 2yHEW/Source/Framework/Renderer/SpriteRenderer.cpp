@@ -1,7 +1,7 @@
 #include "SpriteRenderer.h"
 
-#include "../Graphics/Graphics.h"
-#include "../Texture/Texture.h"
+#include "Graphics.h"
+#include "Texture.h"
 #include "DebugLog.h"
 
 #include <d3dcompiler.h>
