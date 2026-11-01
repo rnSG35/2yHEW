@@ -1,5 +1,5 @@
 #include "Graphics.h"
-#include "DebugLog.h"
+#include "../DebugSystem/DebugLog.h"
 #pragma comment(lib,"d3d11.lib")
 
 using Microsoft::WRL::ComPtr;

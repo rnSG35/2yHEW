@@ -1,5 +1,5 @@
 #include "test.h"
-#include "ShowObject/CShowObject.h"
+#include "../../../Component/ShowObject/CShowObject.h"
 
 //---------------------------------------------------------
 //コンストラクタ

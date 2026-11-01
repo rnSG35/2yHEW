@@ -1,5 +1,5 @@
 #pragma once
-#include "ComponentBase.h"
+#include "../Base/ComponentBase.h"
 class CShowObject :
     public ComponentBase
 {

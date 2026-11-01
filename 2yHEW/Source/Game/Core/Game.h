@@ -2,10 +2,10 @@
 
 #pragma once
 
-#include "Input.h"
+#include "../../Framework/Input/Input.h"
 
 #include <memory>
-#include "test/test.h"
+#include "../Object/SpriteObject/test/test.h"
 
 class test;
 

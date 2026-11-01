@@ -1,6 +1,6 @@
 #pragma once
 //コンポーネントを持つ側
-#include "ComponentBase.h"
+#include "../Component/Base/ComponentBase.h"
 
 #include <memory>
 #include <vector>

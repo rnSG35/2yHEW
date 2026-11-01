@@ -1,7 +1,7 @@
 #include "Application.h"
-#include "Graphics.h"
-#include "Game.h"
-#include "DebugLog.h"
+#include "../Graphics/Graphics.h"
+#include "../../Game/Core/Game.h"
+#include "../DebugSystem/DebugLog.h"
 //---------------------------------------------------------
 //アプリケーション初期化
 // Window生成

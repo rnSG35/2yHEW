@@ -1,10 +1,10 @@
 #include "Game.h"
 
-#include "SpriteRenderer.h"
-#include "TextureManager.h"
-#include "DebugLog.h"
+#include "../../Framework/Renderer/SpriteRenderer.h"
+#include "../../Framework/Texture/TextureManager.h"
+#include "../../Framework/DebugSystem/DebugLog.h"
 #include "../../Game/Object/SpriteObject/test/test.h"
-#include "ShowObject/CShowObject.h"
+#include "../Component/ShowObject/CShowObject.h"
 
 //---------------------------------------------------------
 // èâä˙âª
