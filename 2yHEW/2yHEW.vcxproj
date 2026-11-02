@@ -131,12 +131,10 @@
     <ClCompile Include="Source\Game\Component\ShowObject\CShowObject.cpp" />
     <ClCompile Include="Source\Game\Component\Base\ComponentBase.cpp" />
     <ClCompile Include="Source\Framework\DebugSystem\DebugLog.cpp" />
-    <ClCompile Include="Source\Framework\Graphics\Shader\ShaderManager.cpp" />
     <ClCompile Include="Source\Framework\Application\Application.cpp" />
     <ClCompile Include="Source\Framework\Application\Window.cpp" />
     <ClCompile Include="Source\Framework\Audio\AudioManager.cpp" />
     <ClCompile Include="Source\Framework\Graphics\Graphics.cpp" />
-    <ClCompile Include="Source\Framework\Graphics\Shader\Shader.cpp" />
     <ClCompile Include="Source\Framework\Input\Input.cpp" />
     <ClCompile Include="Source\Framework\Loader\TextureLoader.cpp" />
     <ClCompile Include="Source\Framework\Texture\Texture.cpp" />
@@ -153,12 +151,10 @@
     <ClInclude Include="Source\Game\Component\ShowObject\CShowObject.h" />
     <ClInclude Include="Source\Game\Component\Base\ComponentBase.h" />
     <ClInclude Include="Source\Framework\DebugSystem\DebugLog.h" />
-    <ClInclude Include="Source\Framework\Graphics\Shader\ShaderManager.h" />
     <ClInclude Include="Source\Framework\Application\Application.h" />
     <ClInclude Include="Source\Framework\Application\Window.h" />
     <ClInclude Include="Source\Framework\Audio\AudioManager.h" />
     <ClInclude Include="Source\Framework\Graphics\Graphics.h" />
-    <ClInclude Include="Source\Framework\Graphics\Shader\Shader.h" />
     <ClInclude Include="Source\Framework\Input\Input.h" />
     <ClInclude Include="Source\Framework\Loader\TextureLoader.h" />
     <ClInclude Include="Source\Framework\Texture\Texture.h" />
