@@ -4,7 +4,7 @@
 回数を取るだけの変数は「○○Cnt」などにする。(例：跳躍回数はjumpCntなど)
 (if内の回数をとったり、for分の条件式になるような「i」など、スコープを絞ったものは除く)
 
-言葉同士のつなぎ目は頭文字を大文字にして区切る。<変数のスールを参照>
+言葉同士のつなぎ目は頭文字を大文字にして区切る。<変数のルールを参照>
 大文字が続く場合、"_"を挟む。
 数字は大文字扱いとする。
 
@@ -14,9 +14,9 @@
 メンバ変数には「m_」を付けることが好ましい。
 グローバル変数には「g_」を付けること。
 例:
-int number
-float moveForward
-bool stingTrapFlg
+int m_posX
+int g_windowSize
+
 
 
 <変数以外のルール>
@@ -54,9 +54,6 @@ int[] numbers
 Object[] enemies
 Vector2[] moveAxis
 Vector3[] vector3_Presets
-
-
-
 
 
 <特別ルール>
