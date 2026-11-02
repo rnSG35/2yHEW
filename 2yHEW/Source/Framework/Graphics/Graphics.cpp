@@ -124,9 +124,7 @@ void Graphics::BeginFrame()
 		return;
 	}
 
-	//---------------------------------------------------------
 	//背景色、空色にしておく
-	//---------------------------------------------------------
 	float clearColor[4] =
 	{
 		0.4f,
@@ -135,20 +133,16 @@ void Graphics::BeginFrame()
 		1.0f
 	};
 
-	//---------------------------------------------------------
 	//前フレームの色を消す
 	//消さないと前の描画結果が残る
-	//---------------------------------------------------------
 	m_context->ClearRenderTargetView(
 		m_renderTargetView.Get(),
 		clearColor);
 
-	//---------------------------------------------------------
 	//深度情報もリセット
 	// ここが無いと
 	// ・モデルが突然消える
 	// ・描画がおかしくなる	というバグが発生
-	//---------------------------------------------------------
 	m_context->ClearDepthStencilView(
 		m_depthStencilView.Get(),
 		D3D11_CLEAR_DEPTH,
@@ -169,10 +163,8 @@ void Graphics::EndFrame()
 		return;
 	}
 
-	//---------------------------------------------------------
 	//バックバッファ表示
 	//今書いた内容を実際の画面に出力
-	//---------------------------------------------------------
 	HRESULT presentResult = m_swapChain->Present(1, 0);
 
 	if (FAILED(presentResult)) { DebugLogWrite("Present失敗 / Failed to Present"); }
@@ -184,6 +176,9 @@ void Graphics::EndFrame()
 	//---------------------------------------------------------
 }
 
+//---------------------------------------------------------
+//GPU、スワップチェイン作成
+//---------------------------------------------------------
 bool Graphics::CreateDeviceAndSwapChain(HWND hwnd, UINT width, UINT height)
 {
 	//渡されたウィンドウハンドルを確認する
@@ -193,10 +188,8 @@ bool Graphics::CreateDeviceAndSwapChain(HWND hwnd, UINT width, UINT height)
 		return false;
 	}
 
-	//---------------------------------------------------------
 	//スワップチェイン設定
 	//バックバッファの設定を行う
-	//---------------------------------------------------------
 	DXGI_SWAP_CHAIN_DESC swapChainDesc = {};
 
 	swapChainDesc.BufferCount = 1;
@@ -259,6 +252,9 @@ bool Graphics::CreateDeviceAndSwapChain(HWND hwnd, UINT width, UINT height)
 	return true;
 }
 
+//---------------------------------------------------------
+//RTV(レンダーターゲットビュー)作成
+//---------------------------------------------------------
 bool Graphics::CreateRenderTargetView(UINT width, UINT height)
 {
 	//SwapChainが作られているか確認

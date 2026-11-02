@@ -14,9 +14,7 @@ std::shared_ptr<Texture> TextureLoader::Load(const std::string& filePath)
 	int height = 0;
 	int channelsCount = 0;
 
-	//---------------------------------------------------------
 	//stb_imageで画像読み込み
-	//---------------------------------------------------------
 	unsigned char* imageData;
 	imageData = stbi_load(filePath.c_str(), &width, &height, &channelsCount, STBI_rgb_alpha);
 
@@ -29,9 +27,7 @@ std::shared_ptr<Texture> TextureLoader::Load(const std::string& filePath)
 	//m_width = width;
 	//m_height = height;
 
-	//---------------------------------------------------------
 	//読み込んだ画像の設定
-	//---------------------------------------------------------
 	D3D11_TEXTURE2D_DESC textureDesc = {};
 
 	textureDesc.Width = static_cast<UINT>(width);
@@ -43,30 +39,22 @@ std::shared_ptr<Texture> TextureLoader::Load(const std::string& filePath)
 	textureDesc.Usage = D3D11_USAGE_DEFAULT;
 	textureDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
 
-	//---------------------------------------------------------
 	//画像をCPUに転送
-	//---------------------------------------------------------
 	D3D11_SUBRESOURCE_DATA textureData = {};
 	textureData.pSysMem = imageData;
 	textureData.SysMemPitch = static_cast<UINT>(width * 4);
 
-	//---------------------------------------------------------
 	//Textureを生成
-	//---------------------------------------------------------
 	std::shared_ptr<Texture> texture(new Texture());
 
-	//---------------------------------------------------------
 	//GPU上にTexture2Dを作成
-	//---------------------------------------------------------
 	HRESULT createTexture2DResult = Graphics::GetInstance().GetDevice()->CreateTexture2D(
 		&textureDesc,
 		&textureData,
 		texture->m_texture.GetAddressOf());
 
 
-	//---------------------------------------------------------
 	//CPU側の画像データはTexture2D作成後に解放
-	//---------------------------------------------------------
 	stbi_image_free(imageData);
 	if (FAILED(createTexture2DResult))
 	{
@@ -74,9 +62,7 @@ std::shared_ptr<Texture> TextureLoader::Load(const std::string& filePath)
 		return nullptr;
 	}
 
-	//---------------------------------------------------------
 	//SshaderResourceView作成、PixelShaderから参照するために必要
-	//---------------------------------------------------------
 	HRESULT createSrvResult = Graphics::GetInstance().GetDevice()->CreateShaderResourceView(
 		texture->m_texture.Get(),
 		nullptr,
@@ -88,9 +74,7 @@ std::shared_ptr<Texture> TextureLoader::Load(const std::string& filePath)
 		return nullptr;
 	}
 
-	//---------------------------------------------------------
 	//画像サイズを保存
-	//---------------------------------------------------------
 	texture->m_width = static_cast<UINT>(width);
 	texture->m_height = static_cast<UINT>(height);
 	DebugLogWrite("Texture読み込み成功");

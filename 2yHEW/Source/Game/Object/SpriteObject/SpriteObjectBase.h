@@ -35,10 +35,6 @@ protected:
 	virtual void OnInit() {};
 	virtual void OnUpdate() {};
 	virtual void OnDraw() {};
-
-protected:	
-	////派生クラスのコンストラクタで設定する画像パス
-	//std::string m_filePath;
 	
 private:
 	//読み込んだTexture

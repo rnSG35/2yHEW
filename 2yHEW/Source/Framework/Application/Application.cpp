@@ -2,6 +2,7 @@
 #include "../Graphics/Graphics.h"
 #include "../../Game/Core/Game.h"
 #include "../DebugSystem/DebugLog.h"
+
 //---------------------------------------------------------
 //アプリケーション初期化
 // Window生成
@@ -16,12 +17,9 @@ bool Application::AppInit(int nShowCmd, bool isFullScreen, int screenWidth, int 
 		return false;
 	}
 
-	//---------------------------------------------------------
 	// DirectX初期化
-	//
 	// Window生成後でないとHWNDが存在しないため、
 	// Graphicsの初期化はここで行う。
-	//---------------------------------------------------------
 	if (!Graphics::GetInstance().Initialize(
 		m_window.GetHwnd(),
 		screenWidth,
@@ -77,7 +75,9 @@ void Application::AppLoop()
 	game.Exit();
 }
 
-
+//---------------------------------------------------------
+//解放処理
+//---------------------------------------------------------
 void Application::UnInit()
 {
 	//ここでRendererやInput、Sound、Resourceの解放処理を行う

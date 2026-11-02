@@ -2,6 +2,7 @@
 #include "../Texture/TextureManager.h"
 #include "../Loader/TextureLoader.h"
 #include "../DebugSystem/DebugLog.h"
+
 //---------------------------------------------------------
 //TextureManagerのシングルトンを取得
 //---------------------------------------------------------
@@ -27,18 +28,6 @@ std::shared_ptr<Texture> TextureManager::LoadTexture(const std::string& filePath
 
 	if (textureIterator != m_textures.end())
 	{
-		////weak_ptrからshared_ptrを取得
-		////元のTextureがまだ存在していれば、そのTextureを返す
-		//std::shared_ptr<Texture> cachedTexture =
-		//	textureIterator->second.lock();
-		//if (cachedTexture)
-		//{
-		//	return cachedTexture;
-		//}
-		////weak_ptrだけが残っていて、Texture本体がすでに破棄されている場合は
-		////古い管理情報を削除して、改めて読み込める状態にする
-		//m_textures.erase(textureIterator);
-
 		return textureIterator->second;
 	}
 

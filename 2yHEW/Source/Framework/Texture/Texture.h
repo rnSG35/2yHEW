@@ -13,10 +13,6 @@ public:
 	//shared_ptrがTextureを破棄できるようにpublicにする
 	~Texture() = default;
 
-	//テクスチャ読み込み
-	// filePath : 読み込む画像ファイルのパス(png jpg bmpなど)
-	//bool Load(const std::string& filePath);
-
 	//ピクセルシェーダーへテクスチャーを設定
 	//slot : シェーダーのテクスチャスロット番号(t0, t1, t2...)
 	void SetPS(UINT slot = 0) const;
