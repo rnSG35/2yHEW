@@ -9,7 +9,7 @@ bool Create(①、②、③)
 		・ウィンドウサイズ補正
 		・ウィンドウ生成
 		・ウィンドウ表示		失敗したらfalse、成功したらtrueを返す
-		sdvsdfsdfsdf
+
 
 
 HWND GetHwnd() const
