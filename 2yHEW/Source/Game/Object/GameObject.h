@@ -23,6 +23,11 @@ public:
 		//コンポーネント生成
 		std::shared_ptr<T> component = std::make_shared<T>();
 
+		//自分(GameObject)を持ち主として登録
+		//Initializeより先に設定するのは、
+		//Initialize野中で同じオブジェクトの別コンポーネントを探せるようにするため
+		component->m_owner = this;
+
 		//GameObjectが管理する
 		m_components.push_back(component);
 
@@ -42,6 +47,11 @@ public:
 			//指定された種類のコンポーネントか確認
 			if (std::dynamic_pointer_cast<T>(*componentIterator))
 			{
+				//外す前に持ち主を解除
+				//ほかの場所でshared_ptrが残っていた場合に
+				//古い持ち主を触ってしまうのを防ぐため
+				(*componentIterator)->m_owner = nullptr;
+
 				componentIterator = m_components.erase(componentIterator);
 				return;
 			}
@@ -64,6 +74,16 @@ public:
 		return nullptr;
 	}
 
+	//付いている全コンポーネントを更新
+	//コンポーネントが自分で動けるようにするため
+	//舞フレームここからUpdate()を呼ぶ
+	void UpdateComponents()
+	{
+		for (const auto& component : m_components)
+		{
+			component->Update();
+		}
+	}
 
 protected:
 	//登録されたコンポーネント

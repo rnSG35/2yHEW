@@ -50,6 +50,9 @@ bool SpriteObjectBase::Initialize()
 
 void SpriteObjectBase::Update()
 {
+	//先にコンポーネントを更新
+	UpdateComponents();
+
 	OnUpdate();
 }
 
