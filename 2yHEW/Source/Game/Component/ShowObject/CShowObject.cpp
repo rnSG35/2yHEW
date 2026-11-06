@@ -10,6 +10,11 @@ void CShowObject::Hide()
 	m_isVisible = false;
 }
 
+void CShowObject::Toggle()
+{
+	m_isVisible = !m_isVisible;
+}
+
 void CShowObject::SetVisible(bool isVisible)
 {
 	m_isVisible = isVisible;

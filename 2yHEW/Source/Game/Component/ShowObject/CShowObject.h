@@ -13,6 +13,9 @@ public:
     //”ñ•\¦‚É‚·‚é
     void Hide();
 
+    //•\¦ó‘Ô‚ğ”½“]
+    void Toggle();
+
     //•\¦ó‘Ô‚ğ’¼Úİ’è
     void SetVisible(bool isVisible);
 

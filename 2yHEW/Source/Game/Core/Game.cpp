@@ -62,7 +62,7 @@ void Game::Update()
 
 		if (showComponent)
 		{
-			showComponent->SetVisible(!showComponent->IsVisible());
+			showComponent->Toggle();
 		}
 	}
 }
