@@ -7,7 +7,7 @@ bool AppInit(①、②、③、④)
 		ウィンドウを生成する関数と、DirectXを初期化する関数を呼び出す。
 		失敗したらfalse,成功したらtrueを返す。
 
-
+asd
 
 void AppLoop()
 	Windowsからのメッセージを受け取るmsg変数を使ってゲームループを作成。
