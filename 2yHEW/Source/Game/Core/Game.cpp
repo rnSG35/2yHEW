@@ -63,6 +63,7 @@ void Game::Update()
 		if (showComponent)
 		{
 			showComponent->Toggle();
+			DebugLogWrite("CShowObject‚Ì•\Ž¦ó‘Ô‚ðØ‚è‘Ö‚¦‚Ü‚µ‚½B");
 		}
 	}
 }
