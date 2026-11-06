@@ -4,7 +4,7 @@
 
 #include <memory>
 #include <vector>
-#include <type_traits>
+#include <concepts>
 
 //AddComponent<T>()RemoveComponent<T>()GetComponent<T>()はテンプレート関数なので実装もヘッダーに書く
 class GameObject
@@ -14,18 +14,16 @@ public:
 	virtual ~GameObject() = default;
 
 	//コンポーネント追加
-	template<class T>
+	template<std::derived_from<ComponentBase> T>
 	std::shared_ptr<T> AddComponent()
 	{
-		//ComponentBaseを継承しているクラスのみ許可
-		static_assert(std::is_base_of_v < ComponentBase, T>, "TはComponentBaesを継承する必要があります");
 
 		//コンポーネント生成
 		std::shared_ptr<T> component = std::make_shared<T>();
 
 		//自分(GameObject)を持ち主として登録
 		//Initializeより先に設定するのは、
-		//Initialize野中で同じオブジェクトの別コンポーネントを探せるようにするため
+		//Initializeの中で同じオブジェクトの別コンポーネントを探せるようにするため
 		component->m_owner = this;
 
 		//GameObjectが管理する
@@ -38,7 +36,7 @@ public:
 	}
 
 	//コンポーネント削除
-	template<class T>
+	template<std::derived_from<ComponentBase> T>
 	void RemoveComponent()
 	{
 		for (auto componentIterator = m_components.begin();
@@ -60,7 +58,7 @@ public:
 	}
 
 	//コンポーネント取得
-	template<class T>
+	template<std::derived_from<ComponentBase> T>
 	std::shared_ptr<T> GetComponent()
 	{
 		for (const auto& component : m_components)

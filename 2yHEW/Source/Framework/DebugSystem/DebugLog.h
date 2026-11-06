@@ -4,12 +4,14 @@
 
 #ifdef _DEBUG
 
+#include <source_location>
+
 class DebugLog
 {
 public:
 
 	// ƒƒOo—Í
-	static void Write(const char* text);
+	static void Write(const char* text,const std::source_location& location = std::source_location::current());
 
 	//ƒƒO‚ğ‹ó‚É‚·‚é
 	static void Clear();
