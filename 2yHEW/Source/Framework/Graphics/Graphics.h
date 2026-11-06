@@ -31,6 +31,11 @@ public:
 	//フレーム終了、描画結果を画面に表示
 	void EndFrame();
 
+	bool IsLastPresentSucceeded() const
+	{
+		return m_isLastPresentSucceeded;
+	}
+
 	//Device取得
 	// TextureやShader作成時に使用
 	ID3D11Device* GetDevice()
@@ -70,6 +75,9 @@ private:
 	//深度バッファを描画処理から使うためのビュー
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> m_depthStencilView;
 
+	//直前のPresent(画面表示)が成功したかどうか
+	//一度も表示していない場合は「成功していない」ので初期値false
+	bool m_isLastPresentSucceeded = false;
 
 	bool CreateDeviceAndSwapChain(HWND hwnd, UINT width, UINT height);
 	bool CreateRenderTargetView(UINT width, UINT height);

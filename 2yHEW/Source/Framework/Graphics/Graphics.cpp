@@ -157,6 +157,8 @@ void Graphics::BeginFrame()
 //---------------------------------------------------------
 void Graphics::EndFrame()
 {
+	m_isLastPresentSucceeded = false;
+
 	if (!m_swapChain)
 	{
 		DebugLogWrite("EndFrame時にm_swapChainがnullptr / m_swapChain is nullptr at EndFrame");
@@ -174,6 +176,9 @@ void Graphics::EndFrame()
 	//DirectXはバックバッファへ描画する
 	//Presentを呼ぶことでバックバッファとフロントバッファを入れ替える
 	//---------------------------------------------------------
+
+	//画面表示成功
+	m_isLastPresentSucceeded = true;
 }
 
 //---------------------------------------------------------

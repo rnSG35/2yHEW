@@ -46,6 +46,10 @@ void Application::AppLoop()
 		return;
 	}
 
+	//起動時のログを消したかどうかを判定する変数
+	//最初のフレームのみ判定するので、覚えておく
+	bool isStartupLogCleared = false;
+
 	//WM_QUITが送られるまでループ
 	while (msg.message != WM_QUIT)
 	{
@@ -70,6 +74,17 @@ void Application::AppLoop()
 			game.Draw();
 
 			Graphics::GetInstance().EndFrame();
+			
+			//初期化が成功し、最初のフレームも表示できたら起動時のログを消して、ゲーム中のログだけにする
+			//表示に失敗した場合はクリアしない
+			if (!isStartupLogCleared && Graphics::GetInstance().IsLastPresentSucceeded())
+			{
+				DebugLogClear();
+				DebugLogWrite("起動処理完了 / Startup Complete");
+
+				isStartupLogCleared = true;
+				//
+			}
 		}
 	}
 	game.Exit();

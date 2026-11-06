@@ -110,7 +110,7 @@ bool SpriteRenderer::LoadVertexShaderBlob(const wchar_t* csoPath, const wchar_t*
 	{
 		if (errorBlob)
 		{
-			DebugLogWrite(static_cast<const char*>(errorBlob->GetBufferPointer()));
+			//DebugLogWrite(static_cast<const char*>(errorBlob->GetBufferPointer()));
 		}
 		DebugLogWrite("VertexShaderƒRƒ“ƒpƒCƒ‹Ž¸”s / Vertex Shader Compilation Failed");
 		return false;
