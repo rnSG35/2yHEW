@@ -63,7 +63,7 @@ void Game::Update()
 		if (showComponent)
 		{
 			showComponent->Toggle();
-			DebugLogWrite("CShowObjectの表示状態を切り替えました。");
+			//DebugLogWrite("CShowObjectの表示状態を切り替えました。");
 		}
 	}
 }

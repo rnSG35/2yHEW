@@ -1,10 +1,5 @@
 [FilePath：Source\Framework\Application\Application.cpp：Line83]起動処理完了 / Startup Complete
 [FilePath：Source\Game\Core\Game.cpp：Line66]CShowObjectの表示状態を切り替えました。
 [FilePath：Source\Game\Core\Game.cpp：Line66]CShowObjectの表示状態を切り替えました。
-[FilePath：Source\Game\Core\Game.cpp：Line66]CShowObjectの表示状態を切り替えました。
-[FilePath：Source\Game\Core\Game.cpp：Line66]CShowObjectの表示状態を切り替えました。
-[FilePath：Source\Game\Core\Game.cpp：Line66]CShowObjectの表示状態を切り替えました。
-[FilePath：Source\Game\Core\Game.cpp：Line66]CShowObjectの表示状態を切り替えました。
-[FilePath：Source\Game\Core\Game.cpp：Line66]CShowObjectの表示状態を切り替えました。
 [FilePath：Source\Framework\Texture\TextureManager.cpp：Line60]TextureManager解放完了
 [FilePath：Source\Framework\Renderer\SpriteRenderer.cpp：Line465]SpriteRenderer終了処理完了 / SpriteRenderer Cleanup Complete
