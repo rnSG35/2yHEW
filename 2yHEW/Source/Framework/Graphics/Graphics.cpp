@@ -127,9 +127,9 @@ void Graphics::BeginFrame()
 	//”wŒiFA‹óF‚É‚µ‚Ä‚¨‚­
 	float clearColor[4] =
 	{
-		0.4f,
-		0.6f,
-		0.9f,
+		0.1f,
+		0.1f,
+		0.1f,
 		1.0f
 	};
 

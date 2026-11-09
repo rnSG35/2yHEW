@@ -1,8 +1,16 @@
 #pragma once
 #include <d3d11.h>
 #include <wrl/client.h>
+#include <DirectXMath.h>
 
 class Texture;
+
+//スプライトの合成方法
+enum class SpriteBlendMode
+{
+	Alpha,	//通常の半透明
+	Additive//光などに使う加算合成
+};
 
 class SpriteRenderer
 {
@@ -19,15 +27,28 @@ public:
 	//y		 ：画像左上のY座標
 	//width	 ：描画横幅
 	//height ：描画縦幅
+	//color  :スプライトにかける色
+	//blendMode:合成方法
 	void Draw(Texture* texture,
 		float x,
 		float y,
 		float width,
-		float height);
+		float height,
+	const DirectX::XMFLOAT4& color = DirectX::XMFLOAT4(1.0f,1.0f,1.0f,1.0f),
+		SpriteBlendMode blendMode = SpriteBlendMode::Alpha);
 
 	//終了処理
 	void UnInitialize();
 private:
+	//HLSLのConstBufferと同じ並びにする
+	struct ConstantBufferData
+	{
+		DirectX::XMFLOAT4 vertexColor;
+		DirectX::XMFLOAT4X4 matrixTex;
+		DirectX::XMFLOAT4X4 matrixProj;
+		DirectX::XMFLOAT4X4 matrixWorld;
+	};
+
 	SpriteRenderer() = default;
 	~SpriteRenderer() = default;
 
@@ -50,6 +71,9 @@ private:
 	//頂点バッファ作成
 	bool CreateVertexBuffer();
 
+	//定数バッファ作成
+	bool CreateConstantBuffer();
+
 	//サンプラーステート作成
 	bool CreateSamplerState();
 
@@ -65,10 +89,15 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11InputLayout> m_inputLayout;
 	//四角形の頂点を保存する
 	Microsoft::WRL::ComPtr<ID3D11Buffer> m_vertexBuffer;
+	//
+	Microsoft::WRL::ComPtr<ID3D11Buffer> m_constantBuffer;
 	//テクスチャーの色を取得する方法
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> m_samplerState;
 	//png画像の透過を有効にする
-	Microsoft::WRL::ComPtr<ID3D11BlendState> m_blendState;
+	Microsoft::WRL::ComPtr<ID3D11BlendState> m_alphaBlendState;
+	//レーザーの光などに使う加算合成
+	Microsoft::WRL::ComPtr<ID3D11BlendState> m_additiveBlendState;
+
 
 	//画面サイズ
 	UINT m_screenWidth = 0;

@@ -4,6 +4,8 @@
 #include "../../Framework/Texture/TextureManager.h"
 #include "../../Framework/DebugSystem/DebugLog.h"
 #include "../../Game/Object/SpriteObject/test/test.h"
+#include "../../Game/Object/SpriteObject/laser/laser.h"
+
 #include "../Component/ShowObject/CShowObject.h"
 
 //---------------------------------------------------------
@@ -39,6 +41,16 @@ bool Game::Init()
 		return false;
 	}
 
+	m_laserSpriteObject =
+		std::make_unique<laser>();
+
+	if (!m_laserSpriteObject->Initialize())
+	{
+		DebugLogWrite(
+			"laserSpriteObject初期化失敗");
+
+		return false;
+	}
 	DebugLogWrite("Gameクラス初期化成功 / GameInit Suscess");
 
 	return true;
@@ -54,6 +66,11 @@ void Game::Update()
 	if (m_testSpriteObject)
 	{
 		m_testSpriteObject->Update();
+	}
+
+	if (m_laserSpriteObject)
+	{
+		m_laserSpriteObject->Update();
 	}
 
 	if (m_input.GetKeyTrigger(VK_SPACE))
@@ -77,6 +94,10 @@ void Game::Draw()
 	{
 		m_testSpriteObject->Draw();
 	}
+	if (m_laserSpriteObject)
+	{
+		m_laserSpriteObject->Draw();
+	}
 }
 
 //---------------------------------------------------------
@@ -87,6 +108,7 @@ void Game::Exit()
 	// オブジェクトが持つshared_ptrを先に解放す
 	m_testSpriteObject.reset();
 
+	m_laserSpriteObject.reset();
 	// TextureManagerが管理するTextureを解放する
 	TextureManager::GetInstance()
 		.ClearTexture();

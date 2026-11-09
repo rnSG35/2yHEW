@@ -6,8 +6,10 @@
 
 #include <memory>
 #include "../Object/SpriteObject/test/test.h"
+#include "../Object/SpriteObject/laser/laser.h"
 
 class test;
+class laser;
 
 class Game
 {
@@ -28,4 +30,6 @@ private:
 	// 表示確認用オブジェクト
 	std::unique_ptr<test>
 		m_testSpriteObject;
+	std::unique_ptr<laser>
+		m_laserSpriteObject;
 };

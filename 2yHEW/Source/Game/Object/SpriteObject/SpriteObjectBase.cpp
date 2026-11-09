@@ -73,7 +73,7 @@ void SpriteObjectBase::Draw()
 	}
 
 	//SpriteRendererにTexture、位置、サイズを渡して描画する
-	SpriteRenderer::GetInstance().Draw(m_texture.get(), m_x, m_y, m_width, m_height);
+	SpriteRenderer::GetInstance().Draw(m_texture.get(), m_x, m_y, m_width, m_height, m_color, m_blendMode);
 
 	OnDraw();
 }
@@ -94,4 +94,20 @@ void SpriteObjectBase::SetSize(float width, float height)
 {
 	m_width = width;
 	m_height = height;
+}
+
+void SpriteObjectBase::SetColor(float red, float green, float blue, float alpha)
+{
+	m_color =
+	{
+		red,
+		green,
+		blue,
+		alpha
+	};
+}
+
+void SpriteObjectBase::SetBlendMode(SpriteBlendMode blendMode)
+{
+	m_blendMode = blendMode;
 }

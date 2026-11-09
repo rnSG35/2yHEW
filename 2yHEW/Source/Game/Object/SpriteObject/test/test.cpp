@@ -28,6 +28,7 @@ void test::OnInit()
 
 void test::OnUpdate()
 {
+
 }
 
 void test::OnDraw()

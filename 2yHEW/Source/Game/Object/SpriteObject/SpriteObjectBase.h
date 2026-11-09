@@ -4,6 +4,7 @@
 
 #include <memory>
 #include <string>
+#include "../../../Framework/Renderer/SpriteRenderer.h"
 
 class Texture;
 
@@ -30,6 +31,14 @@ public:
 	//表示サイズ設定
 	void SetSize(float width, float height);
 
+	void SetColor(
+		float red,
+		float green,
+		float blue,
+		float alpha);
+
+	void SetBlendMode(SpriteBlendMode blendMode);
+
 protected:
 	//派生用
 	virtual void OnInit() {};
@@ -51,5 +60,16 @@ private:
 	float m_width = 0.0f;
 	float m_height = 0.0f;
 
+	//描画するときに画像に掛ける色
+	DirectX::XMFLOAT4 m_color =
+	{
+		1.0f,
+		1.0f,
+		1.0f,
+		1.0f
+	};
+
+	//描画時の合成方法
+	SpriteBlendMode m_blendMode = SpriteBlendMode::Alpha;
 };
 

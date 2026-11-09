@@ -8,6 +8,7 @@
 #pragma comment(lib, "d3dcompiler.lib")
 
 using Microsoft::WRL::ComPtr;
+using namespace DirectX;
 
 //スプライト用頂点
 namespace
@@ -15,7 +16,9 @@ namespace
 	struct sSpriteVertex
 	{
 		//画面上の頂点位置
-		float position[3];
+		float position[4];
+
+		float color[4];
 
 		//画像のどこを使用するかを表す座標
 		float uv[2];
@@ -57,6 +60,13 @@ bool SpriteRenderer::Initialize(UINT screenWidth, UINT screenHeight)
 	if (!CreateVertexBuffer())
 	{
 		DebugLogWrite("SpriteRendererの頂点バッファ作成失敗 /Failed to create a vertex buffer for SpriteRenderer");
+		return false;
+	}
+
+	//定数バッファ作成
+	if (!CreateConstantBuffer())
+	{
+		DebugLogWrite("SpriteRendererの定数バッファ作成失敗 / Failed to create ConstantBuffer for SpriteRenderer");
 		return false;
 	}
 
@@ -145,14 +155,14 @@ bool SpriteRenderer::LoadPixelShaderBlob(const wchar_t* csoPath, const wchar_t* 
 		0,
 		shaderBlob.GetAddressOf(),
 		errorBlob.GetAddressOf());
-		if (FAILED(compileShaderResult))
+	if (FAILED(compileShaderResult))
+	{
+		if (errorBlob)
 		{
-			if (errorBlob)
-			{
-				DebugLogWrite(static_cast<const char*>(errorBlob->GetBufferPointer()));
-			}
-			return false;
+			DebugLogWrite(static_cast<const char*>(errorBlob->GetBufferPointer()));
 		}
+		return false;
+	}
 	return true;
 }
 
@@ -196,13 +206,14 @@ bool SpriteRenderer::CreateShaders()
 	//頂点データの構造を設定
 	D3D11_INPUT_ELEMENT_DESC inputElementDesc[] =
 	{
-		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT , 0,  0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT	 , 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+		{ "POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT , 0,  0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT , 0,  16, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT	 , 0, 32, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 	};
 
 	//C++側の頂点とHLSL側の頂点を関連付ける
 	HRESULT createInputLayoutResult = device->CreateInputLayout(
-		inputElementDesc, 
+		inputElementDesc,
 		ARRAYSIZE(inputElementDesc),
 		vertexShaderBlob->GetBufferPointer(),
 		vertexShaderBlob->GetBufferSize(),
@@ -279,6 +290,41 @@ bool SpriteRenderer::CreateVertexBuffer()
 	return true;
 }
 
+bool SpriteRenderer::CreateConstantBuffer()
+{
+	ID3D11Device* device = Graphics::GetInstance().GetDevice();
+
+	if (device == nullptr)
+	{
+		DebugLogWrite("CreateConstantBuffer時にDeviceがnullptr / Device is nullptr when calling CreateConstantBuffer");
+		return false;
+	}
+
+	D3D11_BUFFER_DESC constantBufferDesc = {};
+
+	//HLSLに毎期あ転送するため、DYNAMICにする
+	constantBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+	//ConstantBufferDataのサイズ
+	constantBufferDesc.ByteWidth = sizeof(ConstantBufferData);
+	//定数バッファとして使用
+	constantBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	//CPUから書き換えられるようにする
+	constantBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+
+	HRESULT createConstantBufferResult = device->CreateBuffer(
+		&constantBufferDesc,
+		nullptr,
+		m_constantBuffer.GetAddressOf());
+
+	if (FAILED(createConstantBufferResult))
+	{
+		DebugLogWrite("Sprite様ConstantBuffer作成失敗 / Failed to create ConstantBuffer for Sprite");
+		return false;
+	}
+
+	return true;
+}
+
 bool SpriteRenderer::CreateSamplerState()
 {
 	ID3D11Device* device = Graphics::GetInstance().GetDevice();
@@ -326,30 +372,55 @@ bool SpriteRenderer::CreateBlendState()
 		return false;
 	}
 
-	D3D11_BLEND_DESC blendDesc = {};
+	D3D11_BLEND_DESC alphaBlendDesc = {};
 
 	//透明度を使った描画を有効にする
-	blendDesc.RenderTarget[0].BlendEnable = TRUE;
+	alphaBlendDesc.RenderTarget[0].BlendEnable = TRUE;
 
 	//最終色の計算
 	//画像の色 x 画像の透明度 + 背景の色 x ( 1 - 画像の透明度 )
-	blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
-	blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
-	blendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
-	blendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
-	blendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
-	blendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
-	blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	alphaBlendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	alphaBlendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	alphaBlendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	alphaBlendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+	alphaBlendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+	alphaBlendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	alphaBlendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
-	HRESULT createBlendStateResult = device->CreateBlendState(
-		&blendDesc,
-		m_blendState.GetAddressOf());
+	HRESULT createAlphaBlendStateResult = device->CreateBlendState(
+		&alphaBlendDesc,
+		m_alphaBlendState.GetAddressOf());
 
-	if (FAILED(createBlendStateResult))
+	if (FAILED(createAlphaBlendStateResult))
 	{
-		DebugLogWrite("Sprite用BlendState作成失敗 / Failed to Create a BlendState for a Sprite");
+		DebugLogWrite("Sprite用AlphaBlendState作成失敗 / Failed to Create an AlphaBlendState for a Sprite");
 		return false;
 	}
+
+	//加算合成
+	D3D11_BLEND_DESC additiveBlendDesc = {};
+
+	additiveBlendDesc.RenderTarget[0].BlendEnable = TRUE;
+
+	additiveBlendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	additiveBlendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_ONE;
+	additiveBlendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	additiveBlendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+	additiveBlendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;
+	additiveBlendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	additiveBlendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	HRESULT createAdditiveBlendStateResult = device->CreateBlendState(
+			&additiveBlendDesc,
+			m_additiveBlendState.GetAddressOf());
+
+	if (FAILED(createAdditiveBlendStateResult))
+	{
+		DebugLogWrite(
+			"Sprite用AdditiveBlendState作成失敗 / Failed to create an AdditiveBlendState for a sprite");
+		return false;
+	}
+
 
 	return true;
 }
@@ -357,7 +428,8 @@ bool SpriteRenderer::CreateBlendState()
 //---------------------------------------------------------
 //画像描画
 //---------------------------------------------------------
-void SpriteRenderer::Draw(Texture* texture, float x, float y, float width, float height)
+void SpriteRenderer::Draw(Texture* texture, float x, float y, float width, float height,const DirectX::XMFLOAT4& color,
+	SpriteBlendMode blendMode)
 {
 	if (texture == nullptr)
 	{
@@ -382,13 +454,13 @@ void SpriteRenderer::Draw(Texture* texture, float x, float y, float width, float
 	//四角形を構成する6頂点
 	sSpriteVertex vertices[6] =
 	{
-		{{left  ,	top,0.0f},{0.0f,0.0f}},
-		{{right ,	top,0.0f},{1.0f,0.0f}},
-		{{left  ,bottom,0.0f},{0.0f,1.0f}},
+		{{left  ,	top,0.0f, 1.0f},{1.0f,1.0f,1.0f,1.0f},{0.0f,0.0f}},
+		{{right ,	top,0.0f, 1.0f},{1.0f,1.0f,1.0f,1.0f},{1.0f,0.0f}},
+		{{left  ,bottom,0.0f, 1.0f},{1.0f,1.0f,1.0f,1.0f},{0.0f,1.0f}},
 
-		{{left  ,bottom,0.0f},{0.0f,1.0f}},
-		{{right ,   top,0.0f},{1.0f,0.0f}},
-		{{right ,bottom,0.0f},{1.0f,1.0f}},
+		{{left  ,bottom,0.0f, 1.0f},{1.0f,1.0f,1.0f,1.0f},{0.0f,1.0f}},
+		{{right ,   top,0.0f, 1.0f},{1.0f,1.0f,1.0f,1.0f},{1.0f,0.0f}},
+		{{right ,bottom,0.0f, 1.0f},{1.0f,1.0f,1.0f,1.0f},{1.0f,1.0f}},
 	};
 
 	//頂点バッファを置き換え可能な状態にする
@@ -426,10 +498,48 @@ void SpriteRenderer::Draw(Texture* texture, float x, float y, float width, float
 	//頂点を三角形として描画する
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
+	//定数バッファへ送るデータを作る
+	ConstantBufferData constantBufferData = {};
+
+	//描画時に指定された色
+	constantBufferData.vertexColor = color;
+
+	XMMATRIX identityMatrix = XMMatrixIdentity();
+
+	XMStoreFloat4x4(&constantBufferData.matrixTex, identityMatrix);
+	XMStoreFloat4x4(&constantBufferData.matrixProj, identityMatrix);
+	XMStoreFloat4x4(&constantBufferData.matrixWorld, identityMatrix);
+
+	//定数バッファを書き換える
+	D3D11_MAPPED_SUBRESOURCE mappedConstantBuffer = {};
+
+	HRESULT mapConstantBufferResult =
+		context->Map(m_constantBuffer.Get(),
+			0,
+			D3D11_MAP_WRITE_DISCARD,
+			0,
+			&mappedConstantBuffer);
+	if (FAILED(mapConstantBufferResult))
+	{
+		DebugLogWrite("Sprite定数バッファのMap失敗 / Sprite Constant Buffer Map Failure");
+		return;
+	}
+
+	memcpy(mappedConstantBuffer.pData,
+		&constantBufferData,
+		sizeof(constantBufferData));
+
+	context->Unmap(m_constantBuffer.Get(), 0);
+
 	//シェーダーを設定
 	context->VSSetShader(m_vertexShader.Get(), nullptr, 0);
 
 	context->PSSetShader(m_pixelShader.Get(), nullptr, 0);
+
+	//HLSLのregister(b0)に設定する
+	ID3D11Buffer* constantBuffer = m_constantBuffer.Get();
+
+	context->VSSetConstantBuffers(0, 1, &constantBuffer);
 
 	//描画する画像をピクセルシェーダーに設定
 	texture->SetPS(0);
@@ -439,9 +549,30 @@ void SpriteRenderer::Draw(Texture* texture, float x, float y, float width, float
 
 	context->PSSetSamplers(0, 1, &samplerState);
 
+	ID3D11BlendState* blendState = nullptr;
+	switch (blendMode)
+	{
+	case SpriteBlendMode::Additive:
+	{
+		//レーザー、発光花火など
+		blendState = m_additiveBlendState.Get();
+		break;
+	}
+	case SpriteBlendMode::Alpha:
+	{
+
+	}
+	default:
+	{
+		//UI、通常画像、煙など
+		blendState = m_alphaBlendState.Get();
+		break;
+	}
+	}
+
 	//透過を有効に
 	float blendFactor[4] = { 0.0f,0.0f,0.0f,0.0f };
-	context->OMSetBlendState(m_blendState.Get(), blendFactor, 0xffffffff);
+	context->OMSetBlendState(m_alphaBlendState.Get(), blendFactor, 0xffffffff);
 
 	//6頂点を描画
 	context->Draw(6, 0);
@@ -455,9 +586,10 @@ void SpriteRenderer::Draw(Texture* texture, float x, float y, float width, float
 //---------------------------------------------------------
 void SpriteRenderer::UnInitialize()
 {
-	m_blendState.Reset();
+	m_alphaBlendState.Reset();
 	m_samplerState.Reset();
 	m_vertexBuffer.Reset();
+	m_constantBuffer.Reset();
 	m_inputLayout.Reset();
 	m_pixelShader.Reset();
 	m_vertexShader.Reset();
