@@ -84,6 +84,13 @@ bool SpriteRenderer::Initialize(UINT screenWidth, UINT screenHeight)
 		return false;
 	}
 
+	//深度テストを使わない設定を作成
+	if (!CreateDepthStencilState())
+	{
+		DebugLogWrite("SpriteRendererのDepthStencilState作成失敗 / Failed to create a DepthStencilState for SpriteRenderer");
+		return false;
+	}
+
 	DebugLogWrite("SpriteRenderer初期化成功 / SpriteRenderer initialization successful");
 	return true;
 }
@@ -425,6 +432,41 @@ bool SpriteRenderer::CreateBlendState()
 	return true;
 }
 
+bool SpriteRenderer::CreateDepthStencilState()
+{
+	ID3D11Device* device = Graphics::GetInstance().GetDevice();
+	if (device == nullptr)
+	{
+		DebugLogWrite("CreateDepthStencilState時にDeviceがnullptr / Device is nullptr when calling CreateDepthStencilState");
+		return false;
+	}
+
+	D3D11_DEPTH_STENCIL_DESC depthStencilDesc = {};
+
+	//深度テストをしない
+	//前後お関係は描画した順番で決める(後に書いたものが手前)
+	depthStencilDesc.DepthEnable = FALSE;
+
+	//深度を書き込まない
+	//透明部分が「見えない壁」になるのを防ぐ
+	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+	depthStencilDesc.DepthFunc = D3D11_COMPARISON_ALWAYS;
+
+	//ステンシル(型抜き)も使わない
+	depthStencilDesc.StencilEnable = FALSE;
+
+	HRESULT createDepthStencilStateResult = device->CreateDepthStencilState(
+		&depthStencilDesc,
+		m_depthStencilState.GetAddressOf());
+
+	if (FAILED(createDepthStencilStateResult))
+	{
+		DebugLogWrite("Sprite用DepthStencilState作成失敗 / Failed to create a DepthStencilState for Sprite");
+		return false;
+	}
+	return true;
+}
+
 //---------------------------------------------------------
 //画像描画
 //---------------------------------------------------------
@@ -574,11 +616,15 @@ void SpriteRenderer::Draw(Texture* texture, float x, float y, float width, float
 	float blendFactor[4] = { 0.0f,0.0f,0.0f,0.0f };
 	context->OMSetBlendState(m_alphaBlendState.Get(), blendFactor, 0xffffffff);
 
+	//深度テストを無効にする
+	context->OMSetDepthStencilState(m_depthStencilState.Get(), 0);
+	
 	//6頂点を描画
 	context->Draw(6, 0);
 
 	//次の3D描画などへ影響を残さないようにブレンドステートを解除
 	context->OMSetBlendState(nullptr, nullptr, 0xffffffff);
+	context->OMSetDepthStencilState(nullptr, 0);
 }
 
 //---------------------------------------------------------
@@ -593,6 +639,9 @@ void SpriteRenderer::UnInitialize()
 	m_inputLayout.Reset();
 	m_pixelShader.Reset();
 	m_vertexShader.Reset();
+	m_depthStencilState.Reset();
+	m_additiveBlendState.Reset();
+	m_alphaBlendState.Reset();
 
 	DebugLogWrite("SpriteRenderer終了処理完了 / SpriteRenderer Cleanup Complete");
 }

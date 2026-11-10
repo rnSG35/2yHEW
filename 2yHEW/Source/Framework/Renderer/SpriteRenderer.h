@@ -34,7 +34,7 @@ public:
 		float y,
 		float width,
 		float height,
-	const DirectX::XMFLOAT4& color = DirectX::XMFLOAT4(1.0f,1.0f,1.0f,1.0f),
+		const DirectX::XMFLOAT4& color = DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f),
 		SpriteBlendMode blendMode = SpriteBlendMode::Alpha);
 
 	//終了処理
@@ -80,6 +80,10 @@ private:
 	//ブレンドステート作成
 	bool CreateBlendState();
 
+	//深度ステンシルステート作成
+	//2Dスプライトでは深度てえストを使わず、書いた順番で前後関係を決めるため
+	bool CreateDepthStencilState();
+
 private:
 	//頂点シェーダー
 	Microsoft::WRL::ComPtr<ID3D11VertexShader> m_vertexShader;
@@ -97,6 +101,8 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11BlendState> m_alphaBlendState;
 	//レーザーの光などに使う加算合成
 	Microsoft::WRL::ComPtr<ID3D11BlendState> m_additiveBlendState;
+	//新でテストと深度書き込みを無効にする設定
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> m_depthStencilState;
 
 
 	//画面サイズ
