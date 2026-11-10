@@ -17,13 +17,13 @@ public:
 	virtual ~SpriteObjectBase() = default;
 
 	//初期化
-	bool Initialize();
+	bool Initialize() override;
 
 	//更新
-	void Update();
+	void Update() override;
 
 	//描画
-	void Draw();
+	void Draw() override;
 
 	//表示位置設定
 	void SetPosition(float x, float y);

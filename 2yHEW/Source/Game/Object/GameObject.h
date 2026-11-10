@@ -11,7 +11,20 @@ class GameObject
 {
 public:
 	GameObject() = default;
+	//派生クラスを削除するとき、virtualでないと派生クラス側のデストラクタが呼ばれないため
 	virtual ~GameObject() = default;
+
+	//基底クラスのポインタから呼んでも、派生クラス側の初期化が実行される
+	virtual bool Initialize() { return true; }
+
+	//何も上書きしない派生クラスでもコンポーネントだけは動くようにする(当たり判定などもため)
+	virtual void Update() { UpdateComponents(); }
+
+	//画像を持たないオブジェクトもあるので、基底では何もしない
+	virtual void Draw() {}
+
+	//終了
+	virtual void UnInitialize(){}
 
 	//コンポーネント追加
 	template<std::derived_from<ComponentBase> T>

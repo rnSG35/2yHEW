@@ -30,27 +30,19 @@ bool Game::Init()
 	}
 
 	// テスト用画像オブジェクトを生成
-	m_testSpriteObject =
-		std::make_unique<test>();
+	m_testSpriteObject = AddGameObject<test>();
+	AddGameObject<laser>();
+	
 
-	if (!m_testSpriteObject->Initialize())
+	for (auto& gameObject : m_gameObjects)
 	{
-		DebugLogWrite(
-			"TestSpriteObject初期化失敗");
-
-		return false;
+		if (!gameObject->Initialize())
+		{
+			DebugLogWrite("GameObject初期化失敗 / GameObject Initialization Failed");
+			return false;
+		}
 	}
 
-	m_laserSpriteObject =
-		std::make_unique<laser>();
-
-	if (!m_laserSpriteObject->Initialize())
-	{
-		DebugLogWrite(
-			"laserSpriteObject初期化失敗");
-
-		return false;
-	}
 	DebugLogWrite("Gameクラス初期化成功 / GameInit Suscess");
 
 	return true;
@@ -63,17 +55,14 @@ void Game::Update()
 {
 	m_input.Update();
 
-	if (m_testSpriteObject)
+	//オブジェクトをまとめて更新
+	for (auto& gameObject : m_gameObjects)
 	{
-		m_testSpriteObject->Update();
+		gameObject->Update();
 	}
 
-	if (m_laserSpriteObject)
-	{
-		m_laserSpriteObject->Update();
-	}
-
-	if (m_input.GetKeyTrigger(VK_SPACE))
+	//スペースキーでtestの表示を切り替える
+	if (m_testSpriteObject && m_input.GetKeyTrigger(VK_SPACE))
 	{
 		std::shared_ptr<CShowObject> showComponent = m_testSpriteObject->GetComponent<CShowObject>();
 
@@ -90,13 +79,10 @@ void Game::Update()
 //---------------------------------------------------------
 void Game::Draw()
 {
-	if (m_testSpriteObject)
+	//オブジェクトをまとめて描画
+	for (auto& gameObject : m_gameObjects)
 	{
-		m_testSpriteObject->Draw();
-	}
-	if (m_laserSpriteObject)
-	{
-		m_laserSpriteObject->Draw();
+		gameObject->Draw();
 	}
 }
 
@@ -105,10 +91,18 @@ void Game::Draw()
 //---------------------------------------------------------
 void Game::Exit()
 {
-	// オブジェクトが持つshared_ptrを先に解放す
-	m_testSpriteObject.reset();
+	//オブジェクトをまとめて終了処理
+	for (auto& gameObject : m_gameObjects)
+	{
+		gameObject->UnInitialize();
+	}
 
-	m_laserSpriteObject.reset();
+	//配列を空にして、全オブジェクトを解放
+	//オブジェクトが持つTextureのshared_ptrを先に手放すため、TextureManagerより前に行う
+	m_gameObjects.clear();
+	m_testSpriteObject = nullptr;
+
+
 	// TextureManagerが管理するTextureを解放する
 	TextureManager::GetInstance()
 		.ClearTexture();
