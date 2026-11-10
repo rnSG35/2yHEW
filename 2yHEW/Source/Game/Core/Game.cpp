@@ -5,7 +5,7 @@
 #include "../../Framework/DebugSystem/DebugLog.h"
 #include "../../Game/Object/SpriteObject/test/test.h"
 #include "../../Game/Object/SpriteObject/laser/laser.h"
-
+#include "../../Game/Object/SpriteObject/Player/Player.h"
 #include "../Component/ShowObject/CShowObject.h"
 
 //---------------------------------------------------------
@@ -32,6 +32,7 @@ bool Game::Init()
 	// テスト用画像オブジェクトを生成
 	m_testSpriteObject = AddGameObject<test>();
 	AddGameObject<laser>();
+	AddGameObject<Player>();
 	
 
 	for (auto& gameObject : m_gameObjects)

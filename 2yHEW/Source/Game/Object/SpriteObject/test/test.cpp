@@ -5,7 +5,7 @@
 //---------------------------------------------------------
 //コンストラクタ
 //---------------------------------------------------------
-test::test() : SpriteObjectBase("AppData/Assets/Textures/test.png")
+test::test() : SpriteObjectBase("AppData/Assets/Textures/test1.png")
 {
 
 }
