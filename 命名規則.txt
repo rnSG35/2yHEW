@@ -47,13 +47,14 @@ enum eColor = {
 
 
 <配列のルール>
+配列は可能な限りvectorを使うこと
 配列名は、頭文字を小文字にし、複数形にして書く。
 
 例:
-int[] numbers
-Object[] enemies
-Vector2[] moveAxis
-Vector3[] vector3_Presets
+vector<int> numbers(num);
+vector<Object> enemies();
+vector<Vector2> moveAxis();
+vector<Vector3> vector3_Presets():
 
 
 <特別ルール>
