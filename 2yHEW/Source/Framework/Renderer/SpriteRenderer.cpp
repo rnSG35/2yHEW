@@ -4,7 +4,6 @@
 #include "../Texture/Texture.h"
 #include "../DebugSystem/DebugLog.h"
 
-#include <d3dcompiler.h>
 #pragma comment(lib, "d3dcompiler.lib")
 
 using Microsoft::WRL::ComPtr;

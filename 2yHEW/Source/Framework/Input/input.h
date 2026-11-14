@@ -1,8 +1,4 @@
 ﻿#pragma once
-#include <d3d11.h>  // DirectX11を使うためのヘッダーファイル
-#include <DirectXMath.h> // DirextXの数学関連のヘッダーファイル
-
-#include <Xinput.h> //XInputを使うためのヘッダーファイル
 #pragma comment (lib, "xinput.lib") //XInputを使うために必要
 
 #define XINPUT_A              0x1000
