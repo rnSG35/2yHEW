@@ -134,6 +134,5 @@ bool GameManager::ChangeScene(eScene nextScene)
 
 	m_currentScene = std::move(newScene);
 	
-	
 	return true;
 }
