@@ -35,7 +35,7 @@ private:
 
 
 	//前回フレームを処理したときのタイマーの値
-	long long m_lastFrameCount = 0;
+	long long m_lastFrameCnt = 0;
 
 	//フレームレートの計測を始めたときのタイマーの値
 	long long m_measureStartCnt = 0;

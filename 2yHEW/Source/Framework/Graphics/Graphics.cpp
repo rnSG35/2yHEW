@@ -168,7 +168,7 @@ void Graphics::EndFrame()
 
 	//バックバッファ表示
 	//今書いた内容を実際の画面に出力
-	HRESULT presentResult = m_swapChain->Present(1, 0);
+	HRESULT presentResult = m_swapChain->Present(0, 0);
 
 	if (FAILED(presentResult)) { DebugLogWrite("Present失敗 / Failed to Present"); }
 

@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "FpsManager.h"
 #include "../Graphics/Graphics.h"
 #include "../../Game/Core/GameManager.h"
 #include "../DebugSystem/DebugLog.h"
@@ -40,6 +41,8 @@ void Application::AppLoop()
 
 	GameManager game;
 
+	FpsManager fpsManager;
+
 	if (!game.Init())
 	{
 		DebugLogWrite("Game初期化失敗 / Failed to Initialize Game class");
@@ -64,9 +67,13 @@ void Application::AppLoop()
 		}
 		else
 		{
-			//ここにゲームの更新処理や描画処理を追加する
-			//Update
-			//Draw
+			//1/60秒立っていなければ、更新も描画もしない
+			//(１秒間の処理回数を60回に固定)
+			if (!fpsManager.IsReadyToUpdate())
+			{
+				continue;
+			}
+
 			game.Update();
 
 			Graphics::GetInstance().BeginFrame();
@@ -74,6 +81,15 @@ void Application::AppLoop()
 			game.Draw();
 
 			Graphics::GetInstance().EndFrame();
+
+			//キャプションにフレームせーとを表示
+			if (fpsManager.IsFpsUpdated())
+			{
+				wchar_t windowTitle[64];
+				swprintf_s(windowTitle, L"HEW2026 FPS = %.2f", fpsManager.GetFps());
+
+				SetWindowTextW(m_window.GetHwnd(), windowTitle);
+			}
 			
 			//初期化が成功し、最初のフレームも表示できたら起動時のログを消して、ゲーム中のログだけにする
 			//表示に失敗した場合はクリアしない
