@@ -1,9 +1,8 @@
 #undef UNICODE
 #define _CRT_SECURE_NO_WARNINGS
 
-//Application.hをインクルード
 #include "Framework/Application/Application.h"
-#include <combaseapi.h>
+//#include <combaseapi.h>
 #include "../Source/Framework/DebugSystem/DebugLog.h"
 // NVIDIA Optimus 対応：dGPUを優先
 extern "C" {

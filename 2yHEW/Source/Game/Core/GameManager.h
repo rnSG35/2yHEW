@@ -6,8 +6,8 @@
 #include "../Scene/Base/SceneBase.h"
 
 #include <memory>
-#include <vector>
-#include <concepts>
+//#include <vector>
+//#include <concepts>
 
 class GameManager
 {
