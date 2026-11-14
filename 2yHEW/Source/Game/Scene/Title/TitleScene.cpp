@@ -1,0 +1,28 @@
+#include "TitleScene.h"
+#include "../../../Framework/Input/input.h"
+#include "../../../Framework/DebugSystem/DebugLog.h"
+
+bool TitleScene::Init()
+{
+    DebugLogWrite("TitleScene初期化 / TitleScene Init");
+
+    //タイトル画像のオブジェクトを追加
+    //AddGameObject<TitleLogo>();
+    return InitGameObjects();
+}
+
+void TitleScene::Update()
+{
+    UpdateGameObjects();
+
+    //エンターキーでゲームシーンへ
+    if (m_input.GetKeyTrigger(VK_ENTER))
+    {
+        ChangeScene(GAME);
+    }
+}
+
+void TitleScene::Draw()
+{
+    DrawGameObjects();
+}

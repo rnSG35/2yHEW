@@ -1,6 +1,6 @@
 #include "Application.h"
 #include "../Graphics/Graphics.h"
-#include "../../Game/Core/Game.h"
+#include "../../Game/Core/GameManager.h"
 #include "../DebugSystem/DebugLog.h"
 
 //---------------------------------------------------------
@@ -38,7 +38,7 @@ void Application::AppLoop()
 {
 	MSG msg{};
 
-	Game game;
+	GameManager game;
 
 	if (!game.Init())
 	{

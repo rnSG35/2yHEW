@@ -128,6 +128,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Game\Scene\Game\GameScene.cpp" />
+    <ClCompile Include="Source\Game\Scene\Base\SceneBase.cpp" />
     <ClCompile Include="Source\Game\Object\SpriteObject\laser\laser.cpp" />
     <ClCompile Include="Source\Game\Object\GameObject.cpp" />
     <ClCompile Include="Source\Game\Component\ShowObject\CShowObject.cpp" />
@@ -141,15 +143,18 @@
     <ClCompile Include="Source\Framework\Loader\TextureLoader.cpp" />
     <ClCompile Include="Source\Framework\Texture\Texture.cpp" />
     <ClCompile Include="Source\Framework\Texture\TextureManager.cpp" />
-    <ClCompile Include="Source\Game\Core\Game.cpp" />
+    <ClCompile Include="Source\Game\Core\GameManager.cpp" />
     <ClCompile Include="Source\Game\Object\SpriteObject\player\Player.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Game\Object\SpriteObject\SpriteObjectBase.cpp" />
     <ClCompile Include="Source\Game\Object\SpriteObject\test\test.cpp" />
     <ClCompile Include="Source\Framework\Renderer\SpriteRenderer.cpp" />
     <ClCompile Include="thirdParty\stb_image\stb_image.cpp" />
+    <ClCompile Include="Source\Game\Scene\Title\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Game\Scene\Game\GameScene.h" />
+    <ClInclude Include="Source\Game\Scene\Base\SceneBase.h" />
     <ClInclude Include="Source\Game\Object\SpriteObject\laser\laser.h" />
     <ClInclude Include="Source\Game\Object\GameObject.h" />
     <ClInclude Include="Source\Game\Component\ShowObject\CShowObject.h" />
@@ -163,12 +168,13 @@
     <ClInclude Include="Source\Framework\Loader\TextureLoader.h" />
     <ClInclude Include="Source\Framework\Texture\Texture.h" />
     <ClInclude Include="Source\Framework\Texture\TextureManager.h" />
-    <ClInclude Include="Source\Game\Core\Game.h" />
+    <ClInclude Include="Source\Game\Core\GameManager.h" />
     <ClInclude Include="Source\Game\Object\SpriteObject\player\Player.h" />
     <ClInclude Include="Source\Game\Object\SpriteObject\SpriteObjectBase.h" />
     <ClInclude Include="Source\Game\Object\SpriteObject\test\test.h" />
     <ClInclude Include="Source\Framework\Renderer\SpriteRenderer.h" />
     <ClInclude Include="thirdParty\stb_image\stb_image.h" />
+    <ClInclude Include="Source\Game\Scene\Title\TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Shader\SpritePixelShader.hlsl">
