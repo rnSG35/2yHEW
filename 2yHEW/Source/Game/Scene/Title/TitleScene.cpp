@@ -4,7 +4,8 @@
 
 bool TitleScene::Init()
 {
-    DebugLogWrite("TitleScene初期化 / TitleScene Init");
+    //TitleSceneの初期化が通っているか確認
+    //DebugLogWrite("TitleScene初期化 / TitleScene Init");
 
     //タイトル画像のオブジェクトを追加
     //AddGameObject<TitleLogo>();
@@ -16,7 +17,7 @@ void TitleScene::Update()
     UpdateGameObjects();
 
     //エンターキーでゲームシーンへ
-    if (m_input.GetKeyTrigger(VK_ENTER))
+    if (m_input.GetKeyTrigger(VK_RETURN))
     {
         ChangeScene(GAME);
     }

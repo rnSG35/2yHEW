@@ -22,7 +22,7 @@ void test::OnInit()
 
 	if (showComponent->GetOwner() == this)
 	{
-		DebugLogWrite("CShowObject‚Ìm_ownerİ’è¬Œ÷");
+		//DebugLogWrite("CShowObject‚Ìm_ownerİ’è¬Œ÷");
 	}
 }
 

@@ -5,15 +5,18 @@
 
 #include "../../Object/SpriteObject/test/test.h"
 #include "../../Object/SpriteObject/laser/laser.h"
+#include "../../Object/SpriteObject/player/Player.h"
 #include "../../Component/ShowObject/CShowObject.h"
 
 bool GameScene::Init()
 {
-    DebugLogWrite("GameScene初期化 / GameScene Init");
+    //GameSceneの初期化が通っているか確認
+    //DebugLogWrite("GameScene初期化 / GameScene Init");
 
     //追加した淳に描画される(後の者が手前)
     m_testSpriteObject = AddGameObject<test>();
     AddGameObject<laser>();
+    AddGameObject<Player>();
 
     return InitGameObjects();
 }

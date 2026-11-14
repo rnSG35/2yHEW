@@ -18,7 +18,8 @@ std::shared_ptr<Texture> TextureLoader::Load(const std::string& filePath)
 	unsigned char* imageData;
 	imageData = stbi_load(filePath.c_str(), &width, &height, &channelsCount, STBI_rgb_alpha);
 
-	DebugLogWrite(filePath.c_str());
+	//画像読み込みが失敗した際にコメントアウトを解除する
+	//DebugLogWrite(filePath.c_str());
 	if (imageData == nullptr)
 	{
 		DebugLogWrite("画像読込失敗 / Failed to load image");
@@ -77,6 +78,6 @@ std::shared_ptr<Texture> TextureLoader::Load(const std::string& filePath)
 	//画像サイズを保存
 	texture->m_width = static_cast<UINT>(width);
 	texture->m_height = static_cast<UINT>(height);
-	DebugLogWrite("Texture読み込み成功");
+	//DebugLogWrite("Texture読み込み成功");
 	return texture;
 }

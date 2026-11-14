@@ -1,10 +1,3 @@
 [FilePath：Source\Framework\Application\Application.cpp：Line83]起動処理完了 / Startup Complete
-[FilePath：Source\Game\Scene\Game\GameScene.cpp：Line12]GameScene蛻晄悄蛹・/ GameScene Init
-[FilePath：Source\Framework\Loader\TextureLoader.cpp：Line21]AppData/Assets/Textures/test1.png
-[FilePath：Source\Framework\Loader\TextureLoader.cpp：Line80]Texture読み込み成功
-[FilePath：Source\Game\Object\SpriteObject\test\test.cpp：Line25]CShowObjectのm_owner設定成功
-[FilePath：Source\Framework\Loader\TextureLoader.cpp：Line21]AppData/Assets/Textures/laser1.png
-[FilePath：Source\Framework\Loader\TextureLoader.cpp：Line80]Texture読み込み成功
-[FilePath：Source\Game\Scene\Title\TitleScene.cpp：Line7]TitleScene蛻晄悄蛹・/ TitleScene Init
 [FilePath：Source\Framework\Texture\TextureManager.cpp：Line60]TextureManager解放完了
 [FilePath：Source\Framework\Renderer\SpriteRenderer.cpp：Line646]SpriteRenderer終了処理完了 / SpriteRenderer Cleanup Complete
