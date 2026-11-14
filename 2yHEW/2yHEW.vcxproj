@@ -135,6 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Framework\Application\FpsManager.cpp" />
     <ClCompile Include="Source\Framework\Pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -164,6 +165,7 @@
     <ClCompile Include="Source\Game\Scene\Title\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Framework\Application\FpsManager.h" />
     <ClInclude Include="Source\Framework\Pch.h" />
     <ClInclude Include="Source\Game\Scene\Game\GameScene.h" />
     <ClInclude Include="Source\Game\Scene\Base\SceneBase.h" />
