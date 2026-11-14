@@ -11,12 +11,12 @@ using Microsoft::WRL::ComPtr;
 //---------------------------------------------------------
 void Texture::SetPS(UINT slot) const
 {
-	ID3D11ShaderResourceView* srv = m_srv.Get();
+	ID3D11ShaderResourceView* pSrv = m_srv.Get();
 
 	Graphics::GetInstance().GetContext()->PSSetShaderResources(
 		slot,
 		1,
-		&srv);
+		&pSrv);
 }
 //---------------------------------------------------------
 //SRVŽæ“¾

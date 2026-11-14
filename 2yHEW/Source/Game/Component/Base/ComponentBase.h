@@ -23,13 +23,13 @@ public:
 	virtual void Update() {}
 
 	//自分が付いているGameObjectを取得
-	GameObject* GetOwner() const { return m_owner; }
+	GameObject* GetOwner() const { return m_pOwner; }
 
 protected:
 	//自分が付いているGameObject
 	//所有しているのはGameObject側なので、解放の責任を持たない普通のポインタ
 	//shared_ptrにすると、GameobjectとComponentがお互いを持ち合って解放されなくなるため使わない
-	GameObject* m_owner = nullptr;
+	GameObject* m_pOwner = nullptr;
 
 private:
 	//m_ownerを設定できるのはGameObjectのみ

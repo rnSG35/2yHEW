@@ -1,4 +1,7 @@
 ﻿#pragma once
+#include <d3d11.h>
+#include <DirectXMath.h>
+#include <Xinput.h>
 #pragma comment (lib, "xinput.lib") //XInputを使うために必要
 
 #define XINPUT_A              0x1000

@@ -1,3 +1,4 @@
+#include"../../Framework/Pch.h"
 #include "AudioManager.h"
 
 #ifdef _XBOX //Big-Endian

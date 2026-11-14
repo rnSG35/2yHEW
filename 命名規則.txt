@@ -13,10 +13,11 @@
 変数名は頭文字を小文字にする。
 メンバ変数には「m_」を付けることが好ましい。
 グローバル変数には「g_」を付けること。
+ポインタ変数には「p」を付けた後に変数名を付けること、「p」の後は大文字
 例:
 int m_posX
 int g_windowSize
-
+int* pSize
 
 
 <変数以外のルール>
@@ -33,7 +34,7 @@ enum eScene
 
 <定数のルール>
 定数となるもの(const変数,マクロ定義,列挙型識別子など)はすべて大文字で書く。
-
+関数のように使うマクロは例外(今回のDebugLogWrite();など)
 例:
 const int MAX = 255
 const bool DUMMY_FLG = false

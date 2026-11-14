@@ -1,9 +1,10 @@
+#include"../../Framework/Pch.h"
 #include "SpriteRenderer.h"
-
 #include "../Graphics/Graphics.h"
 #include "../Texture/Texture.h"
 #include "../DebugSystem/DebugLog.h"
 
+#include <d3dcompiler.h>
 #pragma comment(lib, "d3dcompiler.lib")
 
 using Microsoft::WRL::ComPtr;
@@ -177,9 +178,9 @@ bool SpriteRenderer::LoadPixelShaderBlob(const wchar_t* csoPath, const wchar_t* 
 //---------------------------------------------------------
 bool SpriteRenderer::CreateShaders()
 {
-	ID3D11Device* device = Graphics::GetInstance().GetDevice();
+	ID3D11Device* pDevice = Graphics::GetInstance().GetDevice();
 
-	if (device == nullptr)
+	if (pDevice == nullptr)
 	{
 		DebugLogWrite("CreateShader時にDeviceがnullptr / Device is nullptr when calling CreateShader");
 		return false;
@@ -196,7 +197,7 @@ bool SpriteRenderer::CreateShaders()
 		return false;
 	}
 	//コンパイル結果から頂点シェーダーを作成
-	HRESULT createVertexShaderResult = device->CreateVertexShader(
+	HRESULT createVertexShaderResult = pDevice->CreateVertexShader(
 		vertexShaderBlob->GetBufferPointer(),
 		vertexShaderBlob->GetBufferSize(),
 		nullptr,
@@ -218,7 +219,7 @@ bool SpriteRenderer::CreateShaders()
 	};
 
 	//C++側の頂点とHLSL側の頂点を関連付ける
-	HRESULT createInputLayoutResult = device->CreateInputLayout(
+	HRESULT createInputLayoutResult = pDevice->CreateInputLayout(
 		inputElementDesc,
 		ARRAYSIZE(inputElementDesc),
 		vertexShaderBlob->GetBufferPointer(),
@@ -243,7 +244,7 @@ bool SpriteRenderer::CreateShaders()
 	}
 
 	//コンパイル結果からピクセルシェーダーを作成
-	HRESULT createPixelShaderResult = device->CreatePixelShader(
+	HRESULT createPixelShaderResult = pDevice->CreatePixelShader(
 		pixelShaderBlob->GetBufferPointer(),
 		pixelShaderBlob->GetBufferSize(),
 		nullptr,
@@ -266,8 +267,8 @@ bool SpriteRenderer::CreateShaders()
 //---------------------------------------------------------
 bool SpriteRenderer::CreateVertexBuffer()
 {
-	ID3D11Device* device = Graphics::GetInstance().GetDevice();
-	if (device == nullptr)
+	ID3D11Device* pDevice = Graphics::GetInstance().GetDevice();
+	if (pDevice == nullptr)
 	{
 		DebugLogWrite("CreateVertexBuffer時にDeviceがnullptr / Device is nullptr when calling CreateVertexBuffer");
 		return false;
@@ -282,7 +283,7 @@ bool SpriteRenderer::CreateVertexBuffer()
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	vertexBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
-	HRESULT createVertexBufferResult = device->CreateBuffer(
+	HRESULT createVertexBufferResult = pDevice->CreateBuffer(
 		&vertexBufferDesc,
 		nullptr,
 		m_vertexBuffer.GetAddressOf());
@@ -298,9 +299,9 @@ bool SpriteRenderer::CreateVertexBuffer()
 
 bool SpriteRenderer::CreateConstantBuffer()
 {
-	ID3D11Device* device = Graphics::GetInstance().GetDevice();
+	ID3D11Device* pDevice = Graphics::GetInstance().GetDevice();
 
-	if (device == nullptr)
+	if (pDevice == nullptr)
 	{
 		DebugLogWrite("CreateConstantBuffer時にDeviceがnullptr / Device is nullptr when calling CreateConstantBuffer");
 		return false;
@@ -317,7 +318,7 @@ bool SpriteRenderer::CreateConstantBuffer()
 	//CPUから書き換えられるようにする
 	constantBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
-	HRESULT createConstantBufferResult = device->CreateBuffer(
+	HRESULT createConstantBufferResult = pDevice->CreateBuffer(
 		&constantBufferDesc,
 		nullptr,
 		m_constantBuffer.GetAddressOf());
@@ -333,9 +334,9 @@ bool SpriteRenderer::CreateConstantBuffer()
 
 bool SpriteRenderer::CreateSamplerState()
 {
-	ID3D11Device* device = Graphics::GetInstance().GetDevice();
+	ID3D11Device* pDevice = Graphics::GetInstance().GetDevice();
 
-	if (device == nullptr)
+	if (pDevice == nullptr)
 	{
 		DebugLogWrite("CreateSamplerState時にDeviceがnullptr / Device is nullptr when calling CreateSamplerState");
 		return false;
@@ -352,7 +353,7 @@ bool SpriteRenderer::CreateSamplerState()
 	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
 	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
 
-	HRESULT createSamplerResult = device->CreateSamplerState(
+	HRESULT createSamplerResult = pDevice->CreateSamplerState(
 		&samplerDesc,
 		m_samplerState.GetAddressOf());
 
@@ -370,9 +371,9 @@ bool SpriteRenderer::CreateSamplerState()
 //---------------------------------------------------------
 bool SpriteRenderer::CreateBlendState()
 {
-	ID3D11Device* device = Graphics::GetInstance().GetDevice();
+	ID3D11Device* pDevice = Graphics::GetInstance().GetDevice();
 
-	if (device == nullptr)
+	if (pDevice == nullptr)
 	{
 		DebugLogWrite("CreateBlendState時にDeviceがnullptr / Device is nullptr when calling CreateBlendState");
 		return false;
@@ -393,7 +394,7 @@ bool SpriteRenderer::CreateBlendState()
 	alphaBlendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
 	alphaBlendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
-	HRESULT createAlphaBlendStateResult = device->CreateBlendState(
+	HRESULT createAlphaBlendStateResult = pDevice->CreateBlendState(
 		&alphaBlendDesc,
 		m_alphaBlendState.GetAddressOf());
 
@@ -416,7 +417,7 @@ bool SpriteRenderer::CreateBlendState()
 	additiveBlendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
 	additiveBlendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
-	HRESULT createAdditiveBlendStateResult = device->CreateBlendState(
+	HRESULT createAdditiveBlendStateResult = pDevice->CreateBlendState(
 			&additiveBlendDesc,
 			m_additiveBlendState.GetAddressOf());
 
@@ -433,8 +434,8 @@ bool SpriteRenderer::CreateBlendState()
 
 bool SpriteRenderer::CreateDepthStencilState()
 {
-	ID3D11Device* device = Graphics::GetInstance().GetDevice();
-	if (device == nullptr)
+	ID3D11Device* pDevice = Graphics::GetInstance().GetDevice();
+	if (pDevice == nullptr)
 	{
 		DebugLogWrite("CreateDepthStencilState時にDeviceがnullptr / Device is nullptr when calling CreateDepthStencilState");
 		return false;
@@ -454,7 +455,7 @@ bool SpriteRenderer::CreateDepthStencilState()
 	//ステンシル(型抜き)も使わない
 	depthStencilDesc.StencilEnable = FALSE;
 
-	HRESULT createDepthStencilStateResult = device->CreateDepthStencilState(
+	HRESULT createDepthStencilStateResult = pDevice->CreateDepthStencilState(
 		&depthStencilDesc,
 		m_depthStencilState.GetAddressOf());
 
@@ -469,18 +470,18 @@ bool SpriteRenderer::CreateDepthStencilState()
 //---------------------------------------------------------
 //画像描画
 //---------------------------------------------------------
-void SpriteRenderer::Draw(Texture* texture, float x, float y, float width, float height,const DirectX::XMFLOAT4& color,
-	SpriteBlendMode blendMode)
+void SpriteRenderer::Draw(Texture* pTexture, float x, float y, float width, float height,const DirectX::XMFLOAT4& color,
+	eSpriteBlendMode blendMode)
 {
-	if (texture == nullptr)
+	if (pTexture == nullptr)
 	{
 		DebugLogWrite("SpriteRenderer::DrawのTextureがnullptr");
 		return;
 	}
 
-	ID3D11DeviceContext* context = Graphics::GetInstance().GetContext();
+	ID3D11DeviceContext* pContext = Graphics::GetInstance().GetContext();
 
-	if (context == nullptr)
+	if (pContext == nullptr)
 	{
 		DebugLogWrite("SpriteRenderer::Draw時にContextがnullptr");
 		return;
@@ -507,7 +508,7 @@ void SpriteRenderer::Draw(Texture* texture, float x, float y, float width, float
 	//頂点バッファを置き換え可能な状態にする
 	D3D11_MAPPED_SUBRESOURCE mappedResource = {};
 
-	HRESULT mapVertexBufferResult = context->Map(
+	HRESULT mapVertexBufferResult = pContext->Map(
 		m_vertexBuffer.Get(),
 		0,
 		D3D11_MAP_WRITE_DISCARD,
@@ -524,20 +525,20 @@ void SpriteRenderer::Draw(Texture* texture, float x, float y, float width, float
 	memcpy(mappedResource.pData, vertices, sizeof(vertices));
 
 	//頂点バッファの書き換えを終了
-	context->Unmap(m_vertexBuffer.Get(), 0);
+	pContext->Unmap(m_vertexBuffer.Get(), 0);
 
 	//頂点バッファをDirectXに設定
 	UINT stride = sizeof(sSpriteVertex);
 	UINT offset = 0;
 
 	ID3D11Buffer* vertexBuffer = m_vertexBuffer.Get();
-	context->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
+	pContext->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
 
 	//頂点の構造を設定
-	context->IASetInputLayout(m_inputLayout.Get());
+	pContext->IASetInputLayout(m_inputLayout.Get());
 
 	//頂点を三角形として描画する
-	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	//定数バッファへ送るデータを作る
 	ConstantBufferData constantBufferData = {};
@@ -555,7 +556,7 @@ void SpriteRenderer::Draw(Texture* texture, float x, float y, float width, float
 	D3D11_MAPPED_SUBRESOURCE mappedConstantBuffer = {};
 
 	HRESULT mapConstantBufferResult =
-		context->Map(m_constantBuffer.Get(),
+		pContext->Map(m_constantBuffer.Get(),
 			0,
 			D3D11_MAP_WRITE_DISCARD,
 			0,
@@ -570,36 +571,36 @@ void SpriteRenderer::Draw(Texture* texture, float x, float y, float width, float
 		&constantBufferData,
 		sizeof(constantBufferData));
 
-	context->Unmap(m_constantBuffer.Get(), 0);
+	pContext->Unmap(m_constantBuffer.Get(), 0);
 
 	//シェーダーを設定
-	context->VSSetShader(m_vertexShader.Get(), nullptr, 0);
+	pContext->VSSetShader(m_vertexShader.Get(), nullptr, 0);
 
-	context->PSSetShader(m_pixelShader.Get(), nullptr, 0);
+	pContext->PSSetShader(m_pixelShader.Get(), nullptr, 0);
 
 	//HLSLのregister(b0)に設定する
 	ID3D11Buffer* constantBuffer = m_constantBuffer.Get();
 
-	context->VSSetConstantBuffers(0, 1, &constantBuffer);
+	pContext->VSSetConstantBuffers(0, 1, &constantBuffer);
 
 	//描画する画像をピクセルシェーダーに設定
-	texture->SetPS(0);
+	pTexture->SetPS(0);
 
 	//テクスチャの読み取り方法を設定
 	ID3D11SamplerState* samplerState = m_samplerState.Get();
 
-	context->PSSetSamplers(0, 1, &samplerState);
+	pContext->PSSetSamplers(0, 1, &samplerState);
 
 	ID3D11BlendState* blendState = nullptr;
 	switch (blendMode)
 	{
-	case SpriteBlendMode::Additive:
+	case eSpriteBlendMode::ADDITIVE:
 	{
 		//レーザー、発光花火など
 		blendState = m_additiveBlendState.Get();
 		break;
 	}
-	case SpriteBlendMode::Alpha:
+	case eSpriteBlendMode::ALPHA:
 	{
 
 	}
@@ -613,17 +614,17 @@ void SpriteRenderer::Draw(Texture* texture, float x, float y, float width, float
 
 	//透過を有効に
 	float blendFactor[4] = { 0.0f,0.0f,0.0f,0.0f };
-	context->OMSetBlendState(m_alphaBlendState.Get(), blendFactor, 0xffffffff);
+	pContext->OMSetBlendState(m_alphaBlendState.Get(), blendFactor, 0xffffffff);
 
 	//深度テストを無効にする
-	context->OMSetDepthStencilState(m_depthStencilState.Get(), 0);
+	pContext->OMSetDepthStencilState(m_depthStencilState.Get(), 0);
 	
 	//6頂点を描画
-	context->Draw(6, 0);
+	pContext->Draw(6, 0);
 
 	//次の3D描画などへ影響を残さないようにブレンドステートを解除
-	context->OMSetBlendState(nullptr, nullptr, 0xffffffff);
-	context->OMSetDepthStencilState(nullptr, 0);
+	pContext->OMSetBlendState(nullptr, nullptr, 0xffffffff);
+	pContext->OMSetDepthStencilState(nullptr, 0);
 }
 
 //---------------------------------------------------------

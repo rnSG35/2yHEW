@@ -1,5 +1,9 @@
 #include "DebugLog.h"
 #ifdef _DEBUG
+
+#include <fstream>
+#include <string_view>
+
 namespace
 {
 	// ログファイル

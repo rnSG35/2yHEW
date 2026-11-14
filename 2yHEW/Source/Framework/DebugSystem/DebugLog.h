@@ -4,6 +4,8 @@
 
 #ifdef _DEBUG
 
+#include <source_location>
+
 class DebugLog
 {
 public:

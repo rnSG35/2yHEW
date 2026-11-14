@@ -15,12 +15,12 @@ std::shared_ptr<Texture> TextureLoader::Load(const std::string& filePath)
 	int channelsCount = 0;
 
 	//stb_imageで画像読み込み
-	unsigned char* imageData;
-	imageData = stbi_load(filePath.c_str(), &width, &height, &channelsCount, STBI_rgb_alpha);
+	unsigned char* pImageData;
+	pImageData = stbi_load(filePath.c_str(), &width, &height, &channelsCount, STBI_rgb_alpha);
 
 	//画像読み込みが失敗した際にコメントアウトを解除する
 	//DebugLogWrite(filePath.c_str());
-	if (imageData == nullptr)
+	if (pImageData == nullptr)
 	{
 		DebugLogWrite("画像読込失敗 / Failed to load image");
 		return nullptr;
@@ -42,7 +42,7 @@ std::shared_ptr<Texture> TextureLoader::Load(const std::string& filePath)
 
 	//画像をCPUに転送
 	D3D11_SUBRESOURCE_DATA textureData = {};
-	textureData.pSysMem = imageData;
+	textureData.pSysMem = pImageData;
 	textureData.SysMemPitch = static_cast<UINT>(width * 4);
 
 	//Textureを生成
@@ -56,7 +56,7 @@ std::shared_ptr<Texture> TextureLoader::Load(const std::string& filePath)
 
 
 	//CPU側の画像データはTexture2D作成後に解放
-	stbi_image_free(imageData);
+	stbi_image_free(pImageData);
 	if (FAILED(createTexture2DResult))
 	{
 		DebugLogWrite("Texture2D作成失敗 / Failed to create Texture2D");

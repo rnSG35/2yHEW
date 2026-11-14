@@ -1,12 +1,16 @@
 #pragma once
 
+#include <d3d11.h>
+#include <wrl/client.h>
+#include <DirectXMath.h>
+
 class Texture;
 
 //スプライトの合成方法
-enum class SpriteBlendMode
+enum class eSpriteBlendMode
 {
-	Alpha,	//通常の半透明
-	Additive//光などに使う加算合成
+	ALPHA,	//通常の半透明
+	ADDITIVE//光などに使う加算合成
 };
 
 class SpriteRenderer
@@ -26,13 +30,13 @@ public:
 	//height ：描画縦幅
 	//color  :スプライトにかける色
 	//blendMode:合成方法
-	void Draw(Texture* texture,
+	void Draw(Texture* pTexture,
 		float x,
 		float y,
 		float width,
 		float height,
 		const DirectX::XMFLOAT4& color = DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f),
-		SpriteBlendMode blendMode = SpriteBlendMode::Alpha);
+		eSpriteBlendMode blendMode = eSpriteBlendMode::ALPHA);
 
 	//終了処理
 	void UnInitialize();
