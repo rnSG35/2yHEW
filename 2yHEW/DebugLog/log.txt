@@ -1,1 +1,3 @@
 [FilePath：Source\Framework\Application\Application.cpp：Line99]起動処理完了 / Startup Complete
+[FilePath：Source\Framework\Texture\TextureManager.cpp：Line60]TextureManager解放完了
+[FilePath：Source\Framework\Renderer\SpriteRenderer.cpp：Line646]SpriteRenderer終了処理完了 / SpriteRenderer Cleanup Complete

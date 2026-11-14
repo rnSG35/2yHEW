@@ -86,11 +86,11 @@ void Application::AppLoop()
 			if (fpsManager.IsFpsUpdated())
 			{
 				wchar_t windowTitle[64];
-				swprintf_s(windowTitle, L"HEW2026 FPS = %.2f", fpsManager.GetFps());
+				swprintf_s(windowTitle, L"2yHEW Scene = %ls FPS = %.2f", game.GetCurrentSceneName(), fpsManager.GetFps());
 
 				SetWindowTextW(m_window.GetHwnd(), windowTitle);
 			}
-			
+
 			//初期化が成功し、最初のフレームも表示できたら起動時のログを消して、ゲーム中のログだけにする
 			//表示に失敗した場合はクリアしない
 			if (!isStartupLogCleared && Graphics::GetInstance().IsLastPresentSucceeded())
