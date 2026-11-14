@@ -37,7 +37,7 @@ public:
 		//自分(GameObject)を持ち主として登録
 		//Initializeより先に設定するのは、
 		//Initializeの中で同じオブジェクトの別コンポーネントを探せるようにするため
-		component->m_owner = this;
+		component->m_pOwner = this;
 
 		//GameObjectが管理する
 		m_components.push_back(component);
@@ -61,7 +61,7 @@ public:
 				//外す前に持ち主を解除
 				//ほかの場所でshared_ptrが残っていた場合に
 				//古い持ち主を触ってしまうのを防ぐため
-				(*componentIterator)->m_owner = nullptr;
+				(*componentIterator)->m_pOwner = nullptr;
 
 				componentIterator = m_components.erase(componentIterator);
 				return;

@@ -33,7 +33,7 @@ void Player::OnInit()
 
     // åıÇ»ÇÃÇ≈â¡éZçáê¨
     SetBlendMode(
-        SpriteBlendMode::Additive);
+        eSpriteBlendMode::ADDITIVE);
 }
 
 void Player::OnUpdate()

@@ -37,7 +37,7 @@ public:
 		float blue,
 		float alpha);
 
-	void SetBlendMode(SpriteBlendMode blendMode);
+	void SetBlendMode(eSpriteBlendMode blendMode);
 
 protected:
 	//”h¶—p
@@ -70,6 +70,6 @@ private:
 	};
 
 	//•`‰æ‚Ì‡¬•û–@
-	SpriteBlendMode m_blendMode = SpriteBlendMode::Alpha;
+	eSpriteBlendMode m_blendMode = eSpriteBlendMode::ALPHA;
 };
 

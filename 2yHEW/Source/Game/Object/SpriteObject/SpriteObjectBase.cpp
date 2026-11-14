@@ -107,7 +107,7 @@ void SpriteObjectBase::SetColor(float red, float green, float blue, float alpha)
 	};
 }
 
-void SpriteObjectBase::SetBlendMode(SpriteBlendMode blendMode)
+void SpriteObjectBase::SetBlendMode(eSpriteBlendMode blendMode)
 {
 	m_blendMode = blendMode;
 }

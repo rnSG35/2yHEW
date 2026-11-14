@@ -33,7 +33,7 @@ void laser::OnInit()
 
     // Œõ‚È‚Ì‚Å‰ÁZ‡¬
     SetBlendMode(
-        SpriteBlendMode::Additive);
+        eSpriteBlendMode::ADDITIVE);
 }
 
 void laser::OnUpdate()
