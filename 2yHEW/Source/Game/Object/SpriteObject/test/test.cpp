@@ -7,7 +7,6 @@
 //---------------------------------------------------------
 test::test() : SpriteObjectBase("AppData/Assets/Textures/test1.png")
 {
-
 }
 
 void test::OnInit()

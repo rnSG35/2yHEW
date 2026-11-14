@@ -16,13 +16,8 @@ public:
 	SpriteObjectBase(const std::string& filePath);
 	virtual ~SpriteObjectBase() = default;
 
-	//初期化
 	bool Initialize() override;
-
-	//更新
 	void Update() override;
-
-	//描画
 	void Draw() override;
 
 	//表示位置設定
@@ -72,4 +67,3 @@ private:
 	//描画時の合成方法
 	eSpriteBlendMode m_blendMode = eSpriteBlendMode::ALPHA;
 };
-

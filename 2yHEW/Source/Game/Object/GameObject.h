@@ -2,9 +2,9 @@
 //コンポーネントを持つ側
 #include "../Component/Base/ComponentBase.h"
 
-#include <memory>
-#include <vector>
-#include <concepts>
+//#include <memory>
+//#include <vector>
+//#include <concepts>
 
 //AddComponent<T>()RemoveComponent<T>()GetComponent<T>()はテンプレート関数なので実装もヘッダーに書く
 class GameObject
@@ -17,7 +17,7 @@ public:
 	//基底クラスのポインタから呼んでも、派生クラス側の初期化が実行される
 	virtual bool Initialize() { return true; }
 
-	//何も上書きしない派生クラスでもコンポーネントだけは動くようにする(当たり判定などもため)
+	//何も上書きしない派生クラスでもコンポーネントだけは動くようにする(当たり判定などのため)
 	virtual void Update() { UpdateComponents(); }
 
 	//画像を持たないオブジェクトもあるので、基底では何もしない
@@ -26,11 +26,12 @@ public:
 	//終了
 	virtual void UnInitialize(){}
 
+	//---------------------------------------------------------
 	//コンポーネント追加
+	//---------------------------------------------------------
 	template<std::derived_from<ComponentBase> T>
 	std::shared_ptr<T> AddComponent()
 	{
-
 		//コンポーネント生成
 		std::shared_ptr<T> component = std::make_shared<T>();
 
@@ -48,7 +49,9 @@ public:
 		return component;
 	}
 
+	//---------------------------------------------------------
 	//コンポーネント削除
+	//---------------------------------------------------------
 	template<std::derived_from<ComponentBase> T>
 	void RemoveComponent()
 	{
@@ -70,7 +73,9 @@ public:
 		}
 	}
 
+	//---------------------------------------------------------
 	//コンポーネント取得
+	//---------------------------------------------------------
 	template<std::derived_from<ComponentBase> T>
 	std::shared_ptr<T> GetComponent()
 	{
@@ -85,9 +90,11 @@ public:
 		return nullptr;
 	}
 
+	//---------------------------------------------------------
 	//付いている全コンポーネントを更新
 	//コンポーネントが自分で動けるようにするため
 	//舞フレームここからUpdate()を呼ぶ
+	//---------------------------------------------------------
 	void UpdateComponents()
 	{
 		for (const auto& component : m_components)
@@ -100,4 +107,3 @@ protected:
 	//登録されたコンポーネント
 	std::vector<std::shared_ptr<ComponentBase>> m_components;
 };
-

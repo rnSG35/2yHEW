@@ -21,7 +21,6 @@ bool Window::Create(int width, int height, const wchar_t* title)
 		return false;
 	}
 
-
 	//ウィンドウにタイトルバーとか枠が含まれているので、サイズを正しくするための対策
 	RECT windowRect =
 	{

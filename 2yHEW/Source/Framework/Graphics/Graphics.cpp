@@ -141,9 +141,9 @@ void Graphics::BeginFrame()
 		clearColor);
 
 	//深度情報もリセット
-	// ここが無いと
-	// ・モデルが突然消える
-	// ・描画がおかしくなる	というバグが発生
+	//ここが無いと
+	//・モデルが突然消える
+	//・描画がおかしくなる	というバグが発生
 	m_context->ClearDepthStencilView(
 		m_depthStencilView.Get(),
 		D3D11_CLEAR_DEPTH,
@@ -197,19 +197,13 @@ bool Graphics::CreateDeviceAndSwapChain(HWND hwnd, UINT width, UINT height)
 	//スワップチェイン設定
 	//バックバッファの設定を行う
 	DXGI_SWAP_CHAIN_DESC swapChainDesc = {};
-
 	swapChainDesc.BufferCount = 1;
-
 	swapChainDesc.BufferDesc.Width = width;
 	swapChainDesc.BufferDesc.Height = height;
 	swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;	//RGBA 8bit
-
 	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;	//描画先として使うバッファ
-
 	swapChainDesc.OutputWindow = hwnd;
-
 	swapChainDesc.SampleDesc.Count = 1;	//MSAAナシ
-
 	swapChainDesc.Windowed = true;
 
 	//Device・Context・SwapChainをまとめて作成
@@ -241,17 +235,17 @@ bool Graphics::CreateDeviceAndSwapChain(HWND hwnd, UINT width, UINT height)
 	//念のためポインタを確認
 	if (!m_swapChain)
 	{
-		DebugLogWrite("m_swapChainがnullptr / m_swapChain is nullptr");
+		DebugLogWrite("CreateDeviceAndSwapChain時にm_swapChainがnullptr / m_swapChain is nullptr　when calling CreateDeviceAndSwapChain");
 		return false;
 	}
 	if (!m_device)
 	{
-		DebugLogWrite("m_deviceがnullptr / m_device is nullptr");
+		DebugLogWrite("CreateDeviceAndSwapChain時にm_deviceがnullptr / m_device is nullptr　when calling CreateDeviceAndSwapChain");
 		return false;
 	}
 	if (!m_context)
 	{
-		DebugLogWrite("m_contextがnullptr / m_context is nullptr");
+		DebugLogWrite("CreateDeviceAndSwapChain時にm_contextがnullptr / m_context is nullptr　when calling CreateDeviceAndSwapChain");
 		return false;
 	}
 
@@ -322,22 +316,15 @@ bool Graphics::CreateDepthBuffer(UINT width, UINT height)
 
 	//深度バッファ作成
 	D3D11_TEXTURE2D_DESC depthTextureDesc = {};
-
 	depthTextureDesc.Width = width;
 	depthTextureDesc.Height = height;
-
 	depthTextureDesc.MipLevels = 1;
 	depthTextureDesc.ArraySize = 1;
-
 	depthTextureDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-
 	depthTextureDesc.SampleDesc.Count = 1;
 	depthTextureDesc.SampleDesc.Quality = 0;
-
 	depthTextureDesc.Usage = D3D11_USAGE_DEFAULT;
-
 	depthTextureDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-	
 	depthTextureDesc.CPUAccessFlags = 0;
 	depthTextureDesc.MiscFlags = 0;
 
@@ -372,7 +359,7 @@ bool Graphics::CreateDepthStencilView()
 	//CreateDepthBufferで作ったものがあるか確認
 	if (!m_depthBuffer)
 	{
-		DebugLogWrite("m_depthBufferがnullptr / m_depthBuffer is nullptr");
+		DebugLogWrite("CreateDepthStencilView時にm_depthBufferがnullptr / m_depthBuffer is nullptr　when calling CreateDepthStencilView");
 		return false;
 	}
 
@@ -442,10 +429,8 @@ bool Graphics::SetViewPort(UINT width, UINT height)
 
 	//画面全体を描画範囲にする
 	D3D11_VIEWPORT mainViewport = {};
-
 	mainViewport.TopLeftX = 0.0f;
 	mainViewport.TopLeftY = 0.0f;
-
 	mainViewport.Width = static_cast<float>(width);
 	mainViewport.Height = static_cast<float>(height);
 	mainViewport.MinDepth = 0.0f;

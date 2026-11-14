@@ -12,4 +12,3 @@ private:
 	void OnUpdate() override;
 	void OnDraw() override;
 };
-

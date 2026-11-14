@@ -27,4 +27,3 @@ private:
     //falseF•`‰æ‚µ‚È‚¢
     bool m_isVisible = true;
 };
-

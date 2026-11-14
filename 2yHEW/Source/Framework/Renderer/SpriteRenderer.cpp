@@ -277,7 +277,6 @@ bool SpriteRenderer::CreateVertexBuffer()
 	//四角形は三角形2枚で
 	D3D11_BUFFER_DESC vertexBufferDesc = {};
 	vertexBufferDesc.ByteWidth = sizeof(sSpriteVertex) * 6;
-
 	//毎回画像の位置は大きさを書き換えるため、D3D11_USAGE_DYNAMICを使用
 	vertexBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
@@ -308,7 +307,6 @@ bool SpriteRenderer::CreateConstantBuffer()
 	}
 
 	D3D11_BUFFER_DESC constantBufferDesc = {};
-
 	//HLSLに毎期あ転送するため、DYNAMICにする
 	constantBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
 	//ConstantBufferDataのサイズ
@@ -346,7 +344,6 @@ bool SpriteRenderer::CreateSamplerState()
 
 	//画像を拡大縮小した時に周囲の画素を補間して滑らかに表示する設定
 	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-
 	//UVが0~1の範囲を超えた場合、画像の端の色を使用する
 	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
 	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
@@ -383,7 +380,6 @@ bool SpriteRenderer::CreateBlendState()
 
 	//透明度を使った描画を有効にする
 	alphaBlendDesc.RenderTarget[0].BlendEnable = TRUE;
-
 	//最終色の計算
 	//画像の色 x 画像の透明度 + 背景の色 x ( 1 - 画像の透明度 )
 	alphaBlendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
@@ -406,9 +402,7 @@ bool SpriteRenderer::CreateBlendState()
 
 	//加算合成
 	D3D11_BLEND_DESC additiveBlendDesc = {};
-
 	additiveBlendDesc.RenderTarget[0].BlendEnable = TRUE;
-
 	additiveBlendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
 	additiveBlendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_ONE;
 	additiveBlendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
@@ -427,8 +421,6 @@ bool SpriteRenderer::CreateBlendState()
 			"Sprite用AdditiveBlendState作成失敗 / Failed to create an AdditiveBlendState for a sprite");
 		return false;
 	}
-
-
 	return true;
 }
 
@@ -446,12 +438,10 @@ bool SpriteRenderer::CreateDepthStencilState()
 	//深度テストをしない
 	//前後お関係は描画した順番で決める(後に書いたものが手前)
 	depthStencilDesc.DepthEnable = FALSE;
-
 	//深度を書き込まない
 	//透明部分が「見えない壁」になるのを防ぐ
 	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
 	depthStencilDesc.DepthFunc = D3D11_COMPARISON_ALWAYS;
-
 	//ステンシル(型抜き)も使わない
 	depthStencilDesc.StencilEnable = FALSE;
 
@@ -533,10 +523,8 @@ void SpriteRenderer::Draw(Texture* pTexture, float x, float y, float width, floa
 
 	ID3D11Buffer* vertexBuffer = m_vertexBuffer.Get();
 	pContext->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
-
 	//頂点の構造を設定
 	pContext->IASetInputLayout(m_inputLayout.Get());
-
 	//頂点を三角形として描画する
 	pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
@@ -575,7 +563,6 @@ void SpriteRenderer::Draw(Texture* pTexture, float x, float y, float width, floa
 
 	//シェーダーを設定
 	pContext->VSSetShader(m_vertexShader.Get(), nullptr, 0);
-
 	pContext->PSSetShader(m_pixelShader.Get(), nullptr, 0);
 
 	//HLSLのregister(b0)に設定する
@@ -615,13 +602,10 @@ void SpriteRenderer::Draw(Texture* pTexture, float x, float y, float width, floa
 	//透過を有効に
 	float blendFactor[4] = { 0.0f,0.0f,0.0f,0.0f };
 	pContext->OMSetBlendState(m_alphaBlendState.Get(), blendFactor, 0xffffffff);
-
 	//深度テストを無効にする
 	pContext->OMSetDepthStencilState(m_depthStencilState.Get(), 0);
-	
 	//6頂点を描画
 	pContext->Draw(6, 0);
-
 	//次の3D描画などへ影響を残さないようにブレンドステートを解除
 	pContext->OMSetBlendState(nullptr, nullptr, 0xffffffff);
 	pContext->OMSetDepthStencilState(nullptr, 0);

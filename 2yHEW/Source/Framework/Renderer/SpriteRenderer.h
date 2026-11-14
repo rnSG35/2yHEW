@@ -68,19 +68,14 @@ private:
 
 	//csoからシェーダー作成
 	bool CreateShaders();
-
 	//頂点バッファ作成
 	bool CreateVertexBuffer();
-
 	//定数バッファ作成
 	bool CreateConstantBuffer();
-
 	//サンプラーステート作成
 	bool CreateSamplerState();
-
 	//ブレンドステート作成
 	bool CreateBlendState();
-
 	//深度ステンシルステート作成
 	//2Dスプライトでは深度てえストを使わず、書いた順番で前後関係を決めるため
 	bool CreateDepthStencilState();
@@ -104,12 +99,8 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11BlendState> m_additiveBlendState;
 	//新でテストと深度書き込みを無効にする設定
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> m_depthStencilState;
-
-
+	
 	//画面サイズ
 	UINT m_screenWidth = 0;
 	UINT m_screenHeight = 0;
-
-
 };
-

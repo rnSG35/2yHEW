@@ -37,4 +37,3 @@ private:
 	//‚Ç‚±‚É•t‚¢‚Ä‚¢‚é‚Ì‚©‚ª•ª‚©‚ç‚È‚­‚È‚é‚½‚ß
 	friend class GameObject;
 };
-

@@ -28,7 +28,6 @@ bool Application::AppInit(int nShowCmd, bool isFullScreen, int screenWidth, int 
 	{
 		return false;
 	}
-
 	return true;
 }
 
@@ -99,7 +98,6 @@ void Application::AppLoop()
 				DebugLogWrite("‹N“®ˆ—Š®—¹ / Startup Complete");
 
 				isStartupLogCleared = true;
-				//
 			}
 		}
 	}

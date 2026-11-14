@@ -5,14 +5,13 @@
 #include "../../Framework/Input/Input.h"
 #include "../Scene/Base/SceneBase.h"
 
-#include <memory>
+//#include <memory>
 //#include <vector>
 //#include <concepts>
 
 class GameManager
 {
 public:
-
 	GameManager() = default;
 	~GameManager() = default;
 
@@ -28,7 +27,6 @@ public:
 		return m_currentScene ? m_currentScene->GetSceneName() : L"None";
 	}
 private:
-
 	Input m_input;
 
 	//動いているシーン
@@ -39,6 +37,4 @@ private:
 
 	//シーンの切り替え
 	bool ChangeScene(eScene nextScene);
-
-
 };
