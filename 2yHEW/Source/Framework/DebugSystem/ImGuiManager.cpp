@@ -102,7 +102,7 @@ void ImGuiManager::EndFrame()
 //---------------------------------------------------------
 //終了処理
 //---------------------------------------------------------
-void ImGuiManager::UnInitalize()
+void ImGuiManager::UnInitialize()
 {
 	if (!s_isInitialized)
 	{

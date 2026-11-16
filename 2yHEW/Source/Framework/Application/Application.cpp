@@ -131,7 +131,7 @@ void Application::AppLoop()
 	}
 	game.Exit();
 
-	ImGuiManager::UnInitalize();
+	ImGuiManager::UnInitialize();
 }
 
 //---------------------------------------------------------

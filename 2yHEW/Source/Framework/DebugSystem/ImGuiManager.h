@@ -21,7 +21,7 @@ public:
 	static void EndFrame();
 
 	//終了
-	static void UnInitalize();
+	static void UnInitialize();
 
 	//入力後Imguiに渡す
 	//Imguiが入力を使った場合はtrueを返す
