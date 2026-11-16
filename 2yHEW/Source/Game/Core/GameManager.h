@@ -20,6 +20,13 @@ public:
 	void Draw();
 	void Exit();
 
+	//今のシーンからゲーム終了が依頼されているか
+	//シーンがないときはfalse、m_currentSceneが空のままだと落ちるため、先に確認
+	bool IsQuitRequested() const
+	{
+		return m_currentScene && m_currentScene->IsQuitRestested();
+	}
+
 	//今のシーン名を取得
 	//シーンがないときは"None"を返す、nullptrで返すと、表示する側で落ちる原因になる
 	const wchar_t* GetCurrentSceneName() const

@@ -75,6 +75,16 @@ void Application::AppLoop()
 
 			game.Update();
 
+			//シーンからゲーム終了が依頼されたらループを抜ける
+			if (game.IsQuitRequested())
+			{
+				DebugLogWrite("ゲーム終了 / Game Quit");
+				
+				//ウィンドウを閉じる
+				DestroyWindow(m_window.GetHwnd());
+				break;
+			}
+
 			Graphics::GetInstance().BeginFrame();
 
 			game.Draw();
