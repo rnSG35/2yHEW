@@ -37,7 +37,7 @@ bool Application::AppInit(int nShowCmd, bool isFullScreen, int screenWidth, int 
 		Graphics::GetInstance().GetDevice(),
 		Graphics::GetInstance().GetContext()))
 	{
-		return true;
+		return false;
 	}
 
 	return true;

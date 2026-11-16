@@ -57,5 +57,5 @@ void TextureManager::ClearTexture()
 {
 	m_textures.clear();
 
-	DebugLogWrite("TextureManager‰ð•úŠ®—¹");
+	DebugLogWrite("TextureManager‰ð•úŠ®—¹ / TextureManager‚Ì‰ð•ú‚ªŠ®—¹‚µ‚Ü‚µ‚½");
 }
