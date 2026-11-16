@@ -81,7 +81,7 @@ void Application::AppLoop()
 
 			Graphics::GetInstance().EndFrame();
 
-			//キャプションにフレームせーとを表示
+			//キャプションにフレームレートを表示
 			if (fpsManager.IsFpsUpdated())
 			{
 				wchar_t windowTitle[64];

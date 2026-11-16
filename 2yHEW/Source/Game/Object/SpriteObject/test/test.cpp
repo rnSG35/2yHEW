@@ -5,9 +5,10 @@
 //---------------------------------------------------------
 //コンストラクタ
 //---------------------------------------------------------
-test::test() : SpriteObjectBase("AppData/Assets/Textures/test1.png")
-{
-}
+test::test()
+	: SpriteObjectBase(
+		"AppData/Assets/Textures/test1.png")
+{}
 
 void test::OnInit()
 {
@@ -17,7 +18,7 @@ void test::OnInit()
 	//画面に表示する大きさ
 	SetSize(256.0f, 256.0f);
 
-	auto showComponent =AddComponent<CShowObject>();
+	auto showComponent = AddComponent<CShowObject>();
 
 	if (showComponent->GetOwner() == this)
 	{
@@ -26,10 +27,7 @@ void test::OnInit()
 }
 
 void test::OnUpdate()
-{
-
-}
+{}
 
 void test::OnDraw()
-{
-}
+{}

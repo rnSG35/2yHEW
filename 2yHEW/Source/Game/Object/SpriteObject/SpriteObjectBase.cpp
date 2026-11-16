@@ -10,8 +10,7 @@
 //コンストラクタ
 //---------------------------------------------------------
 SpriteObjectBase::SpriteObjectBase(const std::string& filePath) : m_filePath(filePath)
-{
-}
+{}
 
 //---------------------------------------------------------
 //初期化
