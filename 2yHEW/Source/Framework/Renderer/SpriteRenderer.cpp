@@ -590,6 +590,7 @@ void SpriteRenderer::Draw(Texture* pTexture, float x, float y, float width, floa
 	case eSpriteBlendMode::ALPHA:
 	{
 
+		break;
 	}
 	default:
 	{

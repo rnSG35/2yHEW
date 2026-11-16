@@ -72,32 +72,28 @@ LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
 	{
 	case WM_DESTROY:
 	{	//ウィンドウが閉じられたらWM_QUITを送ってゲームループ終了
-		PostQuitMessage(0);
-
+		//PostQuitMessage(0);
+		break;
 	}
-	break;
 	case WM_CLOSE: //「x」ボタンが押されたら
 	{
-		DestroyWindow(hWnd); // メッセージループにWM_QUITを送る
+		//DestroyWindow(hWnd); // メッセージループにWM_QUITを送る
+		break;
 	}
-	break;
 	case WM_KEYDOWN:
 	{	//ESCキーが押されたらウィンドウを閉じる
 		if (wp == VK_ESCAPE)
 		{
 			DestroyWindow(hWnd);
-
 		}
 		return 0;
-
+		break;
 	}
-	break;
 	case WM_SETCURSOR:
 	{
 		SetCursor(LoadCursor(nullptr, IDC_ARROW)); // 矢印カーソルを設定
+		break;
 	}
-	break;
-
 	default:
 		//未処理メッセージはWindows標準処理に任せる
 		return DefWindowProc(hWnd, msg, wp, lp);
