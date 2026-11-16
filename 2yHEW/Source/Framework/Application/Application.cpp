@@ -2,7 +2,9 @@
 #include "FpsManager.h"
 #include "../Graphics/Graphics.h"
 #include "../../Game/Core/GameManager.h"
+
 #include "../DebugSystem/DebugLog.h"
+#include "../DebugSystem/ImGuiManager.h"
 
 //---------------------------------------------------------
 //アプリケーション初期化
@@ -28,6 +30,16 @@ bool Application::AppInit(int nShowCmd, bool isFullScreen, int screenWidth, int 
 	{
 		return false;
 	}
+
+	//ImGui初期化
+	if (!ImGuiManager::Initialize(
+		m_window.GetHwnd(),
+		Graphics::GetInstance().GetDevice(),
+		Graphics::GetInstance().GetContext()))
+	{
+		return true;
+	}
+
 	return true;
 }
 
@@ -73,6 +85,9 @@ void Application::AppLoop()
 				continue;
 			}
 
+			//シーンのUpdate()の中でImGuiの画面を作れるようにするためにgame.update()より前に
+			ImGuiManager::BeginFrame();
+
 			game.Update();
 
 			//シーンからゲーム終了が依頼されたらループを抜ける
@@ -88,6 +103,9 @@ void Application::AppLoop()
 			Graphics::GetInstance().BeginFrame();
 
 			game.Draw();
+
+			//ゲーム描画の後に呼んで、ゲームより手前に描画
+			ImGuiManager::EndFrame();
 
 			Graphics::GetInstance().EndFrame();
 
@@ -112,6 +130,8 @@ void Application::AppLoop()
 		}
 	}
 	game.Exit();
+
+	ImGuiManager::UnInitalize();
 }
 
 //---------------------------------------------------------

@@ -1,6 +1,7 @@
 #include "Window.h"
 #include "Application.h"
 #include "../DebugSystem/DebugLog.h"
+#include "../DebugSystem/ImGuiManager.h"
 
 //---------------------------------------------------------
 //ウィンドウ生成
@@ -68,6 +69,12 @@ bool Window::Create(int width, int height, const wchar_t* title)
 //---------------------------------------------------------
 LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
 {
+	//ImGuiに入力を渡す
+	if (ImGuiManager::WndProcHandler(hWnd, msg, wp, lp))
+	{
+		return true;
+	}
+
 	switch (msg)
 	{
 	case WM_DESTROY:
