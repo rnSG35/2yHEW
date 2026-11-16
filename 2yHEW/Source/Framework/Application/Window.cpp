@@ -71,7 +71,8 @@ LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
 	switch (msg)
 	{
 	case WM_DESTROY:
-	{	//ウィンドウが閉じられたらWM_QUITを送ってゲームループ終了
+	{
+		//ウィンドウが閉じられたらWM_QUITを送ってゲームループ終了
 		PostQuitMessage(0);
 		break;
 	}
