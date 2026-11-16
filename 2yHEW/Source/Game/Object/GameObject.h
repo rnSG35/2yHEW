@@ -2,9 +2,9 @@
 //コンポーネントを持つ側
 #include "../Component/Base/ComponentBase.h"
 
-//#include <memory>
-//#include <vector>
-//#include <concepts>
+#include <memory>
+#include <vector>
+#include <concepts>
 
 //AddComponent<T>()RemoveComponent<T>()GetComponent<T>()はテンプレート関数なので実装もヘッダーに書く
 class GameObject
