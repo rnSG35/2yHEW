@@ -1,15 +1,15 @@
-#undef UNICODE
+ï»¿#undef UNICODE
 #define _CRT_SECURE_NO_WARNINGS
 
 #include "Framework/Application/Application.h"
 //#include <combaseapi.h>
 #include "../Source/Framework/DebugSystem/DebugLog.h"
-// NVIDIA Optimus ‘Î‰FdGPU‚ğ—Dæ
+// NVIDIA Optimus å¯¾å¿œï¼šdGPUã‚’å„ªå…ˆ
 extern "C" {
 	__declspec(dllexport) DWORD NvOptimusEnablement = 0x00000001;
 }
 
-// AMD PowerXpress ‘Î‰FdGPU‚ğ—Dæ
+// AMD PowerXpress å¯¾å¿œï¼šdGPUã‚’å„ªå…ˆ
 extern "C" {
 	__declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
 }
@@ -18,15 +18,15 @@ static const int WINDOW_WIDTH = 1280;
 static const int WINDOW_HEIGHT = 720;
 
 //---------------------------------------------------------
-//ƒGƒ“ƒgƒŠ[ƒ|ƒCƒ“ƒg
+//ã‚¨ãƒ³ãƒˆãƒªãƒ¼ãƒã‚¤ãƒ³ãƒˆ
 //---------------------------------------------------------
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
 {
 	DebugLogClear();
 	//---------------------------------------------------------
-	//COM‰Šú‰»
-	//TextureƒNƒ‰ƒX‚ÅWIC‚ğg—p‚µ‚Ä‚¢‚é
-	//WIC“à•”‚ÅCOM‚Æ‚¢‚¤Windows‹@”\‚ğ—˜—p‚·‚é‚½‚ßƒAƒvƒŠ‹N“®‚ÉCOM‚ğ‰Šú‰»
+	//COMåˆæœŸåŒ–
+	//Textureã‚¯ãƒ©ã‚¹ã§WICã‚’ä½¿ç”¨ã—ã¦ã„ã‚‹
+	//WICå†…éƒ¨ã§COMã¨ã„ã†Windowsæ©Ÿèƒ½ã‚’åˆ©ç”¨ã™ã‚‹ãŸã‚ã‚¢ãƒ—ãƒªèµ·å‹•æ™‚ã«COMã‚’åˆæœŸåŒ–
 	//---------------------------------------------------------
 	HRESULT hr = CoInitializeEx(
 		nullptr,
@@ -35,23 +35,23 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	if (FAILED(hr)) { return 0; }
 
 
-	//ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ÌƒVƒ“ƒOƒ‹ƒgƒ“ƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾
+	//ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—
 	Application& App = Application::GetInstance();
 
-	//ƒEƒBƒ“ƒhƒEì¬
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ä½œæˆ
 	if (!App.AppInit(nShowCmd, false, WINDOW_WIDTH, WINDOW_HEIGHT))
 	{
 		CoUninitialize();
 		return 0;
 	}
 
-	//ƒƒCƒ“ƒ‹[ƒv
+	//ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒ—
 	App.AppLoop();
 
-	//I—¹ˆ—
+	//çµ‚äº†å‡¦ç†
 	App.UnInit();
 
-	//COMI—¹
+	//COMçµ‚äº†
 	CoUninitialize();
 
 	return 0;
