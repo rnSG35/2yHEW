@@ -21,7 +21,7 @@ public:
 	void Draw() override;
 
 	//表示位置設定
-	void SetPosition(float x, float y,float z = 0.0f);
+	void SetPosition(float x, float y,float z = 0.0f/*zは省略可能*/);
 
 	//表示サイズ設定
 	void SetSize(float width, float height);

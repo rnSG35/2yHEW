@@ -30,11 +30,14 @@ public:
 	//---------------------------------------------------------
 	//コンポーネント追加
 	//---------------------------------------------------------
-	template<std::derived_from<ComponentBase> T>
-	std::shared_ptr<T> AddComponent()
+	template<std::derived_from<ComponentBase> T,class...Args>
+	std::shared_ptr<T> AddComponent(Args&&...args)
 	{
 		//コンポーネント生成
-		std::shared_ptr<T> component = std::make_shared<T>();
+		//受け取った引数をそのままコンストラクタに渡す
+		//std::forwardを使うと、Input&を参照のまま渡すことができる
+		std::shared_ptr<T> component = std::make_shared<T>(std::forward<Args>(args)...);
+
 
 		//自分(GameObject)を持ち主として登録
 		//Initializeより先に設定するのは、
@@ -94,7 +97,7 @@ public:
 	//---------------------------------------------------------
 	//付いている全コンポーネントを更新
 	//コンポーネントが自分で動けるようにするため
-	//舞フレームここからUpdate()を呼ぶ
+	//毎フレームここからUpdate()を呼ぶ
 	//---------------------------------------------------------
 	void UpdateComponents()
 	{

@@ -50,14 +50,12 @@ void CKeyMove::Update()
 		return;
 	}
 
-	//上下左右を押している間
+	//上下左右を押している間、移動する
 	Vector2 moveDirection = Vector2::Zero;
-
 	if (m_input.GetKeyPress(VK_LEFT) || m_input.GetKeyPress(VK_A)) { moveDirection.x -= 1.0f; }
 	if (m_input.GetKeyPress(VK_RIGHT)|| m_input.GetKeyPress(VK_D)) { moveDirection.x += 1.0f; }
 	if (m_input.GetKeyPress(VK_UP)	 || m_input.GetKeyPress(VK_W)) { moveDirection.y -= 1.0f; }
 	if (m_input.GetKeyPress(VK_DOWN) || m_input.GetKeyPress(VK_S)) { moveDirection.y += 1.0f; }
-
 	//斜め移動
 	if (moveDirection.LengthSquared() > 0.0f)
 	{

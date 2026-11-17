@@ -24,7 +24,7 @@ public:
 	//シーンがないときはfalse、m_currentSceneが空のままだと落ちるため、先に確認
 	bool IsQuitRequested() const
 	{
-		return m_currentScene && m_currentScene->IsQuitRestested();
+		return m_currentScene && m_currentScene->IsQuitRequested();
 	}
 
 	//今のシーン名を取得
