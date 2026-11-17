@@ -1,43 +1,43 @@
-#include "DebugLog.h"
+ï»¿#include "DebugLog.h"
 #ifdef _DEBUG
 
 #include "../Pch.h"
 
 namespace
 {
-	// ƒƒOƒtƒ@ƒCƒ‹
+	// ãƒ­ã‚°ãƒ•ã‚¡ã‚¤ãƒ«
 	const char* FILE_PATH = "DebugLog/log.txt";
 
-	//‰½‚à‚µ‚È‚¢‚Ü‚Ü‚¾‚Ælog.txt‚Éâ‘ÎƒpƒX‚Å‘‚«‚Ü‚ê‚é‚Ì‚ÅASourceƒtƒHƒ‹ƒ_‚©‚ç‚Ì‘Š‘ÎƒpƒX‚É•ÏŠ·
+	//ä½•ã‚‚ã—ãªã„ã¾ã¾ã ã¨log.txtã«çµ¶å¯¾ãƒ‘ã‚¹ã§æ›¸ãè¾¼ã¾ã‚Œã‚‹ã®ã§ã€Sourceãƒ•ã‚©ãƒ«ãƒ€ã‹ã‚‰ã®ç›¸å¯¾ãƒ‘ã‚¹ã«å¤‰æ›
 	std::string_view ToRelativePath(std::string_view fullPath)
 	{
-		//Windows‚Ì‹æØ‚è•¶šu\v‚Å’T‚·
+		//Windowsã®åŒºåˆ‡ã‚Šæ–‡å­—ã€Œ\ã€ã§æ¢ã™
 		size_t sourcePosition = fullPath.find("\\Source\\");
 
-		//Œ©‚Â‚©‚ç‚È‚¯‚ê‚Îu/v‚Å‚à’T‚·
+		//è¦‹ã¤ã‹ã‚‰ãªã‘ã‚Œã°ã€Œ/ã€ã§ã‚‚æ¢ã™
 		if (sourcePosition == std::string_view::npos)
 		{
 			sourcePosition = fullPath.find("/Source/");
 		}
 
-		//SourceƒtƒHƒ‹ƒ_‚ªŒ©‚Â‚©‚ç‚È‚¢ê‡‚ÍA‚»‚Ì‚Ü‚Ü•Ô‚·
+		//Sourceãƒ•ã‚©ãƒ«ãƒ€ãŒè¦‹ã¤ã‹ã‚‰ãªã„å ´åˆã¯ã€ãã®ã¾ã¾è¿”ã™
 		if (sourcePosition == std::string_view::npos)
 		{
 			return fullPath;
 		}
 
-		//æ“ª‚Ì‹æØ‚è•¶š‚ğ”ò‚Î‚µ‚ÄuSource...v‚©‚ç•Ô‚·
+		//å…ˆé ­ã®åŒºåˆ‡ã‚Šæ–‡å­—ã‚’é£›ã°ã—ã¦ã€ŒSource...ã€ã‹ã‚‰è¿”ã™
 		return fullPath.substr(sourcePosition + 1);
 	}
 
 }
 
 //---------------------------------------------------------
-// ƒƒOo—Í
+// ãƒ­ã‚°å‡ºåŠ›
 //---------------------------------------------------------
 void DebugLog::Write(const char* text, const std::source_location& location)
 {
-	// ’Ç‹Lƒ‚[ƒh‚ÅŠJ‚­
+	// è¿½è¨˜ãƒ¢ãƒ¼ãƒ‰ã§é–‹ã
 	std::ofstream file(FILE_PATH, std::ios::app);
 
 	if (!file)
@@ -45,15 +45,15 @@ void DebugLog::Write(const char* text, const std::source_location& location)
 		return;
 	}
 
-	file << "[FilePathF" << ToRelativePath(location.file_name())
-		<< "FLine" << location.line()
+	file << "[FilePathï¼š" << ToRelativePath(location.file_name())
+		<< "ï¼šLine" << location.line()
 		<< "]" << text << std::endl;
 
 	file.close();
 }
 
 //---------------------------------------------------------
-//ƒƒOíœ
+//ãƒ­ã‚°å‰Šé™¤
 //---------------------------------------------------------
 void DebugLog::Clear()
 {

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../Base/ComponentBase.h"
 class CShowObject :
     public ComponentBase
@@ -7,23 +7,23 @@ public:
     CShowObject() = default;
     ~CShowObject() override = default;
 
-    //•\¦‚·‚é
+    //è¡¨ç¤ºã™ã‚‹
     void Show();
 
-    //”ñ•\¦‚É‚·‚é
+    //éè¡¨ç¤ºã«ã™ã‚‹
     void Hide();
 
-    //•\¦ó‘Ô‚ğ”½“]
+    //è¡¨ç¤ºçŠ¶æ…‹ã‚’åè»¢
     void Toggle();
 
-    //•\¦ó‘Ô‚ğ’¼Úİ’è
+    //è¡¨ç¤ºçŠ¶æ…‹ã‚’ç›´æ¥è¨­å®š
     void SetVisible(bool isVisible);
 
-    //Œ»İ•\¦‚·‚éó‘Ô‚©æ“¾
+    //ç¾åœ¨è¡¨ç¤ºã™ã‚‹çŠ¶æ…‹ã‹å–å¾—
     bool IsVisible() const;
 
 private:
-    //true F•`‰æ‚·‚é
-    //falseF•`‰æ‚µ‚È‚¢
+    //true ï¼šæç”»ã™ã‚‹
+    //falseï¼šæç”»ã—ãªã„
     bool m_isVisible = true;
 };

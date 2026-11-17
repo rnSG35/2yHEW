@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <d3d11.h>
 #include <wrl/client.h>
@@ -6,30 +6,30 @@
 
 class Texture;
 
-//ƒXƒvƒ‰ƒCƒg‚Ì‡¬•û–@
+//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®åˆæˆæ–¹æ³•
 enum class eSpriteBlendMode
 {
-	ALPHA,	//’Êí‚Ì”¼“§–¾
-	ADDITIVE//Œõ‚È‚Ç‚Ég‚¤‰ÁZ‡¬
+	ALPHA,	//é€šå¸¸ã®åŠé€æ˜
+	ADDITIVE//å…‰ãªã©ã«ä½¿ã†åŠ ç®—åˆæˆ
 };
 
 class SpriteRenderer
 {
 public:
-	//ƒVƒ“ƒOƒ‹ƒgƒ“æ“¾
+	//ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³å–å¾—
 	static SpriteRenderer& GetInstance();
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	bool Initialize(UINT screenWidth, UINT screenHeight);
 
-	//•`‰æ
-	//textureF•`‰æ‚·‚é‰æ‘œ
-	//x		 F‰æ‘œ¶ã‚ÌXÀ•W
-	//y		 F‰æ‘œ¶ã‚ÌYÀ•W
-	//width	 F•`‰æ‰¡•
-	//height F•`‰æc•
-	//color  :ƒXƒvƒ‰ƒCƒg‚É‚©‚¯‚éF
-	//blendMode:‡¬•û–@
+	//æç”»
+	//textureï¼šæç”»ã™ã‚‹ç”»åƒ
+	//x		 ï¼šç”»åƒå·¦ä¸Šã®Xåº§æ¨™
+	//y		 ï¼šç”»åƒå·¦ä¸Šã®Yåº§æ¨™
+	//width	 ï¼šæç”»æ¨ªå¹…
+	//height ï¼šæç”»ç¸¦å¹…
+	//color  :ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã«ã‹ã‘ã‚‹è‰²
+	//blendMode:åˆæˆæ–¹æ³•
 	void Draw(Texture* pTexture,
 		float x,
 		float y,
@@ -38,10 +38,10 @@ public:
 		const DirectX::XMFLOAT4& color = DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f),
 		eSpriteBlendMode blendMode = eSpriteBlendMode::ALPHA);
 
-	//I—¹ˆ—
+	//çµ‚äº†å‡¦ç†
 	void UnInitialize();
 private:
-	//HLSL‚ÌConstBuffer‚Æ“¯‚¶•À‚Ñ‚É‚·‚é
+	//HLSLã®ConstBufferã¨åŒã˜ä¸¦ã³ã«ã™ã‚‹
 	struct ConstantBufferData
 	{
 		DirectX::XMFLOAT4 vertexColor;
@@ -56,7 +56,7 @@ private:
 	SpriteRenderer(const SpriteRenderer&) = delete;
 	SpriteRenderer& operator=(const SpriteRenderer&) = delete;
 
-	//ƒVƒF[ƒ_[ƒtƒ@ƒCƒ‹“Ç‚İ‚İ
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 	bool LoadVertexShaderBlob(
 		const wchar_t* csoPath,
 		const wchar_t* hlslPath,
@@ -66,41 +66,41 @@ private:
 		const wchar_t* hlslPath,
 		Microsoft::WRL::ComPtr<ID3DBlob>& shaderBlob);
 
-	//cso‚©‚çƒVƒF[ƒ_[ì¬
+	//csoã‹ã‚‰ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ä½œæˆ
 	bool CreateShaders();
-	//’¸“_ƒoƒbƒtƒ@ì¬
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ä½œæˆ
 	bool CreateVertexBuffer();
-	//’è”ƒoƒbƒtƒ@ì¬
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ä½œæˆ
 	bool CreateConstantBuffer();
-	//ƒTƒ“ƒvƒ‰[ƒXƒe[ƒgì¬
+	//ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆä½œæˆ
 	bool CreateSamplerState();
-	//ƒuƒŒƒ“ƒhƒXƒe[ƒgì¬
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆä½œæˆ
 	bool CreateBlendState();
-	//[“xƒXƒeƒ“ƒVƒ‹ƒXƒe[ƒgì¬
-	//2DƒXƒvƒ‰ƒCƒg‚Å‚Í[“x‚Ä‚¦ƒXƒg‚ğg‚í‚¸A‘‚¢‚½‡”Ô‚Å‘OŒãŠÖŒW‚ğŒˆ‚ß‚é‚½‚ß
+	//æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ã‚¹ãƒ†ãƒ¼ãƒˆä½œæˆ
+	//2Dã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã§ã¯æ·±åº¦ã¦ãˆã‚¹ãƒˆã‚’ä½¿ã‚ãšã€æ›¸ã„ãŸé †ç•ªã§å‰å¾Œé–¢ä¿‚ã‚’æ±ºã‚ã‚‹ãŸã‚
 	bool CreateDepthStencilState();
 
 private:
-	//’¸“_ƒVƒF[ƒ_[
+	//é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼
 	Microsoft::WRL::ComPtr<ID3D11VertexShader> m_vertexShader;
-	//ƒsƒNƒZƒ‹ƒVƒF[ƒ_[
+	//ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼
 	Microsoft::WRL::ComPtr<ID3D11PixelShader> m_pixelShader;
-	//’¸“_‚Ì•À‚Ñ•û‚ğDirectX‚É“`‚¦‚é
+	//é ‚ç‚¹ã®ä¸¦ã³æ–¹ã‚’DirectXã«ä¼ãˆã‚‹
 	Microsoft::WRL::ComPtr<ID3D11InputLayout> m_inputLayout;
-	//lŠpŒ`‚Ì’¸“_‚ğ•Û‘¶‚·‚é
+	//å››è§’å½¢ã®é ‚ç‚¹ã‚’ä¿å­˜ã™ã‚‹
 	Microsoft::WRL::ComPtr<ID3D11Buffer> m_vertexBuffer;
 	//
 	Microsoft::WRL::ComPtr<ID3D11Buffer> m_constantBuffer;
-	//ƒeƒNƒXƒ`ƒƒ[‚ÌF‚ğæ“¾‚·‚é•û–@
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã®è‰²ã‚’å–å¾—ã™ã‚‹æ–¹æ³•
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> m_samplerState;
-	//png‰æ‘œ‚Ì“§‰ß‚ğ—LŒø‚É‚·‚é
+	//pngç”»åƒã®é€éã‚’æœ‰åŠ¹ã«ã™ã‚‹
 	Microsoft::WRL::ComPtr<ID3D11BlendState> m_alphaBlendState;
-	//ƒŒ[ƒU[‚ÌŒõ‚È‚Ç‚Ég‚¤‰ÁZ‡¬
+	//ãƒ¬ãƒ¼ã‚¶ãƒ¼ã®å…‰ãªã©ã«ä½¿ã†åŠ ç®—åˆæˆ
 	Microsoft::WRL::ComPtr<ID3D11BlendState> m_additiveBlendState;
-	//V‚ÅƒeƒXƒg‚Æ[“x‘‚«‚İ‚ğ–³Œø‚É‚·‚éİ’è
+	//æ–°ã§ãƒ†ã‚¹ãƒˆã¨æ·±åº¦æ›¸ãè¾¼ã¿ã‚’ç„¡åŠ¹ã«ã™ã‚‹è¨­å®š
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> m_depthStencilState;
 	
-	//‰æ–ÊƒTƒCƒY
+	//ç”»é¢ã‚µã‚¤ã‚º
 	UINT m_screenWidth = 0;
 	UINT m_screenHeight = 0;
 };

@@ -1,39 +1,39 @@
-#pragma once
-//�S�R���|�[�l���g�̊��N���X
-// GameObject�ɕt������@�\�̊��
-//�����I��CTransform�ACMove�ACCollider�ACAnimation�Ȃǂ���������h���ł���悤��
+﻿#pragma once
+//全コンポーネントの基底クラス
+// GameObjectに付けられる機能の基底
+//将来的にCTransform、CMove、CCollider、CAnimationなどをここから派生できるように
 
-//GameObject.h���C���N���[�h�����
-//GameObject.h��ComponentBase.h��GameObject.h
-//�Ƃ����z�C���N���[�h�ɂȂ邽�߁A���O�����`����
-//�|�C���^�Ƃ��Ď��Ȃ璆�g��m��Ȃ��Ă����Ȃ�
+//GameObject.hをインクルードすると
+//GameObject.h→ComponentBase.h→GameObject.h
+//という循環インクルードになるため、名前だけ伝える
+//ポインタとして持つなら中身を知らなくても問題ない
 class GameObject;
 
 class ComponentBase
 {
 public:
-	//�f�X�g���N�^
+	//デストラクタ
 	virtual ~ComponentBase() = default;
 
-	//�������AAddComponent()�֐��̒���m_owner��ݒ肵����ɌĂ΂�邽��
-	//�����ł�m_owner���g�p�\
+	//初期化、AddComponent()関数の中でm_ownerを設定した後に呼ばれるため
+	//ここではm_ownerを使用可能
 	virtual void Initialize() {}
 
-	//�X�V
+	//更新
 	virtual void Update() {}
 
-	//�������t���Ă���GameObject���擾
+	//自分が付いているGameObjectを取得
 	GameObject* GetOwner() const { return m_pOwner; }
 
 protected:
-	//�������t���Ă���GameObject
-	//���L���Ă���̂�GameObject���Ȃ̂ŁA����̐ӔC�������Ȃ����ʂ̃|�C���^
-	//shared_ptr�ɂ���ƁAGameobject��Component�����݂������������ĉ������Ȃ��Ȃ邽�ߎg��Ȃ�
+	//自分が付いているGameObject
+	//所有しているのはGameObject側なので、解放の責任を持たない普通のポインタ
+	//shared_ptrにすると、GameobjectとComponentがお互いを持ち合って解放されなくなるため使わない
 	GameObject* m_pOwner = nullptr;
 
 private:
-	//m_owner��ݒ�ł���̂�GameObject�̂�
-	//�R���|�[�l���g�n�k��O������t���ւ����ł����
-	//�ǂ��ɕt���Ă���̂���������Ȃ��Ȃ邽��
+	//m_ownerを設定できるのはGameObjectのみ
+	//コンポーネント地震や外部から付け替えができると
+	//どこに付いているのかが分からなくなるため
 	friend class GameObject;
 };

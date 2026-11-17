@@ -1,4 +1,4 @@
-#include "GameManager.h"
+ï»¿#include "GameManager.h"
 
 #include "../../Framework/Renderer/SpriteRenderer.h"
 #include "../../Framework/Texture/TextureManager.h"
@@ -8,35 +8,35 @@
 #include "../Scene/Game/GameScene.h"
 
 //---------------------------------------------------------
-// ‰Šú‰»
+// åˆæœŸåŒ–
 //---------------------------------------------------------
 bool GameManager::Init()
 {
-	DebugLogWrite("GameƒNƒ‰ƒX‰Šú‰»ŠJn / GameInit start");
+	DebugLogWrite("Gameã‚¯ãƒ©ã‚¹åˆæœŸåŒ–é–‹å§‹ / GameInit start");
 
 	const UINT SCREEN_WIDTH = 1280;
 	const UINT SCREEN_HEIGHT = 720;
 
-	// 2D‰æ‘œ•`‰æ‹@”\‚ğ‰Šú‰»
+	// 2Dç”»åƒæç”»æ©Ÿèƒ½ã‚’åˆæœŸåŒ–
 	if (!SpriteRenderer::GetInstance().Initialize(SCREEN_WIDTH,SCREEN_HEIGHT))
 	{
-		DebugLogWrite("SpriteRenderer‰Šú‰»¸”s");
+		DebugLogWrite("SpriteRendereråˆæœŸåŒ–å¤±æ•—");
 		return false;
 	}
 
-	//Å‰‚ÌƒV[ƒ“
+	//æœ€åˆã®ã‚·ãƒ¼ãƒ³
 	if (!ChangeScene(TITLE))
 	{
 		return false;
 	}
 
-	DebugLogWrite("GameƒNƒ‰ƒX‰Šú‰»¬Œ÷ / GameInit Suscess");
+	DebugLogWrite("Gameã‚¯ãƒ©ã‚¹åˆæœŸåŒ–æˆåŠŸ / GameInit Suscess");
 
 	return true;
 }
 
 //---------------------------------------------------------
-// XV
+// æ›´æ–°
 //---------------------------------------------------------
 void GameManager::Update()
 {
@@ -49,22 +49,22 @@ void GameManager::Update()
 
 	m_currentScene->Update();
 
-	//ƒV[ƒ“‚ÌUpdate‚ªI‚í‚Á‚½Œã‚ÉØ‚è‘Ö‚¦‚é
-	//Update“r’†‚ÅØ‚è‘Ö‚¦‚é‚ÆAÀs’†‚ÌƒV[ƒ“‚ª©•ª©g‚ğíœ‚·‚é‚±‚Æ‚É‚È‚èA—‚¿‚éŒ´ˆö‚É‚È‚é‚½‚ß
+	//ã‚·ãƒ¼ãƒ³ã®UpdateãŒçµ‚ã‚ã£ãŸå¾Œã«åˆ‡ã‚Šæ›¿ãˆã‚‹
+	//Updateé€”ä¸­ã§åˆ‡ã‚Šæ›¿ãˆã‚‹ã¨ã€å®Ÿè¡Œä¸­ã®ã‚·ãƒ¼ãƒ³ãŒè‡ªåˆ†è‡ªèº«ã‚’å‰Šé™¤ã™ã‚‹ã“ã¨ã«ãªã‚Šã€è½ã¡ã‚‹åŸå› ã«ãªã‚‹ãŸã‚
 	eScene nextScene = m_currentScene->GetNextScene();
 
 	if (nextScene != NONE)
 	{
 		if (!ChangeScene(nextScene))
 		{
-			//¸”s‚µ‚½‚ç¡‚ÌƒV[ƒ“‚ğ‘±‚¯‚ÄAˆË—Š‚ğæ‚èÁ‚·
+			//å¤±æ•—ã—ãŸã‚‰ä»Šã®ã‚·ãƒ¼ãƒ³ã‚’ç¶šã‘ã¦ã€ä¾é ¼ã‚’å–ã‚Šæ¶ˆã™
 			m_currentScene->ResetNextScene();
 		}
 	}
 }
 
 //---------------------------------------------------------
-// •`‰æ
+// æç”»
 //---------------------------------------------------------
 void GameManager::Draw()
 {
@@ -75,7 +75,7 @@ void GameManager::Draw()
 }
 
 //---------------------------------------------------------
-// I—¹
+// çµ‚äº†
 //---------------------------------------------------------
 void GameManager::Exit()
 {
@@ -85,15 +85,15 @@ void GameManager::Exit()
 		m_currentScene.reset();
 	}
 
-	// TextureManager‚ªŠÇ—‚·‚éTexture‚ğ‰ğ•ú‚·‚é
+	// TextureManagerãŒç®¡ç†ã™ã‚‹Textureã‚’è§£æ”¾ã™ã‚‹
 	TextureManager::GetInstance().ClearTexture();
 
-	// SpriteRenderer‚ª‚ÂDirectXƒŠƒ\[ƒX‚ğ‰ğ•ú‚·‚é
+	// SpriteRendererãŒæŒã¤DirectXãƒªã‚½ãƒ¼ã‚¹ã‚’è§£æ”¾ã™ã‚‹
 	SpriteRenderer::GetInstance().UnInitialize();
 }
 
 //---------------------------------------------------------
-//ƒV[ƒ“¶¬AV‚µ‚­ƒV[ƒ“‚ğ‘‚â‚µ‚½‚çAcase‚ğ’Ç‰Á
+//ã‚·ãƒ¼ãƒ³ç”Ÿæˆã€æ–°ã—ãã‚·ãƒ¼ãƒ³ã‚’å¢—ã‚„ã—ãŸã‚‰ã€caseã‚’è¿½åŠ 
 //---------------------------------------------------------
 std::unique_ptr<SceneBase> GameManager::CreateScene(eScene sceneType)
 {
@@ -106,7 +106,7 @@ std::unique_ptr<SceneBase> GameManager::CreateScene(eScene sceneType)
 }
 
 //---------------------------------------------------------
-//ƒV[ƒ“Ø‚è‘Ö‚¦
+//ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆ
 //---------------------------------------------------------
 bool GameManager::ChangeScene(eScene nextScene)
 {
@@ -114,19 +114,19 @@ bool GameManager::ChangeScene(eScene nextScene)
 
 	if (!newScene)
 	{
-		DebugLogWrite("–¢‘Î‰‚ÌƒV[ƒ“ / Unsupported scene");
+		DebugLogWrite("æœªå¯¾å¿œã®ã‚·ãƒ¼ãƒ³ / Unsupported scene");
 		return false;
 	}
 
-	//æ‚ÉV‚µ‚¢ƒV[ƒ“‚ğ‰Šú‰»
-	//¸”s‚µ‚½‚Æ‚«‚ÉA¡‚ÌƒV[ƒ“‚ğ‚»‚Ì‚Ü‚Ü‘±‚¯‚ç‚ê‚é‚æ‚¤‚É‚·‚é‚½‚ß
+	//å…ˆã«æ–°ã—ã„ã‚·ãƒ¼ãƒ³ã‚’åˆæœŸåŒ–
+	//å¤±æ•—ã—ãŸã¨ãã«ã€ä»Šã®ã‚·ãƒ¼ãƒ³ã‚’ãã®ã¾ã¾ç¶šã‘ã‚‰ã‚Œã‚‹ã‚ˆã†ã«ã™ã‚‹ãŸã‚
 	if (!newScene->Init())
 	{
-		DebugLogWrite("ƒV[ƒ“‰Šú‰»¸”s / Failed to Initialize Scene");
+		DebugLogWrite("ã‚·ãƒ¼ãƒ³åˆæœŸåŒ–å¤±æ•— / Failed to Initialize Scene");
 		return false;
 	}
 
-	//ŒÃ‚¢ƒV[ƒ“‚ğI—¹‚µ‚Ä“ü‚ê‘Ö‚¦‚é
+	//å¤ã„ã‚·ãƒ¼ãƒ³ã‚’çµ‚äº†ã—ã¦å…¥ã‚Œæ›¿ãˆã‚‹
 	if (m_currentScene)
 	{
 		m_currentScene->UnInit();

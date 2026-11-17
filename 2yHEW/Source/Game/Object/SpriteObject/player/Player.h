@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "../SpriteObjectBase.h"
 class Player :
 	public SpriteObjectBase

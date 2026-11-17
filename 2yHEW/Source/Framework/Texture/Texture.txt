@@ -1,39 +1,39 @@
-�摜�t�@�C���̓ǂݍ��݂ƊǗ���S������N���X
+﻿画像ファイルの読み込みと管理を担当するクラス
 
-TextureManager���摜�S�̂��Ǘ�����̂ɑ΂��āA
-Texture�͉摜1�����Ǘ�����N���X
+TextureManagerが画像全体を管理するのに対して、
+Textureは画像1枚を管理するクラス
 
-�Ⴆ��
+例えば
 	Player.png
 	Enemy.png
-	Title.png	�̂悤�ȉ摜1��������
+	Title.png	のような画像1枚を扱う
 
 
 
-bool Load(�@)
-	�摜�t�@�C����ǂݍ��݁A
-	GPU�Ŏg�p�ł���e�N�X�`���𐶐�����֐�
+bool Load(①)
+	画像ファイルを読み込み、
+	GPUで使用できるテクスチャを生成する関数
 
-	�@const std::string&	�^	�ǂݍ��މ摜�t�@�C���̃p�X
+	①const std::string&	型	読み込む画像ファイルのパス
 
-	�Ή��`��
+	対応形式
 
 		PNG
 		JPG
 		BMP
 
-	�����ł�
-		�E�摜�t�@�C���ǂݍ���
-		�ERGBA�ϊ�
-		�E�摜�T�C�Y�擾
-		�EGPU�e�N�X�`������
-		�EShaderResourceView����	���s��
+	内部では
+		・画像ファイル読み込み
+		・RGBA変換
+		・画像サイズ取得
+		・GPUテクスチャ生成
+		・ShaderResourceView生成	を行う
 
-	�Q�[���J�n����摜����g�p���ɌĂяo��
+	ゲーム開始時や画像初回使用時に呼び出す
 
-	����������true�A���s������false��Ԃ�
+	成功したらtrue、失敗したらfalseを返す
 
-	��
+	例
 		Texture texture;
 
 		texture.Load(
@@ -41,82 +41,82 @@ bool Load(�@)
 
 
 
-void SetPS(�@)
-	PixelShader�փe�N�X�`����ݒ肷��֐�
+void SetPS(①)
+	PixelShaderへテクスチャを設定する関数
 
-	�@UINT�^		�e�N�X�`���X���b�g�ԍ�
-			t0�Ȃ�0
-			t1�Ȃ�1
-			t2�Ȃ�2
-				���w�肷��
+	①UINT型		テクスチャスロット番号
+			t0なら0
+			t1なら1
+			t2なら2
+				を指定する
 
-	�`��O�ɌĂяo��
+	描画前に呼び出す
 
-	��
+	例
 		texture.SetPS(0);
 
 
 ID3D11ShaderResourceView* GetSRV()
-	ShaderResourceView���擾����֐�
+	ShaderResourceViewを取得する関数
 
-	��ȗp�r
-		�E�V�F�[�_�[�ݒ�
-		�E�`�揈��
-		�E�����e�N�X�`���Ǘ�
+	主な用途
+		・シェーダー設定
+		・描画処理
+		・複数テクスチャ管理
 
-	�ʏ��Texture�����Ŏg�p���邽�߁A
-	���ڌĂԋ@��͏��Ȃ�
+	通常はTexture内部で使用するため、
+	直接呼ぶ機会は少ない
 
 
-�yDirectX11�p��z
+【DirectX11用語】
 
 Texture
 
-	GPU��ɕێ������摜�f�[�^
+	GPU上に保持される画像データ
 
-	���ۂ̕`��ɂ�
-	PNG��JPG�����̂܂܎g���̂ł͂Ȃ��A
-	GPU�p��Texture�֕ϊ�����K�v������
+	実際の描画には
+	PNGやJPGをそのまま使うのではなく、
+	GPU用のTextureへ変換する必要がある
 
 
 ShaderResourceView(SRV)
 
-	�V�F�[�_�[����Texture�փA�N�Z�X���邽�߂̃I�u�W�F�N�g
+	シェーダーからTextureへアクセスするためのオブジェクト
 
-	Texture�P�̂ł̓V�F�[�_�[����Q�Ƃł��Ȃ����߁A
+	Texture単体ではシェーダーから参照できないため、
 
 	SRV
 
-	���쐬���ė��p����
+	を作成して利用する
 
 
 PixelShader
 
-	�s�N�Z�����Ƃ̐F�����肷��v���O����
+	ピクセルごとの色を決定するプログラム
 
-	Texture�͎��PixelShader���ŎQ�Ƃ����
+	Textureは主にPixelShader内で参照される
 
 
 WIC
 	(Windows Imaging Component)
 
-	Windows�W���̉摜�ǂݍ��݃��C�u����
+	Windows標準の画像読み込みライブラリ
 
 	PNG
 	JPG
 	BMP
 
-	�Ȃǂ�ǂݍ��ނ��߂Ɏg�p����
+	などを読み込むために使用する
 
 
 RGBA
 
-	R = ��
-	G = ��
-	B = ��
-	A = �����x
+	R = 赤
+	G = 緑
+	B = 青
+	A = 透明度
 
-	��4�v�f�����F�`��
+	の4要素を持つ色形式
 
-	DirectX�ň����₷�����߁A
-	�ǂݍ��ݎ���RGBA�`���֕ϊ����Ă���
+	DirectXで扱いやすいため、
+	読み込み時にRGBA形式へ変換している

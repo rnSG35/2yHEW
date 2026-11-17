@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "../GameObject.h"
 
@@ -12,7 +12,7 @@ class SpriteObjectBase :
 	public GameObject
 {
 public:
-	//g—p‚·‚é‰æ‘œƒpƒX‚ğó‚¯æ‚é
+	//ä½¿ç”¨ã™ã‚‹ç”»åƒãƒ‘ã‚¹ã‚’å—ã‘å–ã‚‹
 	SpriteObjectBase(const std::string& filePath);
 	virtual ~SpriteObjectBase() = default;
 
@@ -20,10 +20,10 @@ public:
 	void Update() override;
 	void Draw() override;
 
-	//•\¦ˆÊ’uİ’è
-	void SetPosition(float x, float y,float z = 0.0f/*z‚ÍÈ—ª‰Â”\*/);
+	//è¡¨ç¤ºä½ç½®è¨­å®š
+	void SetPosition(float x, float y,float z = 0.0f/*zã¯çœç•¥å¯èƒ½*/);
 
-	//•\¦ƒTƒCƒYİ’è
+	//è¡¨ç¤ºã‚µã‚¤ã‚ºè¨­å®š
 	void SetSize(float width, float height);
 
 	void SetColor(
@@ -35,23 +35,23 @@ public:
 	void SetBlendMode(eSpriteBlendMode blendMode);
 
 protected:
-	//”h¶—p
+	//æ´¾ç”Ÿç”¨
 	virtual void OnInit() {};
 	virtual void OnUpdate() {};
 	virtual void OnDraw() {};
 	
 private:
-	//“Ç‚İ‚ñ‚¾Texture
+	//èª­ã¿è¾¼ã‚“ã Texture
 	std::shared_ptr<Texture> m_texture;
 
-	//”h¶ƒNƒ‰ƒX‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^‚Åİ’è‚·‚é‰æ‘œƒpƒX
+	//æ´¾ç”Ÿã‚¯ãƒ©ã‚¹ã®ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã§è¨­å®šã™ã‚‹ç”»åƒãƒ‘ã‚¹
 	std::string m_filePath;
 
-	//‰æ‘œ‚Ì•\¦ƒTƒCƒY
+	//ç”»åƒã®è¡¨ç¤ºã‚µã‚¤ã‚º
 	float m_width = 0.0f;
 	float m_height = 0.0f;
 
-	//•`‰æ‚·‚é‚Æ‚«‚É‰æ‘œ‚ÉŠ|‚¯‚éF
+	//æç”»ã™ã‚‹ã¨ãã«ç”»åƒã«æ›ã‘ã‚‹è‰²
 	DirectX::XMFLOAT4 m_color =
 	{
 		1.0f,
@@ -60,6 +60,6 @@ private:
 		1.0f
 	};
 
-	//•`‰æ‚Ì‡¬•û–@
+	//æç”»æ™‚ã®åˆæˆæ–¹æ³•
 	eSpriteBlendMode m_blendMode = eSpriteBlendMode::ALPHA;
 };

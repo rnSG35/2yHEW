@@ -1,43 +1,43 @@
-#pragma once
+ï»¿#pragma once
 
 #include <d3d11.h>
 #include <wrl/client.h>
 //#include <string>
 
-//TextureLoader‚©‚ç”ñŒöŠJƒƒ“ƒo‚ÉƒAƒNƒZƒX‚Å‚«‚é‚æ‚¤‚É‚·‚é
+//TextureLoaderã‹ã‚‰éå…¬é–‹ãƒ¡ãƒ³ãƒã«ã‚¢ã‚¯ã‚»ã‚¹ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 class TextureLoader;
 
 class Texture
 {
 public:
-	//shared_ptr‚ªTexture‚ğ”jŠü‚Å‚«‚é‚æ‚¤‚Épublic‚É‚·‚é
+	//shared_ptrãŒTextureã‚’ç ´æ£„ã§ãã‚‹ã‚ˆã†ã«publicã«ã™ã‚‹
 	~Texture() = default;
 
-	//ƒsƒNƒZƒ‹ƒVƒF[ƒ_[‚ÖƒeƒNƒXƒ`ƒƒ[‚ğİ’è
-	//slot : ƒVƒF[ƒ_[‚ÌƒeƒNƒXƒ`ƒƒƒXƒƒbƒg”Ô†(t0, t1, t2...)
+	//ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã¸ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã‚’è¨­å®š
+	//slot : ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚¹ãƒ­ãƒƒãƒˆç•ªå·(t0, t1, t2...)
 	void SetPS(UINT slot = 0) const;
 
-	//SRVæ“¾
+	//SRVå–å¾—
 	ID3D11ShaderResourceView* GetSRV() const;
 	
-	//‰æ‘œƒTƒCƒYæ“¾
+	//ç”»åƒã‚µã‚¤ã‚ºå–å¾—
 	UINT GetWidth() const;
 	UINT GetHeight() const;
 
 private:
 
-	//Texture‚Ìì¬‚ÍTextureLoader‚¾‚¯‚ªs‚¤
+	//Textureã®ä½œæˆã¯TextureLoaderã ã‘ãŒè¡Œã†
 	friend class TextureLoader;
 
 	Texture() = default;
 
-	//GPUã‚ÌƒeƒNƒXƒ`ƒƒ
+	//GPUä¸Šã®ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> m_texture;
 
-	//ƒVƒF[ƒ_[ƒŠƒ\[ƒXƒrƒ…[(SRV)AƒVƒF[ƒ_[‚©‚çƒeƒNƒXƒ`ƒƒ‚ğQÆ‚·‚é‚½‚ß‚Ìƒrƒ…[
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼(SRV)ã€ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã‹ã‚‰ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’å‚ç…§ã™ã‚‹ãŸã‚ã®ãƒ“ãƒ¥ãƒ¼
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_srv;
 
-	//‰æ‘œƒTƒCƒY
+	//ç”»åƒã‚µã‚¤ã‚º
 	UINT m_width = 0;
 	UINT m_height = 0;
 };

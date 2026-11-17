@@ -1,6 +1,6 @@
-#pragma once
+ï»¿#pragma once
 
-//ƒNƒ‰ƒbƒVƒ…’¼‘O‚Ìî•ñ‚ğŒ©‚ê‚é‚æ‚¤‚É‚·‚é‚½‚ß‚ÉƒeƒLƒXƒgƒtƒ@ƒCƒ‹‚É‘‚«‚İ
+//ã‚¯ãƒ©ãƒƒã‚·ãƒ¥ç›´å‰ã®æƒ…å ±ã‚’è¦‹ã‚Œã‚‹ã‚ˆã†ã«ã™ã‚‹ãŸã‚ã«ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã«æ›¸ãè¾¼ã¿
 
 #ifdef _DEBUG
 
@@ -10,19 +10,19 @@ class DebugLog
 {
 public:
 
-	// ƒƒOo—Í
+	// ãƒ­ã‚°å‡ºåŠ›
 	static void Write(const char* text,const std::source_location& location = std::source_location::current());
 
-	//ƒƒO‚ğ‹ó‚É‚·‚é
+	//ãƒ­ã‚°ã‚’ç©ºã«ã™ã‚‹
 	static void Clear();
 };
 
-// g‚¢‚â‚·‚¢‚æ‚¤‚Éƒ}ƒNƒ‰»
+// ä½¿ã„ã‚„ã™ã„ã‚ˆã†ã«ãƒã‚¯ãƒ­åŒ–
 #define DebugLogWrite(text) DebugLog::Write(text)
 #define DebugLogClear() DebugLog::Clear()
 #else
 //---------------------------------------------------------
-//Release‚ÌÛ‚Í‰½‚à‚µ‚È‚¢
+//Releaseã®éš›ã¯ä½•ã‚‚ã—ãªã„
 //---------------------------------------------------------
 #define DebugLogWrite(text)
 #define DebugLogClear()

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "../Base/ComponentBase.h"
 
 #include "../../../../thirdParty/directxtk/include/SimpleMath.h"

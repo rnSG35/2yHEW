@@ -1,20 +1,20 @@
-#pragma once
+ï»¿#pragma once
 #include<Windows.h>
 
 class Window
 {
 public:
-	//ƒEƒBƒ“ƒhƒEì¬
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ä½œæˆ
 	bool Create(int width, int height, const wchar_t* title);
 
-	//ƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹æ“¾
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«å–å¾—
 	HWND GetHwnd() const { return m_hWnd; }
 
 private:
-	//Windows‚©‚ç‘—‚ç‚ê‚Ä‚­‚éƒƒbƒZ[ƒW‚Ìˆ—
+	//Windowsã‹ã‚‰é€ã‚‰ã‚Œã¦ãã‚‹ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®å‡¦ç†
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp);
 
 private:
-	//ƒEƒBƒ“ƒhƒE‚ÌÀ‘Ì
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®å®Ÿä½“
 	HWND m_hWnd = nullptr;
 };

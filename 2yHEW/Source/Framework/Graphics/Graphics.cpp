@@ -1,4 +1,4 @@
-#include "Graphics.h"
+ï»¿#include "Graphics.h"
 #include "../DebugSystem/DebugLog.h"
 
 #pragma comment(lib,"d3d11.lib")
@@ -6,82 +6,82 @@
 using Microsoft::WRL::ComPtr;
 
 //---------------------------------------------------------
-//ƒVƒ“ƒOƒ‹ƒgƒ“æ“¾
+//ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³å–å¾—
 //---------------------------------------------------------
 Graphics& Graphics::GetInstance()
 {
-	//static‚É‚·‚é‚±‚Æ‚ÅÅ‰‚Ì‚P‰ñ‚Ì‚İ¶¬
-	//‚Ğ‚Æ‚Â‚Å\•ª‚È‚Ì‚ÅƒVƒ“ƒOƒ‹ƒgƒ“İŒv‚É
+	//staticã«ã™ã‚‹ã“ã¨ã§æœ€åˆã®ï¼‘å›ã®ã¿ç”Ÿæˆ
+	//ã²ã¨ã¤ã§ååˆ†ãªã®ã§ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³è¨­è¨ˆã«
 	static Graphics instance;
 
 	return instance;
 }
 
 //---------------------------------------------------------
-//‰Šú‰»
-//1.Deviceì¬
-//2.Contextì¬
-//3.SwapChainì¬
-//4.RenderTargetì¬
-//5.DepthBufferì¬
-//6.Viewportİ’è
+//åˆæœŸåŒ–
+//1.Deviceä½œæˆ
+//2.Contextä½œæˆ
+//3.SwapChainä½œæˆ
+//4.RenderTargetä½œæˆ
+//5.DepthBufferä½œæˆ
+//6.Viewportè¨­å®š
 //---------------------------------------------------------
 bool Graphics::Initialize(
 	HWND hwnd,
 	UINT width,
 	UINT height)
 {
-	//DeviceEContextESwapChainì¬
-	//‚±‚±‚ª‚È‚¢‚ÆˆÈ~‚Ìˆ—‚ª‚Å‚«‚È‚¢
+	//Deviceãƒ»Contextãƒ»SwapChainä½œæˆ
+	//ã“ã“ãŒãªã„ã¨ä»¥é™ã®å‡¦ç†ãŒã§ããªã„
 	if (!CreateDeviceAndSwapChain(hwnd, width, height))
 	{
-		DebugLogWrite("DeviceEContextESwapChainì¬¸”s / Failed to create Device, Context, and SwapChain");
+		DebugLogWrite("Deviceãƒ»Contextãƒ»SwapChainä½œæˆå¤±æ•— / Failed to create Device, Context, and SwapChain");
 		return false;
 	}
-	//RenderTargetViewì¬
+	//RenderTargetViewä½œæˆ
 	if (!CreateRenderTargetView(width,height))
 	{
-		DebugLogWrite("RenderTargetViewì¬¸”s / Failed to create a RenderTargetView");
+		DebugLogWrite("RenderTargetViewä½œæˆå¤±æ•— / Failed to create a RenderTargetView");
 		return false;
 	}
-	//DepthBufferì¬
+	//DepthBufferä½œæˆ
 	if (!CreateDepthBuffer(width, height))
 	{
-		DebugLogWrite("DepthBufferì¬¸”s / Failed to create depth buffer");
+		DebugLogWrite("DepthBufferä½œæˆå¤±æ•— / Failed to create depth buffer");
 		return false;
 	}
-	//DepthStencilViewì¬
-	//DepthBuffer‚ÌŒã‚ÉŒÄ‚Ô‚±‚Æ
+	//DepthStencilViewä½œæˆ
+	//DepthBufferã®å¾Œã«å‘¼ã¶ã“ã¨
 	if (!CreateDepthStencilView())
 	{
-		DebugLogWrite("DepthStencilViewì¬¸”s / Failed to create DepthStencilView");
+		DebugLogWrite("DepthStencilViewä½œæˆå¤±æ•— / Failed to create DepthStencilView");
 		return false;
 	}
-	//•`‰ææİ’è
+	//æç”»å…ˆè¨­å®š
 	if (!SetRenderTargets())
 	{
-		DebugLogWrite("•`‰ææİ’è¸”s / Failed to set the output destination");
+		DebugLogWrite("æç”»å…ˆè¨­å®šå¤±æ•— / Failed to set the output destination");
 		return false;
 	}
-	//ƒrƒ…[ƒ|[ƒgİ’è
+	//ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆè¨­å®š
 	if (!SetViewPort(width, height))
 	{
-		DebugLogWrite("ƒrƒ…[ƒ|[ƒgİ’è¸”s / Viewport Configuration Failed");
+		DebugLogWrite("ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆè¨­å®šå¤±æ•— / Viewport Configuration Failed");
 		return false;
 	}
 
-	DebugLogWrite("Graphics‰Šú‰»¬Œ÷ / Graphics Initialization Successful");
+	DebugLogWrite("GraphicsåˆæœŸåŒ–æˆåŠŸ / Graphics Initialization Successful");
 	return true;
 }
 
 //---------------------------------------------------------
-//I—¹ˆ—
-//ComPtr‚ÍƒXƒR[ƒvI—¹‚É©“®ŠJ•ú‚³‚ê‚é‚ªA
-//I—¹‡˜‚ğ–¾Šm‚É‚µ‚½‚¢‚½‚ß–¾¦“I‚ÉRelease‚·‚é
+//çµ‚äº†å‡¦ç†
+//ComPtrã¯ã‚¹ã‚³ãƒ¼ãƒ—çµ‚äº†æ™‚ã«è‡ªå‹•é–‹æ”¾ã•ã‚Œã‚‹ãŒã€
+//çµ‚äº†é †åºã‚’æ˜ç¢ºã«ã—ãŸã„ãŸã‚æ˜ç¤ºçš„ã«Releaseã™ã‚‹
 //---------------------------------------------------------
 void Graphics::UnInitialize()
 {
-	//Context‚ª‚Ì“€‚Á‚Ä‚¢‚éê‡‚Í•`‰ææ‚ğ‰ğœ‚·‚é
+	//ContextãŒã®å‡ã£ã¦ã„ã‚‹å ´åˆã¯æç”»å…ˆã‚’è§£é™¤ã™ã‚‹
 	if (m_context)
 	{
 		m_context->OMSetRenderTargets(
@@ -92,7 +92,7 @@ void Graphics::UnInitialize()
 		m_context->Flush();
 	}
 
-	//ì¬‚µ‚½‡”Ô‚Ì‹t‚É‰ğ•ú
+	//ä½œæˆã—ãŸé †ç•ªã®é€†ã«è§£æ”¾
 	m_depthStencilView.Reset();
 	m_depthBuffer.Reset();
 	m_renderTargetView.Reset();
@@ -100,32 +100,32 @@ void Graphics::UnInitialize()
 	m_context.Reset();
 	m_device.Reset();
 
-	DebugLogWrite("GraphicsI—¹ˆ—Š®—¹ / Graphics Cleanup Complete");
+	DebugLogWrite("Graphicsçµ‚äº†å‡¦ç†å®Œäº† / Graphics Cleanup Complete");
 }
 
 //---------------------------------------------------------
-//ƒtƒŒ[ƒ€ŠJn
+//ãƒ•ãƒ¬ãƒ¼ãƒ é–‹å§‹
 //---------------------------------------------------------
 void Graphics::BeginFrame()
 {
 	if (!m_context)
 	{
-		DebugLogWrite("BeginFrame‚Ém_context‚ªnullptr / m_context is nullptr at BeginFrame");
+		DebugLogWrite("BeginFrameæ™‚ã«m_contextãŒnullptr / m_context is nullptr at BeginFrame");
 		return;
 	}
 
 	if (!m_renderTargetView)
 	{
-		DebugLogWrite("BeginFrame‚Ém_renderTargetView‚ªnullptr / m_renderTargetView is nullptr at BeginFrame");
+		DebugLogWrite("BeginFrameæ™‚ã«m_renderTargetViewãŒnullptr / m_renderTargetView is nullptr at BeginFrame");
 		return;
 	}
 	if (!m_depthStencilView)
 	{
-		DebugLogWrite("BeginFrame‚Ém_depthStencilView‚ªnullptr / m_depthStencilView is nullptr at BeginFrame");
+		DebugLogWrite("BeginFrameæ™‚ã«m_depthStencilViewãŒnullptr / m_depthStencilView is nullptr at BeginFrame");
 		return;
 	}
 
-	//”wŒiFA‹óF‚É‚µ‚Ä‚¨‚­
+	//èƒŒæ™¯è‰²ã€ç©ºè‰²ã«ã—ã¦ãŠã
 	float clearColor[4] =
 	{
 		0.5f,
@@ -134,16 +134,16 @@ void Graphics::BeginFrame()
 		1.0f
 	};
 
-	//‘OƒtƒŒ[ƒ€‚ÌF‚ğÁ‚·
-	//Á‚³‚È‚¢‚Æ‘O‚Ì•`‰æŒ‹‰Ê‚ªc‚é
+	//å‰ãƒ•ãƒ¬ãƒ¼ãƒ ã®è‰²ã‚’æ¶ˆã™
+	//æ¶ˆã•ãªã„ã¨å‰ã®æç”»çµæœãŒæ®‹ã‚‹
 	m_context->ClearRenderTargetView(
 		m_renderTargetView.Get(),
 		clearColor);
 
-	//[“xî•ñ‚àƒŠƒZƒbƒg
-	//‚±‚±‚ª–³‚¢‚Æ
-	//Eƒ‚ƒfƒ‹‚ª“Ë‘RÁ‚¦‚é
-	//E•`‰æ‚ª‚¨‚©‚µ‚­‚È‚é	‚Æ‚¢‚¤ƒoƒO‚ª”­¶
+	//æ·±åº¦æƒ…å ±ã‚‚ãƒªã‚»ãƒƒãƒˆ
+	//ã“ã“ãŒç„¡ã„ã¨
+	//ãƒ»ãƒ¢ãƒ‡ãƒ«ãŒçªç„¶æ¶ˆãˆã‚‹
+	//ãƒ»æç”»ãŒãŠã‹ã—ããªã‚‹	ã¨ã„ã†ãƒã‚°ãŒç™ºç”Ÿ
 	m_context->ClearDepthStencilView(
 		m_depthStencilView.Get(),
 		D3D11_CLEAR_DEPTH,
@@ -154,7 +154,7 @@ void Graphics::BeginFrame()
 }
 
 //---------------------------------------------------------
-//ƒtƒŒ[ƒ€I—¹
+//ãƒ•ãƒ¬ãƒ¼ãƒ çµ‚äº†
 //---------------------------------------------------------
 void Graphics::EndFrame()
 {
@@ -162,51 +162,51 @@ void Graphics::EndFrame()
 
 	if (!m_swapChain)
 	{
-		DebugLogWrite("EndFrame‚Ém_swapChain‚ªnullptr / m_swapChain is nullptr at EndFrame");
+		DebugLogWrite("EndFrameæ™‚ã«m_swapChainãŒnullptr / m_swapChain is nullptr at EndFrame");
 		return;
 	}
 
-	//ƒoƒbƒNƒoƒbƒtƒ@•\¦
-	//¡‘‚¢‚½“à—e‚ğÀÛ‚Ì‰æ–Ê‚Éo—Í
+	//ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡è¡¨ç¤º
+	//ä»Šæ›¸ã„ãŸå†…å®¹ã‚’å®Ÿéš›ã®ç”»é¢ã«å‡ºåŠ›
 	HRESULT presentResult = m_swapChain->Present(0, 0);
 
-	if (FAILED(presentResult)) { DebugLogWrite("Present¸”s / Failed to Present"); }
+	if (FAILED(presentResult)) { DebugLogWrite("Presentå¤±æ•— / Failed to Present"); }
 
 	//---------------------------------------------------------
-	//Present‚ª‚ ‚é——R
-	//DirectX‚ÍƒoƒbƒNƒoƒbƒtƒ@‚Ö•`‰æ‚·‚é
-	//Present‚ğŒÄ‚Ô‚±‚Æ‚ÅƒoƒbƒNƒoƒbƒtƒ@‚Æƒtƒƒ“ƒgƒoƒbƒtƒ@‚ğ“ü‚ê‘Ö‚¦‚é
+	//PresentãŒã‚ã‚‹ç†ç”±
+	//DirectXã¯ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã¸æç”»ã™ã‚‹
+	//Presentã‚’å‘¼ã¶ã“ã¨ã§ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã¨ãƒ•ãƒ­ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡ã‚’å…¥ã‚Œæ›¿ãˆã‚‹
 	//---------------------------------------------------------
 
-	//‰æ–Ê•\¦¬Œ÷
+	//ç”»é¢è¡¨ç¤ºæˆåŠŸ
 	m_isLastPresentSucceeded = true;
 }
 
 //---------------------------------------------------------
-//GPUAƒXƒƒbƒvƒ`ƒFƒCƒ“ì¬
+//GPUã€ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ã‚¤ãƒ³ä½œæˆ
 //---------------------------------------------------------
 bool Graphics::CreateDeviceAndSwapChain(HWND hwnd, UINT width, UINT height)
 {
-	//“n‚³‚ê‚½ƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹‚ğŠm”F‚·‚é
+	//æ¸¡ã•ã‚ŒãŸã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«ã‚’ç¢ºèªã™ã‚‹
 	if (hwnd == nullptr)
 	{
-		DebugLogWrite("ƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹‚ªnullptr / The WindowHandle is nullptr");
+		DebugLogWrite("ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«ãŒnullptr / The WindowHandle is nullptr");
 		return false;
 	}
 
-	//ƒXƒƒbƒvƒ`ƒFƒCƒ“İ’è
-	//ƒoƒbƒNƒoƒbƒtƒ@‚Ìİ’è‚ğs‚¤
+	//ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ã‚¤ãƒ³è¨­å®š
+	//ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã®è¨­å®šã‚’è¡Œã†
 	DXGI_SWAP_CHAIN_DESC swapChainDesc = {};
 	swapChainDesc.BufferCount = 1;
 	swapChainDesc.BufferDesc.Width = width;
 	swapChainDesc.BufferDesc.Height = height;
 	swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;	//RGBA 8bit
-	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;	//•`‰ææ‚Æ‚µ‚Äg‚¤ƒoƒbƒtƒ@
+	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;	//æç”»å…ˆã¨ã—ã¦ä½¿ã†ãƒãƒƒãƒ•ã‚¡
 	swapChainDesc.OutputWindow = hwnd;
-	swapChainDesc.SampleDesc.Count = 1;	//MSAAƒiƒV
+	swapChainDesc.SampleDesc.Count = 1;	//MSAAãƒŠã‚·
 	swapChainDesc.Windowed = true;
 
-	//DeviceEContextESwapChain‚ğ‚Ü‚Æ‚ß‚Äì¬
+	//Deviceãƒ»Contextãƒ»SwapChainã‚’ã¾ã¨ã‚ã¦ä½œæˆ
 	HRESULT createDeviceResult =
 		D3D11CreateDeviceAndSwapChain(
 			nullptr,
@@ -228,24 +228,24 @@ bool Graphics::CreateDeviceAndSwapChain(HWND hwnd, UINT width, UINT height)
 		);
 	if (FAILED(createDeviceResult))
 	{
-		DebugLogWrite("D3D11CreateDeviceAndSwapChain¸”s / D3D11 CreateDeviceAndSwapChain Failed");
+		DebugLogWrite("D3D11CreateDeviceAndSwapChainå¤±æ•— / D3D11 CreateDeviceAndSwapChain Failed");
 		return false;
 	}
 
-	//”O‚Ì‚½‚ßƒ|ƒCƒ“ƒ^‚ğŠm”F
+	//å¿µã®ãŸã‚ãƒã‚¤ãƒ³ã‚¿ã‚’ç¢ºèª
 	if (!m_swapChain)
 	{
-		DebugLogWrite("CreateDeviceAndSwapChain‚Ém_swapChain‚ªnullptr / m_swapChain is nullptr@when calling CreateDeviceAndSwapChain");
+		DebugLogWrite("CreateDeviceAndSwapChainæ™‚ã«m_swapChainãŒnullptr / m_swapChain is nullptrã€€when calling CreateDeviceAndSwapChain");
 		return false;
 	}
 	if (!m_device)
 	{
-		DebugLogWrite("CreateDeviceAndSwapChain‚Ém_device‚ªnullptr / m_device is nullptr@when calling CreateDeviceAndSwapChain");
+		DebugLogWrite("CreateDeviceAndSwapChainæ™‚ã«m_deviceãŒnullptr / m_device is nullptrã€€when calling CreateDeviceAndSwapChain");
 		return false;
 	}
 	if (!m_context)
 	{
-		DebugLogWrite("CreateDeviceAndSwapChain‚Ém_context‚ªnullptr / m_context is nullptr@when calling CreateDeviceAndSwapChain");
+		DebugLogWrite("CreateDeviceAndSwapChainæ™‚ã«m_contextãŒnullptr / m_context is nullptrã€€when calling CreateDeviceAndSwapChain");
 		return false;
 	}
 
@@ -253,24 +253,24 @@ bool Graphics::CreateDeviceAndSwapChain(HWND hwnd, UINT width, UINT height)
 }
 
 //---------------------------------------------------------
-//RTV(ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[)ì¬
+//RTV(ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼)ä½œæˆ
 //---------------------------------------------------------
 bool Graphics::CreateRenderTargetView(UINT width, UINT height)
 {
-	//SwapChain‚ªì‚ç‚ê‚Ä‚¢‚é‚©Šm”F
+	//SwapChainãŒä½œã‚‰ã‚Œã¦ã„ã‚‹ã‹ç¢ºèª
 	if (!m_swapChain)
 	{
-		DebugLogWrite("CreateRenderTargetView‚Ém_swapChain‚ªnullptr / m_swapChain is nullptr when calling CreateRenderTargetView");
+		DebugLogWrite("CreateRenderTargetViewæ™‚ã«m_swapChainãŒnullptr / m_swapChain is nullptr when calling CreateRenderTargetView");
 		return false;
 	}
-	//Device‚ªì‚ç‚ê‚Ä‚¢‚é‚©Šm”F
+	//DeviceãŒä½œã‚‰ã‚Œã¦ã„ã‚‹ã‹ç¢ºèª
 	if (!m_device)
 	{
-		DebugLogWrite("CreateRenderTargetView‚Ém_device‚ªnullptr / m_device is nullptr when calling CreateRenderTargetView");
+		DebugLogWrite("CreateRenderTargetViewæ™‚ã«m_deviceãŒnullptr / m_device is nullptr when calling CreateRenderTargetView");
 		return false;
 	}
 
-	//SwapChain‚©‚çƒoƒbƒNƒoƒbƒtƒ@æ“¾
+	//SwapChainã‹ã‚‰ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡å–å¾—
 	ComPtr<ID3D11Texture2D> backBuffer;
 
 	HRESULT getBackBUfferResult = m_swapChain->GetBuffer(
@@ -280,22 +280,22 @@ bool Graphics::CreateRenderTargetView(UINT width, UINT height)
 			backBuffer.GetAddressOf()));
 	if (FAILED(getBackBUfferResult))
 	{
-		DebugLogWrite("CreateRenderTargetView‚ÉƒoƒbƒNƒoƒbƒtƒ@æ“¾¸”s / Failed to retrieve the back buffer when creating a RenderTargetView");
+		DebugLogWrite("CreateRenderTargetViewæ™‚ã«ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡å–å¾—å¤±æ•— / Failed to retrieve the back buffer when creating a RenderTargetView");
 		return false;
 	}
 	if (!backBuffer)
 	{
-		DebugLogWrite("CreateRenderTargetView‚ÉƒoƒbƒNƒoƒbƒtƒ@‚ªnullptr / The back buffer is nullptr when calling CreateRenderTargetView");
+		DebugLogWrite("CreateRenderTargetViewæ™‚ã«ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ãŒnullptr / The back buffer is nullptr when calling CreateRenderTargetView");
 		return false;
 	}
-	//RenderTargetViewì¬
+	//RenderTargetViewä½œæˆ
 	HRESULT createRenderTargetViewResult = m_device->CreateRenderTargetView(
 		backBuffer.Get(),
 		nullptr,
 		m_renderTargetView.GetAddressOf());
 	if (FAILED(createRenderTargetViewResult))
 	{
-		DebugLogWrite("CreateRenderTargetView¸”s / CreateRenderTargetView Failed");
+		DebugLogWrite("CreateRenderTargetViewå¤±æ•— / CreateRenderTargetView Failed");
 		return false;
 	}
 
@@ -303,18 +303,18 @@ bool Graphics::CreateRenderTargetView(UINT width, UINT height)
 }
 
 //---------------------------------------------------------
-//DepthBufferì¬
-//‰œs‚«”»’è‚É•K—v
+//DepthBufferä½œæˆ
+//å¥¥è¡Œãåˆ¤å®šã«å¿…è¦
 //---------------------------------------------------------
 bool Graphics::CreateDepthBuffer(UINT width, UINT height)
 {
 	if (!m_device)
 	{
-		DebugLogWrite("CreateDepthBuffer‚Ém_device‚ªnullptr / m_device is nullptr when calling CreateDepthBuffer");
+		DebugLogWrite("CreateDepthBufferæ™‚ã«m_deviceãŒnullptr / m_device is nullptr when calling CreateDepthBuffer");
 		return false;
 	}
 
-	//[“xƒoƒbƒtƒ@ì¬
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡ä½œæˆ
 	D3D11_TEXTURE2D_DESC depthTextureDesc = {};
 	depthTextureDesc.Width = width;
 	depthTextureDesc.Height = height;
@@ -328,15 +328,15 @@ bool Graphics::CreateDepthBuffer(UINT width, UINT height)
 	depthTextureDesc.CPUAccessFlags = 0;
 	depthTextureDesc.MiscFlags = 0;
 
-	//[“xƒoƒbƒtƒ@ì¬
-	//ƒ[ƒJƒ‹•Ï”‚Å‚Í‚È‚­Aƒƒ“ƒo•Ï”(m_depthBuffer)‚É•Û‘¶‚·‚é
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡ä½œæˆ
+	//ãƒ­ãƒ¼ã‚«ãƒ«å¤‰æ•°ã§ã¯ãªãã€ãƒ¡ãƒ³ãƒå¤‰æ•°(m_depthBuffer)ã«ä¿å­˜ã™ã‚‹
 	HRESULT createDepthBufferResult = m_device->CreateTexture2D(
 		&depthTextureDesc,
 		nullptr,
 		m_depthBuffer.GetAddressOf());
 	if (FAILED(createDepthBufferResult))
 	{
-		DebugLogWrite("DepthBuffer‚ÌTexture2Dì¬¸”s / Failed to create Texture2D for the DepthBuffer");
+		DebugLogWrite("DepthBufferã®Texture2Dä½œæˆå¤±æ•— / Failed to create Texture2D for the DepthBuffer");
 		return false;
 	}
 
@@ -344,33 +344,33 @@ bool Graphics::CreateDepthBuffer(UINT width, UINT height)
 }
 
 //---------------------------------------------------------
-//DepthStencilViewì¬
-//k“xƒoƒbƒtƒ@‚ğGPU‚©‚çg‚¦‚é‚æ‚¤‚É‚·‚é
-// •ÇAƒvƒŒƒCƒ„[‚È‚Ç‚ªd‚È‚Á‚½‚Æ‚«‚É‰œ‚É‚ ‚é‚à‚Ì‚ğ‰B‚·‚½‚ß
+//DepthStencilViewä½œæˆ
+//éœ‡åº¦ãƒãƒƒãƒ•ã‚¡ã‚’GPUã‹ã‚‰ä½¿ãˆã‚‹ã‚ˆã†ã«ã™ã‚‹
+// å£ã€ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãªã©ãŒé‡ãªã£ãŸã¨ãã«å¥¥ã«ã‚ã‚‹ã‚‚ã®ã‚’éš ã™ãŸã‚
 //---------------------------------------------------------
 bool Graphics::CreateDepthStencilView()
 {
 	if (!m_device)
 	{
-		DebugLogWrite("CreateDepthStencilView‚Ém_device‚ªnullptr / m_device is nullptr when calling CreateDepthStencilView");
+		DebugLogWrite("CreateDepthStencilViewæ™‚ã«m_deviceãŒnullptr / m_device is nullptr when calling CreateDepthStencilView");
 		return false;
 	}
 
-	//CreateDepthBuffer‚Åì‚Á‚½‚à‚Ì‚ª‚ ‚é‚©Šm”F
+	//CreateDepthBufferã§ä½œã£ãŸã‚‚ã®ãŒã‚ã‚‹ã‹ç¢ºèª
 	if (!m_depthBuffer)
 	{
-		DebugLogWrite("CreateDepthStencilView‚Ém_depthBuffer‚ªnullptr / m_depthBuffer is nullptr@when calling CreateDepthStencilView");
+		DebugLogWrite("CreateDepthStencilViewæ™‚ã«m_depthBufferãŒnullptr / m_depthBuffer is nullptrã€€when calling CreateDepthStencilView");
 		return false;
 	}
 
-	//DepthStencilViewì¬
+	//DepthStencilViewä½œæˆ
 	HRESULT createDepthStencilViewResult = m_device->CreateDepthStencilView(
 		m_depthBuffer.Get(),
 		nullptr,
 		m_depthStencilView.GetAddressOf());
 	if (FAILED(createDepthStencilViewResult))
 	{
-		DebugLogWrite("CreateDepthStencilViewì¬¸”s / Failed to create CreateDepthStencilView");
+		DebugLogWrite("CreateDepthStencilViewä½œæˆå¤±æ•— / Failed to create CreateDepthStencilView");
 		return false;
 	}
 
@@ -378,28 +378,28 @@ bool Graphics::CreateDepthStencilView()
 }
 
 //---------------------------------------------------------
-//•`‰ææİ’è
-//RenderTarget‚ÆDepthBufer‚ğDirectX‚É“o˜^
+//æç”»å…ˆè¨­å®š
+//RenderTargetã¨DepthBuferã‚’DirectXã«ç™»éŒ²
 //---------------------------------------------------------
 bool Graphics::SetRenderTargets()
 {
 	if (!m_context)
 	{
-		DebugLogWrite("SetRenderTargets‚Ém_context‚ªnullptr / m_context is nullptr when calling SetRenderTargets");
+		DebugLogWrite("SetRenderTargetsæ™‚ã«m_contextãŒnullptr / m_context is nullptr when calling SetRenderTargets");
 		return false;
 	}
 	if (!m_renderTargetView)
 	{
-		DebugLogWrite("SetRenderTargets‚Ém_renderTargetView‚ªnullptr / m_renderTargetView is nullptr when calling SetRenderTargets");
+		DebugLogWrite("SetRenderTargetsæ™‚ã«m_renderTargetViewãŒnullptr / m_renderTargetView is nullptr when calling SetRenderTargets");
 		return false;
 	}
 	if (!m_depthStencilView)
 	{
-		DebugLogWrite("SetRenderTargets‚Ém_depthStencilView‚ªnullptr / m_depthStencilView is nullptr when calling SetRenderTargets");
+		DebugLogWrite("SetRenderTargetsæ™‚ã«m_depthStencilViewãŒnullptr / m_depthStencilView is nullptr when calling SetRenderTargets");
 		return false;
 	}
 
-	//F‚Ì•`‰ææ‚Æ[“xî•ñ‚Ì•Û‘¶æ‚ğİ’è‚·‚é
+	//è‰²ã®æç”»å…ˆã¨æ·±åº¦æƒ…å ±ã®ä¿å­˜å…ˆã‚’è¨­å®šã™ã‚‹
 	m_context->OMSetRenderTargets(
 		1,
 		m_renderTargetView.GetAddressOf(),
@@ -409,25 +409,25 @@ bool Graphics::SetRenderTargets()
 }
 
 //---------------------------------------------------------
-//ƒrƒ…[ƒ|[ƒgİ’è
-//‰æ–Ê‘S‘Ì‚É•`‰æ
-//ƒ~ƒjƒ}ƒbƒv‚â•ªŠ„‰æ–Ê‚ğì‚éê‡‚Í‚±‚±‚ğ•ÏX
+//ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆè¨­å®š
+//ç”»é¢å…¨ä½“ã«æç”»
+//ãƒŸãƒ‹ãƒãƒƒãƒ—ã‚„åˆ†å‰²ç”»é¢ã‚’ä½œã‚‹å ´åˆã¯ã“ã“ã‚’å¤‰æ›´
 //---------------------------------------------------------
 bool Graphics::SetViewPort(UINT width, UINT height)
 {
 	if (!m_context)
 	{
-		DebugLogWrite("SetViewPort‚Ém_context‚ªnullptr / m_context is nullptr when calling SetViewPort");
+		DebugLogWrite("SetViewPortæ™‚ã«m_contextãŒnullptr / m_context is nullptr when calling SetViewPort");
 		return false;
 	}
 
 	if (width == 0 || height == 0)
 	{
-		DebugLogWrite("ƒrƒ…[ƒ|[ƒg‚ÌƒTƒCƒY‚ª0 / The viewport size is 0");
+		DebugLogWrite("ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã®ã‚µã‚¤ã‚ºãŒ0 / The viewport size is 0");
 		return false;
 	}
 
-	//‰æ–Ê‘S‘Ì‚ğ•`‰æ”ÍˆÍ‚É‚·‚é
+	//ç”»é¢å…¨ä½“ã‚’æç”»ç¯„å›²ã«ã™ã‚‹
 	D3D11_VIEWPORT mainViewport = {};
 	mainViewport.TopLeftX = 0.0f;
 	mainViewport.TopLeftY = 0.0f;

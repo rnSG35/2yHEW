@@ -1,4 +1,4 @@
-#include "Application.h"
+ï»¿#include "Application.h"
 #include "FpsManager.h"
 #include "../Graphics/Graphics.h"
 #include "../../Game/Core/GameManager.h"
@@ -7,22 +7,22 @@
 #include "../DebugSystem/ImGuiManager.h"
 
 //---------------------------------------------------------
-//ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‰Šú‰»
-// Window¶¬
-// Graphics‰Šú‰»
-// Input‰Šú‰»
+//ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³åˆæœŸåŒ–
+// Windowç”Ÿæˆ
+// GraphicsåˆæœŸåŒ–
+// InputåˆæœŸåŒ–
 //---------------------------------------------------------
 bool Application::AppInit(int nShowCmd, bool isFullScreen, int screenWidth, int screenHeight)
 {
-	//ƒEƒBƒ“ƒhƒE¶¬
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ç”Ÿæˆ
 	if (!m_window.Create(screenWidth, screenHeight, L"HEW2026"))
 	{
 		return false;
 	}
 
-	// DirectX‰Šú‰»
-	// Window¶¬Œã‚Å‚È‚¢‚ÆHWND‚ª‘¶İ‚µ‚È‚¢‚½‚ßA
-	// Graphics‚Ì‰Šú‰»‚Í‚±‚±‚Ås‚¤B
+	// DirectXåˆæœŸåŒ–
+	// Windowç”Ÿæˆå¾Œã§ãªã„ã¨HWNDãŒå­˜åœ¨ã—ãªã„ãŸã‚ã€
+	// Graphicsã®åˆæœŸåŒ–ã¯ã“ã“ã§è¡Œã†ã€‚
 	if (!Graphics::GetInstance().Initialize(
 		m_window.GetHwnd(),
 		screenWidth,
@@ -31,7 +31,7 @@ bool Application::AppInit(int nShowCmd, bool isFullScreen, int screenWidth, int 
 		return false;
 	}
 
-	//ImGui‰Šú‰»
+	//ImGuiåˆæœŸåŒ–
 	if (!ImGuiManager::Initialize(
 		m_window.GetHwnd(),
 		Graphics::GetInstance().GetDevice(),
@@ -44,7 +44,7 @@ bool Application::AppInit(int nShowCmd, bool isFullScreen, int screenWidth, int 
 }
 
 //---------------------------------------------------------
-//ƒƒCƒ“ƒ‹[ƒv
+//ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒ—
 //---------------------------------------------------------
 void Application::AppLoop()
 {
@@ -56,46 +56,46 @@ void Application::AppLoop()
 
 	if (!game.Init())
 	{
-		DebugLogWrite("Game‰Šú‰»¸”s / Failed to Initialize Game class");
+		DebugLogWrite("GameåˆæœŸåŒ–å¤±æ•— / Failed to Initialize Game class");
 		return;
 	}
 
-	//‹N“®‚ÌƒƒO‚ğÁ‚µ‚½‚©‚Ç‚¤‚©‚ğ”»’è‚·‚é•Ï”
-	//Å‰‚ÌƒtƒŒ[ƒ€‚Ì‚İ”»’è‚·‚é‚Ì‚ÅAŠo‚¦‚Ä‚¨‚­
+	//èµ·å‹•æ™‚ã®ãƒ­ã‚°ã‚’æ¶ˆã—ãŸã‹ã©ã†ã‹ã‚’åˆ¤å®šã™ã‚‹å¤‰æ•°
+	//æœ€åˆã®ãƒ•ãƒ¬ãƒ¼ãƒ ã®ã¿åˆ¤å®šã™ã‚‹ã®ã§ã€è¦šãˆã¦ãŠã
 	bool isStartupLogCleared = false;
 
-	//WM_QUIT‚ª‘—‚ç‚ê‚é‚Ü‚Åƒ‹[ƒv
+	//WM_QUITãŒé€ã‚‰ã‚Œã‚‹ã¾ã§ãƒ«ãƒ¼ãƒ—
 	while (msg.message != WM_QUIT)
 	{
-		//Windows‚©‚çƒƒbƒZ[ƒW‚ª—ˆ‚Ä‚¢‚é‚©Šm”F
+		//Windowsã‹ã‚‰ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒæ¥ã¦ã„ã‚‹ã‹ç¢ºèª
 		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
-			//ƒL[ƒ{[ƒh“ü—Í‚È‚Ç‚ğˆ—
+			//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰å…¥åŠ›ãªã©ã‚’å‡¦ç†
 			TranslateMessage(&msg);
 
-			//WndProcŠÖ”‚ÉƒƒbƒZ[ƒW‚ğ‘—‚é
+			//WndProcé–¢æ•°ã«ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’é€ã‚‹
 			DispatchMessage(&msg);
 		}
 		else
 		{
-			//1/60•b—§‚Á‚Ä‚¢‚È‚¯‚ê‚ÎAXV‚à•`‰æ‚à‚µ‚È‚¢
-			//(‚P•bŠÔ‚Ìˆ—‰ñ”‚ğ60‰ñ‚ÉŒÅ’è)
+			//1/60ç§’ç«‹ã£ã¦ã„ãªã‘ã‚Œã°ã€æ›´æ–°ã‚‚æç”»ã‚‚ã—ãªã„
+			//(ï¼‘ç§’é–“ã®å‡¦ç†å›æ•°ã‚’60å›ã«å›ºå®š)
 			if (!fpsManager.IsReadyToUpdate())
 			{
 				continue;
 			}
 
-			//ƒV[ƒ“‚ÌUpdate()‚Ì’†‚ÅImGui‚Ì‰æ–Ê‚ğì‚ê‚é‚æ‚¤‚É‚·‚é‚½‚ß‚Égame.update()‚æ‚è‘O‚É
+			//ã‚·ãƒ¼ãƒ³ã®Update()ã®ä¸­ã§ImGuiã®ç”»é¢ã‚’ä½œã‚Œã‚‹ã‚ˆã†ã«ã™ã‚‹ãŸã‚ã«game.update()ã‚ˆã‚Šå‰ã«
 			ImGuiManager::BeginFrame();
 
 			game.Update();
 
-			//ƒV[ƒ“‚©‚çƒQ[ƒ€I—¹‚ªˆË—Š‚³‚ê‚½‚çƒ‹[ƒv‚ğ”²‚¯‚é
+			//ã‚·ãƒ¼ãƒ³ã‹ã‚‰ã‚²ãƒ¼ãƒ çµ‚äº†ãŒä¾é ¼ã•ã‚ŒãŸã‚‰ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹
 			if (game.IsQuitRequested())
 			{
-				DebugLogWrite("ƒQ[ƒ€I—¹ / Game Quit");
+				DebugLogWrite("ã‚²ãƒ¼ãƒ çµ‚äº† / Game Quit");
 				
-				//ƒEƒBƒ“ƒhƒE‚ğ•Â‚¶‚é
+				//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‰ã˜ã‚‹
 				DestroyWindow(m_window.GetHwnd());
 				break;
 			}
@@ -104,12 +104,12 @@ void Application::AppLoop()
 
 			game.Draw();
 
-			//ƒQ[ƒ€•`‰æ‚ÌŒã‚ÉŒÄ‚ñ‚ÅAƒQ[ƒ€‚æ‚èè‘O‚É•`‰æ
+			//ã‚²ãƒ¼ãƒ æç”»ã®å¾Œã«å‘¼ã‚“ã§ã€ã‚²ãƒ¼ãƒ ã‚ˆã‚Šæ‰‹å‰ã«æç”»
 			ImGuiManager::EndFrame();
 
 			Graphics::GetInstance().EndFrame();
 
-			//ƒLƒƒƒvƒVƒ‡ƒ“‚ÉƒtƒŒ[ƒ€ƒŒ[ƒg‚ğ•\¦
+			//ã‚­ãƒ£ãƒ—ã‚·ãƒ§ãƒ³ã«ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¬ãƒ¼ãƒˆã‚’è¡¨ç¤º
 			if (fpsManager.IsFpsUpdated())
 			{
 				wchar_t windowTitle[64];
@@ -118,12 +118,12 @@ void Application::AppLoop()
 				SetWindowTextW(m_window.GetHwnd(), windowTitle);
 			}
 
-			//‰Šú‰»‚ª¬Œ÷‚µAÅ‰‚ÌƒtƒŒ[ƒ€‚à•\¦‚Å‚«‚½‚ç‹N“®‚ÌƒƒO‚ğÁ‚µ‚ÄAƒQ[ƒ€’†‚ÌƒƒO‚¾‚¯‚É‚·‚é
-			//•\¦‚É¸”s‚µ‚½ê‡‚ÍƒNƒŠƒA‚µ‚È‚¢
+			//åˆæœŸåŒ–ãŒæˆåŠŸã—ã€æœ€åˆã®ãƒ•ãƒ¬ãƒ¼ãƒ ã‚‚è¡¨ç¤ºã§ããŸã‚‰èµ·å‹•æ™‚ã®ãƒ­ã‚°ã‚’æ¶ˆã—ã¦ã€ã‚²ãƒ¼ãƒ ä¸­ã®ãƒ­ã‚°ã ã‘ã«ã™ã‚‹
+			//è¡¨ç¤ºã«å¤±æ•—ã—ãŸå ´åˆã¯ã‚¯ãƒªã‚¢ã—ãªã„
 			if (!isStartupLogCleared && Graphics::GetInstance().IsLastPresentSucceeded())
 			{
 				DebugLogClear();
-				DebugLogWrite("‹N“®ˆ—Š®—¹ / Startup Complete");
+				DebugLogWrite("èµ·å‹•å‡¦ç†å®Œäº† / Startup Complete");
 
 				isStartupLogCleared = true;
 			}
@@ -135,9 +135,9 @@ void Application::AppLoop()
 }
 
 //---------------------------------------------------------
-//‰ğ•úˆ—
+//è§£æ”¾å‡¦ç†
 //---------------------------------------------------------
 void Application::UnInit()
 {
-	//‚±‚±‚ÅRenderer‚âInputASoundAResource‚Ì‰ğ•úˆ—‚ğs‚¤
+	//ã“ã“ã§Rendererã‚„Inputã€Soundã€Resourceã®è§£æ”¾å‡¦ç†ã‚’è¡Œã†
 }

@@ -1,9 +1,9 @@
-#include "test.h"
+ï»¿#include "test.h"
 #include "../../../Component/ShowObject/CShowObject.h"
 #include "../../../../Framework/DebugSystem/DebugLog.h"
 
 //---------------------------------------------------------
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //---------------------------------------------------------
 test::test()
 	: SpriteObjectBase(
@@ -12,17 +12,17 @@ test::test()
 
 void test::OnInit()
 {
-	//‰æ–Ê¶ã‚©‚çŒ©‚½•\¦ˆÊ’u
+	//ç”»é¢å·¦ä¸Šã‹ã‚‰è¦‹ãŸè¡¨ç¤ºä½ç½®
 	SetPosition(100.0f, 100.0f);
 
-	//‰æ–Ê‚É•\¦‚·‚é‘å‚«‚³
+	//ç”»é¢ã«è¡¨ç¤ºã™ã‚‹å¤§ãã•
 	SetSize(256.0f, 256.0f);
 
 	auto showComponent = AddComponent<CShowObject>();
 
 	if (showComponent->GetOwner() == this)
 	{
-		//DebugLogWrite("CShowObject‚Ìm_ownerİ’è¬Œ÷");
+		//DebugLogWrite("CShowObjectã®m_ownerè¨­å®šæˆåŠŸ");
 	}
 }
 

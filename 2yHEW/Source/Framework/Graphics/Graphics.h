@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <d3d11.h>
 #include <wrl/client.h>
@@ -8,27 +8,27 @@ using Microsoft::WRL::ComPtr;
 class Graphics
 {
 public:
-	//ƒVƒ“ƒOƒ‹ƒgƒ“æ“¾
-	//Device‚ğ•¡”ì‚é‚ÆVRAM‚ª–³‘Ê‚ÉÁ”ï‚³‚ê‚é‚½‚ßAƒVƒ“ƒOƒ‹ƒgƒ“‚Å‚P‚Â‚¾‚¯¶¬‚·‚é
+	//ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³å–å¾—
+	//Deviceã‚’è¤‡æ•°ä½œã‚‹ã¨VRAMãŒç„¡é§„ã«æ¶ˆè²»ã•ã‚Œã‚‹ãŸã‚ã€ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã§ï¼‘ã¤ã ã‘ç”Ÿæˆã™ã‚‹
 	static Graphics& GetInstance();
 
-	//‰Šú‰»
-	// hwnd : •`‰ææƒEƒBƒ“ƒhƒE
-	// width : ‰æ–Ê‰¡•
-	// height : ‰æ–Êc•
+	//åˆæœŸåŒ–
+	// hwnd : æç”»å…ˆã‚¦ã‚£ãƒ³ãƒ‰ã‚¦
+	// width : ç”»é¢æ¨ªå¹…
+	// height : ç”»é¢ç¸¦å¹…
 	bool Initialize(
 		HWND hwnd,
 		UINT width,
 		UINT height
 	);
 
-	//I—¹ˆ—
+	//çµ‚äº†å‡¦ç†
 	void UnInitialize();
 
-	//ƒtƒŒ[ƒ€ŠJnA–ˆƒtƒŒ[ƒ€Å‰‚ÉŒÄ‚Ô
+	//ãƒ•ãƒ¬ãƒ¼ãƒ é–‹å§‹ã€æ¯ãƒ•ãƒ¬ãƒ¼ãƒ æœ€åˆã«å‘¼ã¶
 	void BeginFrame();
 
-	//ƒtƒŒ[ƒ€I—¹A•`‰æŒ‹‰Ê‚ğ‰æ–Ê‚É•\¦
+	//ãƒ•ãƒ¬ãƒ¼ãƒ çµ‚äº†ã€æç”»çµæœã‚’ç”»é¢ã«è¡¨ç¤º
 	void EndFrame();
 
 	bool IsLastPresentSucceeded() const
@@ -36,15 +36,15 @@ public:
 		return m_isLastPresentSucceeded;
 	}
 
-	//Deviceæ“¾
-	// Texture‚âShaderì¬‚Ég—p
+	//Deviceå–å¾—
+	// Textureã‚„Shaderä½œæˆæ™‚ã«ä½¿ç”¨
 	ID3D11Device* GetDevice()
 	{
 		return m_device.Get();
 	}
 
-	//Contextæ“¾
-	// •`‰æ–½—ß”­s‚Ég—p
+	//Contextå–å¾—
+	// æç”»å‘½ä»¤ç™ºè¡Œã«ä½¿ç”¨
 	ID3D11DeviceContext* GetContext()
 	{
 		return m_context.Get();
@@ -54,29 +54,29 @@ private:
 	Graphics() = default;
 	~Graphics() = default;
 
-	//ƒVƒ“ƒOƒ‹ƒgƒ“‚ğƒRƒs[‚Å‚«‚é‚ÆAApplication‚ª•¡”‘¶İ‚µ‚Ä‚µ‚Ü‚¤
-	//‚»‚ê‚ğƒRƒ“ƒpƒCƒ‹‚É–h‚®‚½‚ßAƒRƒs[ˆ—‚ğíœ‚·‚é
+	//ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã‚’ã‚³ãƒ”ãƒ¼ã§ãã‚‹ã¨ã€ApplicationãŒè¤‡æ•°å­˜åœ¨ã—ã¦ã—ã¾ã†
+	//ãã‚Œã‚’ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«æ™‚ã«é˜²ããŸã‚ã€ã‚³ãƒ”ãƒ¼å‡¦ç†ã‚’å‰Šé™¤ã™ã‚‹
 	Graphics(const Graphics&) = delete;
 	Graphics& operator= (const Graphics&) = delete;
 	Graphics(const Graphics&&) = delete;
 	Graphics& operator= (const Graphics&&) = delete;
 
 private:
-	//GPU–{‘Ì
+	//GPUæœ¬ä½“
 	Microsoft::WRL::ComPtr<ID3D11Device> m_device;
-	//GPU‚Ö‚Ì–½—ß‘—M–ğ
+	//GPUã¸ã®å‘½ä»¤é€ä¿¡å½¹
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_context;
-	//‰æ–Êƒoƒbƒtƒ@ŠÇ—
+	//ç”»é¢ãƒãƒƒãƒ•ã‚¡ç®¡ç†
 	Microsoft::WRL::ComPtr<IDXGISwapChain> m_swapChain;
-	//•`‰ææ
+	//æç”»å…ˆ
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_renderTargetView;
-	//[“xî•ñ‚ğ•Û‘¶‚·‚éƒoƒbƒtƒ@
+	//æ·±åº¦æƒ…å ±ã‚’ä¿å­˜ã™ã‚‹ãƒãƒƒãƒ•ã‚¡
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> m_depthBuffer;
-	//[“xƒoƒbƒtƒ@‚ğ•`‰æˆ—‚©‚çg‚¤‚½‚ß‚Ìƒrƒ…[
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã‚’æç”»å‡¦ç†ã‹ã‚‰ä½¿ã†ãŸã‚ã®ãƒ“ãƒ¥ãƒ¼
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> m_depthStencilView;
 
-	//’¼‘O‚ÌPresent(‰æ–Ê•\¦)‚ª¬Œ÷‚µ‚½‚©‚Ç‚¤‚©
-	//ˆê“x‚à•\¦‚µ‚Ä‚¢‚È‚¢ê‡‚Íu¬Œ÷‚µ‚Ä‚¢‚È‚¢v‚Ì‚Å‰Šú’lfalse
+	//ç›´å‰ã®Present(ç”»é¢è¡¨ç¤º)ãŒæˆåŠŸã—ãŸã‹ã©ã†ã‹
+	//ä¸€åº¦ã‚‚è¡¨ç¤ºã—ã¦ã„ãªã„å ´åˆã¯ã€ŒæˆåŠŸã—ã¦ã„ãªã„ã€ã®ã§åˆæœŸå€¤false
 	bool m_isLastPresentSucceeded = false;
 
 	bool CreateDeviceAndSwapChain(HWND hwnd, UINT width, UINT height);

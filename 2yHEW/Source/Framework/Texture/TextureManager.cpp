@@ -1,29 +1,29 @@
-#include "Texture.h"
+ï»¿#include "Texture.h"
 #include "../Texture/TextureManager.h"
 #include "../Loader/TextureLoader.h"
 #include "../DebugSystem/DebugLog.h"
 
 //---------------------------------------------------------
-//TextureManager‚ÌƒVƒ“ƒOƒ‹ƒgƒ“‚ğæ“¾
+//TextureManagerã®ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã‚’å–å¾—
 //---------------------------------------------------------
 TextureManager& TextureManager::GetInstance()
 {
-	//ŠÖ”“àstatic‚ğg—p‚·‚é‚ÆAÅ‰‚ÉŒÄ‚Î‚ê‚½‚¾‚¯¶¬
-	//–¾¦“I‚Ènew delete‚ª•s—vA©“®‚Å”jŠü‚³‚ê‚é
-	//ŠÇ—ƒNƒ‰ƒX‚ÌƒVƒ“ƒOƒ‹ƒgƒ“‚Æ‚µ‚Äˆµ‚¢‚â‚·‚¢
+	//é–¢æ•°å†…staticã‚’ä½¿ç”¨ã™ã‚‹ã¨ã€æœ€åˆã«å‘¼ã°ã‚ŒãŸæ™‚ã ã‘ç”Ÿæˆ
+	//æ˜ç¤ºçš„ãªnew deleteãŒä¸è¦ã€è‡ªå‹•ã§ç ´æ£„ã•ã‚Œã‚‹
+	//ç®¡ç†ã‚¯ãƒ©ã‚¹ã®ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã¨ã—ã¦æ‰±ã„ã‚„ã™ã„
 	static TextureManager instance;
 
 	return instance;
 }
 
 //---------------------------------------------------------
-//ƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İ
+//ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿
 //---------------------------------------------------------
 std::shared_ptr<Texture> TextureManager::LoadTexture(const std::string& filePath)
 {
-	//“¯‚¶ƒtƒ@ƒCƒ‹‚ª“Ç‚İ‚Ü‚ê‚Ä‚¢‚é‚©Šm”FA“Ç‚İ‚İÏ‚İ‚È‚ç‚»‚ÌTexture‚ğ•Ô‚·
-	//“¯‚¶‰æ‘œ‚ğ‰½“x‚àGPU‚Éì¬‚·‚é‚ÆAŠÔ‚Æƒƒ‚ƒŠ‚ğ–³‘Ê‚ÉÁ”ï‚·‚é‚½‚ß
-	//“Ç‚İ‚İÏ‚İƒf[ƒ^‚ğÄ—˜—p
+	//åŒã˜ãƒ•ã‚¡ã‚¤ãƒ«ãŒèª­ã¿è¾¼ã¾ã‚Œã¦ã„ã‚‹ã‹ç¢ºèªã€èª­ã¿è¾¼ã¿æ¸ˆã¿ãªã‚‰ãã®Textureã‚’è¿”ã™
+	//åŒã˜ç”»åƒã‚’ä½•åº¦ã‚‚GPUã«ä½œæˆã™ã‚‹ã¨ã€æ™‚é–“ã¨ãƒ¡ãƒ¢ãƒªã‚’ç„¡é§„ã«æ¶ˆè²»ã™ã‚‹ãŸã‚
+	//èª­ã¿è¾¼ã¿æ¸ˆã¿ãƒ‡ãƒ¼ã‚¿ã‚’å†åˆ©ç”¨
 	auto textureIterator = m_textures.find(filePath);
 
 	if (textureIterator != m_textures.end())
@@ -31,31 +31,31 @@ std::shared_ptr<Texture> TextureManager::LoadTexture(const std::string& filePath
 		return textureIterator->second;
 	}
 
-	//V‚µ‚¢Texture‚ğ¶¬
-	//make_shared‚ğg‚¤‚±‚Æ‚ÅATexture–{‘Ì‚ÆQÆŠÇ—î•ñ‚ğŒø—¦‚æ‚­Šm•Û‚Å‚«‚é
+	//æ–°ã—ã„Textureã‚’ç”Ÿæˆ
+	//make_sharedã‚’ä½¿ã†ã“ã¨ã§ã€Textureæœ¬ä½“ã¨å‚ç…§ç®¡ç†æƒ…å ±ã‚’åŠ¹ç‡ã‚ˆãç¢ºä¿ã§ãã‚‹
 	std::shared_ptr<Texture> texture = TextureLoader::Load(filePath);
 
-	//‰æ‘œƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ‚É¸”s‚µ‚½ê‡‚Ínullptr‚ğ•Ô‚·
-	//¸”s‚µ‚½Texture‚ğŠÇ—•\‚É“o˜^‚µ‚È‚¢‚±‚Æ‚ÅAŸ‰ñ‚Ì“Ç‚İ‚İ‚ğ–W‚°‚È‚¢‚æ‚¤‚É‚·‚é
+	//ç”»åƒãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿ã«å¤±æ•—ã—ãŸå ´åˆã¯nullptrã‚’è¿”ã™
+	//å¤±æ•—ã—ãŸTextureã‚’ç®¡ç†è¡¨ã«ç™»éŒ²ã—ãªã„ã“ã¨ã§ã€æ¬¡å›ã®èª­ã¿è¾¼ã¿ã‚’å¦¨ã’ãªã„ã‚ˆã†ã«ã™ã‚‹
 	if (texture == nullptr)
 	{
-		DebugLogWrite("TextureManager‚Ì‰æ‘œæ“¾¸”s / TextureManager Failed to Retrieve Image");
+		DebugLogWrite("TextureManagerã®ç”»åƒå–å¾—å¤±æ•— / TextureManager Failed to Retrieve Image");
 		return nullptr;
 	}
 
-	//“Ç‚İ‚İÏ‚İTexture‚ğshared_ptr‚Å•Û‘¶‚·‚é
-	//“¯‚¶‰æ‘œ‚ª—v‹‚³‚ê‚½ê‡‚ÉÄ—˜—p‚Å‚«‚é‚æ‚¤‚É‚·‚é
+	//èª­ã¿è¾¼ã¿æ¸ˆã¿Textureã‚’shared_ptrã§ä¿å­˜ã™ã‚‹
+	//åŒã˜ç”»åƒãŒè¦æ±‚ã•ã‚ŒãŸå ´åˆã«å†åˆ©ç”¨ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 	m_textures.emplace(filePath, texture);
 
 	return texture;
 }
 
 //---------------------------------------------------------
-//ŠÇ—’†‚ÌƒeƒNƒXƒ`ƒƒ[‚ğ‚·‚×‚Ä‰ğ•ú
+//ç®¡ç†ä¸­ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã‚’ã™ã¹ã¦è§£æ”¾
 //---------------------------------------------------------
 void TextureManager::ClearTexture()
 {
 	m_textures.clear();
 
-	DebugLogWrite("TextureManager‰ğ•úŠ®—¹ / TextureManager‚Ì‰ğ•ú‚ªŠ®—¹‚µ‚Ü‚µ‚½");
+	DebugLogWrite("TextureManagerè§£æ”¾å®Œäº† / TextureManagerã®è§£æ”¾ãŒå®Œäº†ã—ã¾ã—ãŸ");
 }

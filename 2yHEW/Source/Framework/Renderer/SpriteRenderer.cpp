@@ -1,4 +1,4 @@
-#include"../../Framework/Pch.h"
+ï»¿#include"../../Framework/Pch.h"
 #include "SpriteRenderer.h"
 #include "../Graphics/Graphics.h"
 #include "../Texture/Texture.h"
@@ -10,23 +10,23 @@
 using Microsoft::WRL::ComPtr;
 using namespace DirectX;
 
-//ƒXƒvƒ‰ƒCƒg—p’¸“_
+//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”¨é ‚ç‚¹
 namespace
 {
 	struct sSpriteVertex
 	{
-		//‰æ–Êã‚Ì’¸“_ˆÊ’u
+		//ç”»é¢ä¸Šã®é ‚ç‚¹ä½ç½®
 		float position[4];
 
 		float color[4];
 
-		//‰æ‘œ‚Ì‚Ç‚±‚ğg—p‚·‚é‚©‚ğ•\‚·À•W
+		//ç”»åƒã®ã©ã“ã‚’ä½¿ç”¨ã™ã‚‹ã‹ã‚’è¡¨ã™åº§æ¨™
 		float uv[2];
 	};
 }
 
 //---------------------------------------------------------
-//ƒVƒ“ƒOƒ‹ƒgƒ“æ“¾
+//ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³å–å¾—
 //---------------------------------------------------------
 SpriteRenderer& SpriteRenderer::GetInstance()
 {
@@ -35,78 +35,78 @@ SpriteRenderer& SpriteRenderer::GetInstance()
 }
 
 //---------------------------------------------------------
-//‰Šú‰»
+//åˆæœŸåŒ–
 //---------------------------------------------------------
 bool SpriteRenderer::Initialize(UINT screenWidth, UINT screenHeight)
 {
-	//•`‰æˆÊ’u‚ğ‰æ–ÊÀ•W‚©‚ç•ÏŠ·‚·‚é‚Æ‚«‚Ég—p‚·‚é‚½‚ßA‰æ–ÊƒTƒCƒY‚ğ•Û‘¶‚µ‚Ä‚¨‚­
+	//æç”»ä½ç½®ã‚’ç”»é¢åº§æ¨™ã‹ã‚‰å¤‰æ›ã™ã‚‹ã¨ãã«ä½¿ç”¨ã™ã‚‹ãŸã‚ã€ç”»é¢ã‚µã‚¤ã‚ºã‚’ä¿å­˜ã—ã¦ãŠã
 	m_screenWidth = screenWidth;
 	m_screenHeight = screenHeight;
 
 	if (m_screenWidth == 0 || m_screenHeight == 0)
 	{
-		DebugLogWrite("SpriteRenderer‚Ì‰æ–ÊƒTƒCƒY‚ª0 / The SpriteRenderer's screen size is 0");
+		DebugLogWrite("SpriteRendererã®ç”»é¢ã‚µã‚¤ã‚ºãŒ0 / The SpriteRenderer's screen size is 0");
 		return false;
 	}
 
-	//ƒVƒF[ƒ_[ì¬
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ä½œæˆ
 	if (!CreateShaders())
 	{
-		DebugLogWrite("SpriteRenderer‚ÌƒVƒF[ƒ_[ì¬¸”s / Failed to create a shader for SpriteRenderer");
+		DebugLogWrite("SpriteRendererã®ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ä½œæˆå¤±æ•— / Failed to create a shader for SpriteRenderer");
 		return false;
 	}
 
-	//’¸“_ƒoƒbƒtƒ@ì¬
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ä½œæˆ
 	if (!CreateVertexBuffer())
 	{
-		DebugLogWrite("SpriteRenderer‚Ì’¸“_ƒoƒbƒtƒ@ì¬¸”s /Failed to create a vertex buffer for SpriteRenderer");
+		DebugLogWrite("SpriteRendererã®é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ä½œæˆå¤±æ•— /Failed to create a vertex buffer for SpriteRenderer");
 		return false;
 	}
 
-	//’è”ƒoƒbƒtƒ@ì¬
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ä½œæˆ
 	if (!CreateConstantBuffer())
 	{
-		DebugLogWrite("SpriteRenderer‚Ì’è”ƒoƒbƒtƒ@ì¬¸”s / Failed to create ConstantBuffer for SpriteRenderer");
+		DebugLogWrite("SpriteRendererã®å®šæ•°ãƒãƒƒãƒ•ã‚¡ä½œæˆå¤±æ•— / Failed to create ConstantBuffer for SpriteRenderer");
 		return false;
 	}
 
-	//ƒeƒNƒXƒ`ƒƒ‚Ìæ“¾•û–@‚ğì¬
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®å–å¾—æ–¹æ³•ã‚’ä½œæˆ
 	if (!CreateSamplerState())
 	{
-		DebugLogWrite("SpriteRenderer‚ÌSamplerStateì¬¸”s / Failed to create a SamplerState for SpriteRenderer");
+		DebugLogWrite("SpriteRendererã®SamplerStateä½œæˆå¤±æ•— / Failed to create a SamplerState for SpriteRenderer");
 		return false;
 	}
 
-	//png‰æ‘œ‚Ì“§‰ß‚ğ—LŒø‚É‚·‚éİ’è‚ğì¬
+	//pngç”»åƒã®é€éã‚’æœ‰åŠ¹ã«ã™ã‚‹è¨­å®šã‚’ä½œæˆ
 	if (!CreateBlendState())
 	{
-		DebugLogWrite("SpriteRenderer‚ÌBlendStateì¬¸”s / Failed to create a BlendState for SpriteRenderer");
+		DebugLogWrite("SpriteRendererã®BlendStateä½œæˆå¤±æ•— / Failed to create a BlendState for SpriteRenderer");
 		return false;
 	}
 
-	//[“xƒeƒXƒg‚ğg‚í‚È‚¢İ’è‚ğì¬
+	//æ·±åº¦ãƒ†ã‚¹ãƒˆã‚’ä½¿ã‚ãªã„è¨­å®šã‚’ä½œæˆ
 	if (!CreateDepthStencilState())
 	{
-		DebugLogWrite("SpriteRenderer‚ÌDepthStencilStateì¬¸”s / Failed to create a DepthStencilState for SpriteRenderer");
+		DebugLogWrite("SpriteRendererã®DepthStencilStateä½œæˆå¤±æ•— / Failed to create a DepthStencilState for SpriteRenderer");
 		return false;
 	}
 
-	DebugLogWrite("SpriteRenderer‰Šú‰»¬Œ÷ / SpriteRenderer initialization successful");
+	DebugLogWrite("SpriteRendereråˆæœŸåŒ–æˆåŠŸ / SpriteRenderer initialization successful");
 	return true;
 }
 
 bool SpriteRenderer::LoadVertexShaderBlob(const wchar_t* csoPath, const wchar_t* hlslPath, ComPtr<ID3DBlob>& shaderBlob)
 {
-	//CSO‚ª‚ ‚é‚©Šm”F
+	//CSOãŒã‚ã‚‹ã‹ç¢ºèª
 	HRESULT readShaderResult = D3DReadFileToBlob(
 		csoPath, shaderBlob.GetAddressOf());
 	if (SUCCEEDED(readShaderResult))
 	{
-		DebugLogWrite("VertexShader.cso“Ç‚İ‚İ¬Œ÷ / VertexShader.cso loaded successfully");
+		DebugLogWrite("VertexShader.csoèª­ã¿è¾¼ã¿æˆåŠŸ / VertexShader.cso loaded successfully");
 		return true;
 	}
-	DebugLogWrite("VertexShader.cso‚ª–³‚¢‚½‚ßHLSL‚ğƒRƒ“ƒpƒCƒ‹ / Compile HLSL because VertexShader.cso is missing");
-	//HLSL‚ğƒRƒ“ƒpƒCƒ‹
+	DebugLogWrite("VertexShader.csoãŒç„¡ã„ãŸã‚HLSLã‚’ã‚³ãƒ³ãƒ‘ã‚¤ãƒ« / Compile HLSL because VertexShader.cso is missing");
+	//HLSLã‚’ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 	ComPtr<ID3DBlob> errorBlob;
 	HRESULT compileShaderResult = D3DCompileFromFile(
 		hlslPath,
@@ -129,24 +129,24 @@ bool SpriteRenderer::LoadVertexShaderBlob(const wchar_t* csoPath, const wchar_t*
 		{
 			//DebugLogWrite(static_cast<const char*>(errorBlob->GetBufferPointer()));
 		}
-		DebugLogWrite("VertexShaderƒRƒ“ƒpƒCƒ‹¸”s / Vertex Shader Compilation Failed");
+		DebugLogWrite("VertexShaderã‚³ãƒ³ãƒ‘ã‚¤ãƒ«å¤±æ•— / Vertex Shader Compilation Failed");
 		return false;
 	}
-	DebugLogWrite("VertexShaderƒRƒ“ƒpƒCƒ‹¬Œ÷ / Vertex Shader Compilation Successful");
+	DebugLogWrite("VertexShaderã‚³ãƒ³ãƒ‘ã‚¤ãƒ«æˆåŠŸ / Vertex Shader Compilation Successful");
 	return true;
 }
 
 bool SpriteRenderer::LoadPixelShaderBlob(const wchar_t* csoPath, const wchar_t* hlslPath, ComPtr<ID3DBlob>& shaderBlob)
 {
-	//csoƒtƒ@ƒCƒ‹‚ª‘¶İ‚·‚é‚©Šm”F
+	//csoãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã™ã‚‹ã‹ç¢ºèª
 	HRESULT readShaderResult = D3DReadFileToBlob(csoPath,
 		shaderBlob.GetAddressOf());
 	if (SUCCEEDED(readShaderResult))
 	{
-		DebugLogWrite("VertexShader.cso“Ç‚İ‚İ¬Œ÷ / VertexShader.cso loaded successfully");
+		DebugLogWrite("VertexShader.csoèª­ã¿è¾¼ã¿æˆåŠŸ / VertexShader.cso loaded successfully");
 		return true;
 	}
-	DebugLogWrite("PixelShader.cso‚ª–³‚¢‚½‚ßHLSL‚ğƒRƒ“ƒpƒCƒ‹ / Compile HLSL because PixelShader.cso is missing");
+	DebugLogWrite("PixelShader.csoãŒç„¡ã„ãŸã‚HLSLã‚’ã‚³ãƒ³ãƒ‘ã‚¤ãƒ« / Compile HLSL because PixelShader.cso is missing");
 	ComPtr<ID3DBlob> errorBlob;
 	HRESULT compileShaderResult = D3DCompileFromFile(
 		hlslPath,
@@ -174,7 +174,7 @@ bool SpriteRenderer::LoadPixelShaderBlob(const wchar_t* csoPath, const wchar_t* 
 }
 
 //---------------------------------------------------------
-//ƒVƒF[ƒ_[ì¬
+//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ä½œæˆ
 //---------------------------------------------------------
 bool SpriteRenderer::CreateShaders()
 {
@@ -182,11 +182,11 @@ bool SpriteRenderer::CreateShaders()
 
 	if (pDevice == nullptr)
 	{
-		DebugLogWrite("CreateShader‚ÉDevice‚ªnullptr / Device is nullptr when calling CreateShader");
+		DebugLogWrite("CreateShaderæ™‚ã«DeviceãŒnullptr / Device is nullptr when calling CreateShader");
 		return false;
 	}
 
-	//ƒRƒ“ƒpƒCƒ‹‚Ì’¸“_ƒVƒF[ƒ_[‚ğó‚¯æ‚é
+	//ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã®é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã‚’å—ã‘å–ã‚‹
 	ComPtr<ID3DBlob> vertexShaderBlob;
 
 	if (!LoadVertexShaderBlob(
@@ -196,7 +196,7 @@ bool SpriteRenderer::CreateShaders()
 	{
 		return false;
 	}
-	//ƒRƒ“ƒpƒCƒ‹Œ‹‰Ê‚©‚ç’¸“_ƒVƒF[ƒ_[‚ğì¬
+	//ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«çµæœã‹ã‚‰é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã‚’ä½œæˆ
 	HRESULT createVertexShaderResult = pDevice->CreateVertexShader(
 		vertexShaderBlob->GetBufferPointer(),
 		vertexShaderBlob->GetBufferSize(),
@@ -205,12 +205,12 @@ bool SpriteRenderer::CreateShaders()
 
 	if (FAILED(createVertexShaderResult))
 	{
-		DebugLogWrite("SpriteVertexShaderì¬¸”s / Failed to Create SpriteVertexShader");
+		DebugLogWrite("SpriteVertexShaderä½œæˆå¤±æ•— / Failed to Create SpriteVertexShader");
 		return false;
 	}
 
-	//InputLayoutì¬
-	//’¸“_ƒf[ƒ^‚Ì\‘¢‚ğİ’è
+	//InputLayoutä½œæˆ
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®æ§‹é€ ã‚’è¨­å®š
 	D3D11_INPUT_ELEMENT_DESC inputElementDesc[] =
 	{
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT , 0,  0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
@@ -218,7 +218,7 @@ bool SpriteRenderer::CreateShaders()
 		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT	 , 0, 32, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 	};
 
-	//C++‘¤‚Ì’¸“_‚ÆHLSL‘¤‚Ì’¸“_‚ğŠÖ˜A•t‚¯‚é
+	//C++å´ã®é ‚ç‚¹ã¨HLSLå´ã®é ‚ç‚¹ã‚’é–¢é€£ä»˜ã‘ã‚‹
 	HRESULT createInputLayoutResult = pDevice->CreateInputLayout(
 		inputElementDesc,
 		ARRAYSIZE(inputElementDesc),
@@ -228,11 +228,11 @@ bool SpriteRenderer::CreateShaders()
 
 	if (FAILED(createInputLayoutResult))
 	{
-		DebugLogWrite("Sprite—pInputLayoutì¬¸”s / Failed to Create InputLayout for Sprite");
+		DebugLogWrite("Spriteç”¨InputLayoutä½œæˆå¤±æ•— / Failed to Create InputLayout for Sprite");
 		return false;
 	}
 
-	//ƒsƒNƒZƒ‹ƒVƒF[ƒ_[‚ğƒRƒ“ƒpƒCƒ‹
+	//ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã‚’ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 	ComPtr<ID3DBlob> pixelShaderBlob;
 
 	if (!LoadPixelShaderBlob(
@@ -243,7 +243,7 @@ bool SpriteRenderer::CreateShaders()
 		return false;
 	}
 
-	//ƒRƒ“ƒpƒCƒ‹Œ‹‰Ê‚©‚çƒsƒNƒZƒ‹ƒVƒF[ƒ_[‚ğì¬
+	//ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«çµæœã‹ã‚‰ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã‚’ä½œæˆ
 	HRESULT createPixelShaderResult = pDevice->CreatePixelShader(
 		pixelShaderBlob->GetBufferPointer(),
 		pixelShaderBlob->GetBufferSize(),
@@ -252,32 +252,32 @@ bool SpriteRenderer::CreateShaders()
 
 	if (FAILED(createPixelShaderResult))
 	{
-		DebugLogWrite("SpritePixelShaderì¬¸”s / Failed to Create SpritePixelShader");
+		DebugLogWrite("SpritePixelShaderä½œæˆå¤±æ•— / Failed to Create SpritePixelShader");
 		return false;
 	}
 
 
-	DebugLogWrite("SpriteƒVƒF[ƒ_[ì¬¬Œ÷ / Sprite Shader Created Successfully");
+	DebugLogWrite("Spriteã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ä½œæˆæˆåŠŸ / Sprite Shader Created Successfully");
 	return true;
 }
 
 
 //---------------------------------------------------------
-//’¸“_ƒoƒbƒtƒ@ì¬
+//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ä½œæˆ
 //---------------------------------------------------------
 bool SpriteRenderer::CreateVertexBuffer()
 {
 	ID3D11Device* pDevice = Graphics::GetInstance().GetDevice();
 	if (pDevice == nullptr)
 	{
-		DebugLogWrite("CreateVertexBuffer‚ÉDevice‚ªnullptr / Device is nullptr when calling CreateVertexBuffer");
+		DebugLogWrite("CreateVertexBufferæ™‚ã«DeviceãŒnullptr / Device is nullptr when calling CreateVertexBuffer");
 		return false;
 	}
 
-	//lŠpŒ`‚ÍOŠpŒ`2–‡‚Å
+	//å››è§’å½¢ã¯ä¸‰è§’å½¢2æšã§
 	D3D11_BUFFER_DESC vertexBufferDesc = {};
 	vertexBufferDesc.ByteWidth = sizeof(sSpriteVertex) * 6;
-	//–ˆ‰ñ‰æ‘œ‚ÌˆÊ’u‚Í‘å‚«‚³‚ğ‘‚«Š·‚¦‚é‚½‚ßAD3D11_USAGE_DYNAMIC‚ğg—p
+	//æ¯å›ç”»åƒã®ä½ç½®ã¯å¤§ãã•ã‚’æ›¸ãæ›ãˆã‚‹ãŸã‚ã€D3D11_USAGE_DYNAMICã‚’ä½¿ç”¨
 	vertexBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	vertexBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
@@ -289,7 +289,7 @@ bool SpriteRenderer::CreateVertexBuffer()
 
 	if (FAILED(createVertexBufferResult))
 	{
-		DebugLogWrite("Sprite—p‚ÌVertexBufferì¬¸”s / Failed to create a vertex buffer for a sprite");
+		DebugLogWrite("Spriteç”¨ã®VertexBufferä½œæˆå¤±æ•— / Failed to create a vertex buffer for a sprite");
 		return false;
 	}
 
@@ -302,18 +302,18 @@ bool SpriteRenderer::CreateConstantBuffer()
 
 	if (pDevice == nullptr)
 	{
-		DebugLogWrite("CreateConstantBuffer‚ÉDevice‚ªnullptr / Device is nullptr when calling CreateConstantBuffer");
+		DebugLogWrite("CreateConstantBufferæ™‚ã«DeviceãŒnullptr / Device is nullptr when calling CreateConstantBuffer");
 		return false;
 	}
 
 	D3D11_BUFFER_DESC constantBufferDesc = {};
-	//HLSL‚É–ˆŠú‚ “]‘—‚·‚é‚½‚ßADYNAMIC‚É‚·‚é
+	//HLSLã«æ¯æœŸã‚è»¢é€ã™ã‚‹ãŸã‚ã€DYNAMICã«ã™ã‚‹
 	constantBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-	//ConstantBufferData‚ÌƒTƒCƒY
+	//ConstantBufferDataã®ã‚µã‚¤ã‚º
 	constantBufferDesc.ByteWidth = sizeof(ConstantBufferData);
-	//’è”ƒoƒbƒtƒ@‚Æ‚µ‚Äg—p
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã¨ã—ã¦ä½¿ç”¨
 	constantBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	//CPU‚©‚ç‘‚«Š·‚¦‚ç‚ê‚é‚æ‚¤‚É‚·‚é
+	//CPUã‹ã‚‰æ›¸ãæ›ãˆã‚‰ã‚Œã‚‹ã‚ˆã†ã«ã™ã‚‹
 	constantBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
 	HRESULT createConstantBufferResult = pDevice->CreateBuffer(
@@ -323,7 +323,7 @@ bool SpriteRenderer::CreateConstantBuffer()
 
 	if (FAILED(createConstantBufferResult))
 	{
-		DebugLogWrite("Sprite—lConstantBufferì¬¸”s / Failed to create ConstantBuffer for Sprite");
+		DebugLogWrite("Spriteæ§˜ConstantBufferä½œæˆå¤±æ•— / Failed to create ConstantBuffer for Sprite");
 		return false;
 	}
 
@@ -336,15 +336,15 @@ bool SpriteRenderer::CreateSamplerState()
 
 	if (pDevice == nullptr)
 	{
-		DebugLogWrite("CreateSamplerState‚ÉDevice‚ªnullptr / Device is nullptr when calling CreateSamplerState");
+		DebugLogWrite("CreateSamplerStateæ™‚ã«DeviceãŒnullptr / Device is nullptr when calling CreateSamplerState");
 		return false;
 	}
 
 	D3D11_SAMPLER_DESC samplerDesc = {};
 
-	//‰æ‘œ‚ğŠg‘åk¬‚µ‚½‚ÉüˆÍ‚Ì‰æ‘f‚ğ•âŠÔ‚µ‚ÄŠŠ‚ç‚©‚É•\¦‚·‚éİ’è
+	//ç”»åƒã‚’æ‹¡å¤§ç¸®å°ã—ãŸæ™‚ã«å‘¨å›²ã®ç”»ç´ ã‚’è£œé–“ã—ã¦æ»‘ã‚‰ã‹ã«è¡¨ç¤ºã™ã‚‹è¨­å®š
 	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-	//UV‚ª0~1‚Ì”ÍˆÍ‚ğ’´‚¦‚½ê‡A‰æ‘œ‚Ì’[‚ÌF‚ğg—p‚·‚é
+	//UVãŒ0~1ã®ç¯„å›²ã‚’è¶…ãˆãŸå ´åˆã€ç”»åƒã®ç«¯ã®è‰²ã‚’ä½¿ç”¨ã™ã‚‹
 	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
 	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
 	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
@@ -356,7 +356,7 @@ bool SpriteRenderer::CreateSamplerState()
 
 	if (FAILED(createSamplerResult))
 	{
-		DebugLogWrite("Sprite—pSamplerStateì¬¸”s / Failed to create a SamplerState for Sprite");
+		DebugLogWrite("Spriteç”¨SamplerStateä½œæˆå¤±æ•— / Failed to create a SamplerState for Sprite");
 		return false;
 	}
 
@@ -364,7 +364,7 @@ bool SpriteRenderer::CreateSamplerState()
 }
 
 //---------------------------------------------------------
-//ƒuƒŒƒ“ƒhƒXƒe[ƒgì¬
+//ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆä½œæˆ
 //---------------------------------------------------------
 bool SpriteRenderer::CreateBlendState()
 {
@@ -372,16 +372,16 @@ bool SpriteRenderer::CreateBlendState()
 
 	if (pDevice == nullptr)
 	{
-		DebugLogWrite("CreateBlendState‚ÉDevice‚ªnullptr / Device is nullptr when calling CreateBlendState");
+		DebugLogWrite("CreateBlendStateæ™‚ã«DeviceãŒnullptr / Device is nullptr when calling CreateBlendState");
 		return false;
 	}
 
 	D3D11_BLEND_DESC alphaBlendDesc = {};
 
-	//“§–¾“x‚ğg‚Á‚½•`‰æ‚ğ—LŒø‚É‚·‚é
+	//é€æ˜åº¦ã‚’ä½¿ã£ãŸæç”»ã‚’æœ‰åŠ¹ã«ã™ã‚‹
 	alphaBlendDesc.RenderTarget[0].BlendEnable = TRUE;
-	//ÅIF‚ÌŒvZ
-	//‰æ‘œ‚ÌF x ‰æ‘œ‚Ì“§–¾“x + ”wŒi‚ÌF x ( 1 - ‰æ‘œ‚Ì“§–¾“x )
+	//æœ€çµ‚è‰²ã®è¨ˆç®—
+	//ç”»åƒã®è‰² x ç”»åƒã®é€æ˜åº¦ + èƒŒæ™¯ã®è‰² x ( 1 - ç”»åƒã®é€æ˜åº¦ )
 	alphaBlendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
 	alphaBlendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
 	alphaBlendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
@@ -396,11 +396,11 @@ bool SpriteRenderer::CreateBlendState()
 
 	if (FAILED(createAlphaBlendStateResult))
 	{
-		DebugLogWrite("Sprite—pAlphaBlendStateì¬¸”s / Failed to Create an AlphaBlendState for a Sprite");
+		DebugLogWrite("Spriteç”¨AlphaBlendStateä½œæˆå¤±æ•— / Failed to Create an AlphaBlendState for a Sprite");
 		return false;
 	}
 
-	//‰ÁZ‡¬
+	//åŠ ç®—åˆæˆ
 	D3D11_BLEND_DESC additiveBlendDesc = {};
 	additiveBlendDesc.RenderTarget[0].BlendEnable = TRUE;
 	additiveBlendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
@@ -418,7 +418,7 @@ bool SpriteRenderer::CreateBlendState()
 	if (FAILED(createAdditiveBlendStateResult))
 	{
 		DebugLogWrite(
-			"Sprite—pAdditiveBlendStateì¬¸”s / Failed to create an AdditiveBlendState for a sprite");
+			"Spriteç”¨AdditiveBlendStateä½œæˆå¤±æ•— / Failed to create an AdditiveBlendState for a sprite");
 		return false;
 	}
 	return true;
@@ -429,20 +429,20 @@ bool SpriteRenderer::CreateDepthStencilState()
 	ID3D11Device* pDevice = Graphics::GetInstance().GetDevice();
 	if (pDevice == nullptr)
 	{
-		DebugLogWrite("CreateDepthStencilState‚ÉDevice‚ªnullptr / Device is nullptr when calling CreateDepthStencilState");
+		DebugLogWrite("CreateDepthStencilStateæ™‚ã«DeviceãŒnullptr / Device is nullptr when calling CreateDepthStencilState");
 		return false;
 	}
 
 	D3D11_DEPTH_STENCIL_DESC depthStencilDesc = {};
 
-	//[“xƒeƒXƒg‚ğ‚µ‚È‚¢
-	//‘OŒã‚¨ŠÖŒW‚Í•`‰æ‚µ‚½‡”Ô‚ÅŒˆ‚ß‚é(Œã‚É‘‚¢‚½‚à‚Ì‚ªè‘O)
+	//æ·±åº¦ãƒ†ã‚¹ãƒˆã‚’ã—ãªã„
+	//å‰å¾ŒãŠé–¢ä¿‚ã¯æç”»ã—ãŸé †ç•ªã§æ±ºã‚ã‚‹(å¾Œã«æ›¸ã„ãŸã‚‚ã®ãŒæ‰‹å‰)
 	depthStencilDesc.DepthEnable = FALSE;
-	//[“x‚ğ‘‚«‚Ü‚È‚¢
-	//“§–¾•”•ª‚ªuŒ©‚¦‚È‚¢•Çv‚É‚È‚é‚Ì‚ğ–h‚®
+	//æ·±åº¦ã‚’æ›¸ãè¾¼ã¾ãªã„
+	//é€æ˜éƒ¨åˆ†ãŒã€Œè¦‹ãˆãªã„å£ã€ã«ãªã‚‹ã®ã‚’é˜²ã
 	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
 	depthStencilDesc.DepthFunc = D3D11_COMPARISON_ALWAYS;
-	//ƒXƒeƒ“ƒVƒ‹(Œ^”²‚«)‚àg‚í‚È‚¢
+	//ã‚¹ãƒ†ãƒ³ã‚·ãƒ«(å‹æŠœã)ã‚‚ä½¿ã‚ãªã„
 	depthStencilDesc.StencilEnable = FALSE;
 
 	HRESULT createDepthStencilStateResult = pDevice->CreateDepthStencilState(
@@ -451,21 +451,21 @@ bool SpriteRenderer::CreateDepthStencilState()
 
 	if (FAILED(createDepthStencilStateResult))
 	{
-		DebugLogWrite("Sprite—pDepthStencilStateì¬¸”s / Failed to create a DepthStencilState for Sprite");
+		DebugLogWrite("Spriteç”¨DepthStencilStateä½œæˆå¤±æ•— / Failed to create a DepthStencilState for Sprite");
 		return false;
 	}
 	return true;
 }
 
 //---------------------------------------------------------
-//‰æ‘œ•`‰æ
+//ç”»åƒæç”»
 //---------------------------------------------------------
 void SpriteRenderer::Draw(Texture* pTexture, float x, float y, float width, float height,const DirectX::XMFLOAT4& color,
 	eSpriteBlendMode blendMode)
 {
 	if (pTexture == nullptr)
 	{
-		DebugLogWrite("SpriteRenderer::Draw‚ÌTexture‚ªnullptr");
+		DebugLogWrite("SpriteRenderer::Drawã®TextureãŒnullptr");
 		return;
 	}
 
@@ -473,17 +473,17 @@ void SpriteRenderer::Draw(Texture* pTexture, float x, float y, float width, floa
 
 	if (pContext == nullptr)
 	{
-		DebugLogWrite("SpriteRenderer::Draw‚ÉContext‚ªnullptr");
+		DebugLogWrite("SpriteRenderer::Drawæ™‚ã«ContextãŒnullptr");
 		return;
 	}
 
-	//ƒsƒNƒZƒ‹À•W‚ğDirectX‚ÌÀ•W‚Ö•ÏŠ·‚·‚é
+	//ãƒ”ã‚¯ã‚»ãƒ«åº§æ¨™ã‚’DirectXã®åº§æ¨™ã¸å¤‰æ›ã™ã‚‹
 	float left = (x / static_cast<float>(m_screenWidth)) * 2.0f - 1.0f;
 	float right = ((x + width) / static_cast<float>(m_screenWidth)) * 2.0f - 1.0f;
 	float top = 1.0f - (y / static_cast<float>(m_screenHeight)) * 2.0f;
 	float bottom = 1.0f - ((y + height) / static_cast<float>(m_screenHeight)) * 2.0f;
 
-	//lŠpŒ`‚ğ\¬‚·‚é6’¸“_
+	//å››è§’å½¢ã‚’æ§‹æˆã™ã‚‹6é ‚ç‚¹
 	sSpriteVertex vertices[6] =
 	{
 		{{left  ,	top,0.0f, 1.0f},{1.0f,1.0f,1.0f,1.0f},{0.0f,0.0f}},
@@ -495,7 +495,7 @@ void SpriteRenderer::Draw(Texture* pTexture, float x, float y, float width, floa
 		{{right ,bottom,0.0f, 1.0f},{1.0f,1.0f,1.0f,1.0f},{1.0f,1.0f}},
 	};
 
-	//’¸“_ƒoƒbƒtƒ@‚ğ’u‚«Š·‚¦‰Â”\‚Èó‘Ô‚É‚·‚é
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ç½®ãæ›ãˆå¯èƒ½ãªçŠ¶æ…‹ã«ã™ã‚‹
 	D3D11_MAPPED_SUBRESOURCE mappedResource = {};
 
 	HRESULT mapVertexBufferResult = pContext->Map(
@@ -507,31 +507,31 @@ void SpriteRenderer::Draw(Texture* pTexture, float x, float y, float width, floa
 
 	if (FAILED(mapVertexBufferResult))
 	{
-		DebugLogWrite("Sprite’¸“_ƒoƒbƒtƒ@‚ÌMap¸”s / SpriteVertexBuffer Mapping Failure");
+		DebugLogWrite("Spriteé ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®Mapå¤±æ•— / SpriteVertexBuffer Mapping Failure");
 		return;
 	}
 
-	//’¸“_î•ñ‚ğGPU‚ÉƒRƒs[
+	//é ‚ç‚¹æƒ…å ±ã‚’GPUã«ã‚³ãƒ”ãƒ¼
 	memcpy(mappedResource.pData, vertices, sizeof(vertices));
 
-	//’¸“_ƒoƒbƒtƒ@‚Ì‘‚«Š·‚¦‚ğI—¹
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®æ›¸ãæ›ãˆã‚’çµ‚äº†
 	pContext->Unmap(m_vertexBuffer.Get(), 0);
 
-	//’¸“_ƒoƒbƒtƒ@‚ğDirectX‚Éİ’è
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’DirectXã«è¨­å®š
 	UINT stride = sizeof(sSpriteVertex);
 	UINT offset = 0;
 
 	ID3D11Buffer* vertexBuffer = m_vertexBuffer.Get();
 	pContext->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
-	//’¸“_‚Ì\‘¢‚ğİ’è
+	//é ‚ç‚¹ã®æ§‹é€ ã‚’è¨­å®š
 	pContext->IASetInputLayout(m_inputLayout.Get());
-	//’¸“_‚ğOŠpŒ`‚Æ‚µ‚Ä•`‰æ‚·‚é
+	//é ‚ç‚¹ã‚’ä¸‰è§’å½¢ã¨ã—ã¦æç”»ã™ã‚‹
 	pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	//’è”ƒoƒbƒtƒ@‚Ö‘—‚éƒf[ƒ^‚ğì‚é
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã¸é€ã‚‹ãƒ‡ãƒ¼ã‚¿ã‚’ä½œã‚‹
 	ConstantBufferData constantBufferData = {};
 
-	//•`‰æ‚Éw’è‚³‚ê‚½F
+	//æç”»æ™‚ã«æŒ‡å®šã•ã‚ŒãŸè‰²
 	constantBufferData.vertexColor = color;
 
 	XMMATRIX identityMatrix = XMMatrixIdentity();
@@ -540,7 +540,7 @@ void SpriteRenderer::Draw(Texture* pTexture, float x, float y, float width, floa
 	XMStoreFloat4x4(&constantBufferData.matrixProj, identityMatrix);
 	XMStoreFloat4x4(&constantBufferData.matrixWorld, identityMatrix);
 
-	//’è”ƒoƒbƒtƒ@‚ğ‘‚«Š·‚¦‚é
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã‚’æ›¸ãæ›ãˆã‚‹
 	D3D11_MAPPED_SUBRESOURCE mappedConstantBuffer = {};
 
 	HRESULT mapConstantBufferResult =
@@ -551,7 +551,7 @@ void SpriteRenderer::Draw(Texture* pTexture, float x, float y, float width, floa
 			&mappedConstantBuffer);
 	if (FAILED(mapConstantBufferResult))
 	{
-		DebugLogWrite("Sprite’è”ƒoƒbƒtƒ@‚ÌMap¸”s / Sprite Constant Buffer Map Failure");
+		DebugLogWrite("Spriteå®šæ•°ãƒãƒƒãƒ•ã‚¡ã®Mapå¤±æ•— / Sprite Constant Buffer Map Failure");
 		return;
 	}
 
@@ -561,19 +561,19 @@ void SpriteRenderer::Draw(Texture* pTexture, float x, float y, float width, floa
 
 	pContext->Unmap(m_constantBuffer.Get(), 0);
 
-	//ƒVƒF[ƒ_[‚ğİ’è
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã‚’è¨­å®š
 	pContext->VSSetShader(m_vertexShader.Get(), nullptr, 0);
 	pContext->PSSetShader(m_pixelShader.Get(), nullptr, 0);
 
-	//HLSL‚Ìregister(b0)‚Éİ’è‚·‚é
+	//HLSLã®register(b0)ã«è¨­å®šã™ã‚‹
 	ID3D11Buffer* constantBuffer = m_constantBuffer.Get();
 
 	pContext->VSSetConstantBuffers(0, 1, &constantBuffer);
 
-	//•`‰æ‚·‚é‰æ‘œ‚ğƒsƒNƒZƒ‹ƒVƒF[ƒ_[‚Éİ’è
+	//æç”»ã™ã‚‹ç”»åƒã‚’ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã«è¨­å®š
 	pTexture->SetPS(0);
 
-	//ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İæ‚è•û–@‚ğİ’è
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿å–ã‚Šæ–¹æ³•ã‚’è¨­å®š
 	ID3D11SamplerState* samplerState = m_samplerState.Get();
 
 	pContext->PSSetSamplers(0, 1, &samplerState);
@@ -583,7 +583,7 @@ void SpriteRenderer::Draw(Texture* pTexture, float x, float y, float width, floa
 	{
 	case eSpriteBlendMode::ADDITIVE:
 	{
-		//ƒŒ[ƒU[A”­Œõ‰Ô‰Î‚È‚Ç
+		//ãƒ¬ãƒ¼ã‚¶ãƒ¼ã€ç™ºå…‰èŠ±ç«ãªã©
 		blendState = m_additiveBlendState.Get();
 		break;
 	}
@@ -594,26 +594,26 @@ void SpriteRenderer::Draw(Texture* pTexture, float x, float y, float width, floa
 	}
 	default:
 	{
-		//UIA’Êí‰æ‘œA‰Œ‚È‚Ç
+		//UIã€é€šå¸¸ç”»åƒã€ç…™ãªã©
 		blendState = m_alphaBlendState.Get();
 		break;
 	}
 	}
 
-	//“§‰ß‚ğ—LŒø‚É
+	//é€éã‚’æœ‰åŠ¹ã«
 	float blendFactor[4] = { 0.0f,0.0f,0.0f,0.0f };
 	pContext->OMSetBlendState(m_alphaBlendState.Get(), blendFactor, 0xffffffff);
-	//[“xƒeƒXƒg‚ğ–³Œø‚É‚·‚é
+	//æ·±åº¦ãƒ†ã‚¹ãƒˆã‚’ç„¡åŠ¹ã«ã™ã‚‹
 	pContext->OMSetDepthStencilState(m_depthStencilState.Get(), 0);
-	//6’¸“_‚ğ•`‰æ
+	//6é ‚ç‚¹ã‚’æç”»
 	pContext->Draw(6, 0);
-	//Ÿ‚Ì3D•`‰æ‚È‚Ç‚Ö‰e‹¿‚ğc‚³‚È‚¢‚æ‚¤‚ÉƒuƒŒƒ“ƒhƒXƒe[ƒg‚ğ‰ğœ
+	//æ¬¡ã®3Dæç”»ãªã©ã¸å½±éŸ¿ã‚’æ®‹ã•ãªã„ã‚ˆã†ã«ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã‚’è§£é™¤
 	pContext->OMSetBlendState(nullptr, nullptr, 0xffffffff);
 	pContext->OMSetDepthStencilState(nullptr, 0);
 }
 
 //---------------------------------------------------------
-//I—¹ˆ—
+//çµ‚äº†å‡¦ç†
 //---------------------------------------------------------
 void SpriteRenderer::UnInitialize()
 {
@@ -628,5 +628,5 @@ void SpriteRenderer::UnInitialize()
 	m_additiveBlendState.Reset();
 	m_alphaBlendState.Reset();
 
-	DebugLogWrite("SpriteRendererI—¹ˆ—Š®—¹ / SpriteRenderer Cleanup Complete");
+	DebugLogWrite("SpriteRendererçµ‚äº†å‡¦ç†å®Œäº† / SpriteRenderer Cleanup Complete");
 }

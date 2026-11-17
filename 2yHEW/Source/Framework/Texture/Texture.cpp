@@ -1,13 +1,13 @@
-#include "Texture.h"
+ï»¿#include "Texture.h"
 #include "../Graphics/Graphics.h"
 //#include "../../../thirdParty/stb_image/stb_image.h"
 #include "../DebugSystem/DebugLog.h"
 using Microsoft::WRL::ComPtr;
 
 //---------------------------------------------------------
-//PixelShader‚Éİ’è
-// ˆê“xƒ[ƒJƒ‹•Ï”‚Ö“ü‚ê‚Ä‚¢‚é‚Ì‚ÍA
-// PSSetShaderResources()‚ªƒ|ƒCƒ“ƒ^”z—ñ‚ğó‚¯æ‚é‚½‚ß
+//PixelShaderã«è¨­å®š
+// ä¸€åº¦ãƒ­ãƒ¼ã‚«ãƒ«å¤‰æ•°ã¸å…¥ã‚Œã¦ã„ã‚‹ã®ã¯ã€
+// PSSetShaderResources()ãŒãƒã‚¤ãƒ³ã‚¿é…åˆ—ã‚’å—ã‘å–ã‚‹ãŸã‚
 //---------------------------------------------------------
 void Texture::SetPS(UINT slot) const
 {
@@ -19,7 +19,7 @@ void Texture::SetPS(UINT slot) const
 		&pSrv);
 }
 //---------------------------------------------------------
-//SRVæ“¾
+//SRVå–å¾—
 //---------------------------------------------------------
 ID3D11ShaderResourceView* Texture::GetSRV() const
 {
@@ -27,7 +27,7 @@ ID3D11ShaderResourceView* Texture::GetSRV() const
 }
 
 //---------------------------------------------------------
-//‰æ‘œƒTƒCƒYæ“¾
+//ç”»åƒã‚µã‚¤ã‚ºå–å¾—
 //---------------------------------------------------------
 UINT Texture::GetWidth() const
 {

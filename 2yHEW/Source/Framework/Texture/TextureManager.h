@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <unordered_map>
 #include <memory>
@@ -6,23 +6,23 @@
 
 class Texture;
 
-//ƒeƒNƒXƒ`ƒƒŠÇ—ƒNƒ‰ƒX
+//ãƒ†ã‚¯ã‚¹ãƒãƒ£ç®¡ç†ã‚¯ãƒ©ã‚¹
 class TextureManager
 {
 public:
-	//ƒVƒ“ƒOƒ‹ƒgƒ“æ“¾
+	//ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³å–å¾—
 	static TextureManager& GetInstance();
 
-	//ƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İ
-	//ˆø”Fƒtƒ@ƒCƒ‹ƒpƒX(“Ç‚İ‚Ş‰æ‘œƒtƒ@ƒCƒ‹)
-	//“Ç‚İ‚ß‚Ä‚¢‚È‚¢ê‡‚ÍTextureLoader‚Å“Ç‚İ‚Ş
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿
+	//å¼•æ•°ï¼šãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹(èª­ã¿è¾¼ã‚€ç”»åƒãƒ•ã‚¡ã‚¤ãƒ«)
+	//èª­ã¿è¾¼ã‚ã¦ã„ãªã„å ´åˆã¯TextureLoaderã§èª­ã¿è¾¼ã‚€
 	std::shared_ptr<Texture> LoadTexture(const std::string& filePath);
 
-	//ŠÇ—’†‚ÌƒeƒNƒXƒ`ƒƒ[‚ğ‚·‚×‚Ä‰ğ•ú
+	//ç®¡ç†ä¸­ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã‚’ã™ã¹ã¦è§£æ”¾
 	void ClearTexture();
 
 private:
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^EƒfƒXƒgƒ‰ƒNƒ^
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãƒ»ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	TextureManager() = default;
 	~TextureManager() = default;
 
@@ -30,8 +30,8 @@ private:
 	TextureManager& operator=(const TextureManager&) = delete;
 
 private:
-	//“Ç‚İ‚İÏ‚İƒeƒNƒXƒ`ƒƒˆê——
-	//Key : ƒtƒ@ƒCƒ‹ƒpƒX
-	//Value : ƒeƒNƒXƒ`ƒƒ
+	//èª­ã¿è¾¼ã¿æ¸ˆã¿ãƒ†ã‚¯ã‚¹ãƒãƒ£ä¸€è¦§
+	//Key : ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
+	//Value : ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	std::unordered_map<std::string, std::shared_ptr<Texture>>m_textures;
 };

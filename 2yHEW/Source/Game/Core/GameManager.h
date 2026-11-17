@@ -1,4 +1,4 @@
-
+ï»¿
 
 #pragma once
 
@@ -20,15 +20,15 @@ public:
 	void Draw();
 	void Exit();
 
-	//¡‚ÌƒV[ƒ“‚©‚çƒQ[ƒ€I—¹‚ªˆË—Š‚³‚ê‚Ä‚¢‚é‚©
-	//ƒV[ƒ“‚ª‚È‚¢‚Æ‚«‚ÍfalseAm_currentScene‚ª‹ó‚Ì‚Ü‚Ü‚¾‚Æ—‚¿‚é‚½‚ßAæ‚ÉŠm”F
+	//ä»Šã®ã‚·ãƒ¼ãƒ³ã‹ã‚‰ã‚²ãƒ¼ãƒ çµ‚äº†ãŒä¾é ¼ã•ã‚Œã¦ã„ã‚‹ã‹
+	//ã‚·ãƒ¼ãƒ³ãŒãªã„ã¨ãã¯falseã€m_currentSceneãŒç©ºã®ã¾ã¾ã ã¨è½ã¡ã‚‹ãŸã‚ã€å…ˆã«ç¢ºèª
 	bool IsQuitRequested() const
 	{
 		return m_currentScene && m_currentScene->IsQuitRequested();
 	}
 
-	//¡‚ÌƒV[ƒ“–¼‚ğæ“¾
-	//ƒV[ƒ“‚ª‚È‚¢‚Æ‚«‚Í"None"‚ğ•Ô‚·Anullptr‚Å•Ô‚·‚ÆA•\¦‚·‚é‘¤‚Å—‚¿‚éŒ´ˆö‚É‚È‚é
+	//ä»Šã®ã‚·ãƒ¼ãƒ³åã‚’å–å¾—
+	//ã‚·ãƒ¼ãƒ³ãŒãªã„ã¨ãã¯"None"ã‚’è¿”ã™ã€nullptrã§è¿”ã™ã¨ã€è¡¨ç¤ºã™ã‚‹å´ã§è½ã¡ã‚‹åŸå› ã«ãªã‚‹
 	const wchar_t* GetCurrentSceneName() const
 	{
 		return m_currentScene ? m_currentScene->GetSceneName() : L"None";
@@ -36,12 +36,12 @@ public:
 private:
 	Input m_input;
 
-	//“®‚¢‚Ä‚¢‚éƒV[ƒ“
+	//å‹•ã„ã¦ã„ã‚‹ã‚·ãƒ¼ãƒ³
 	std::unique_ptr<SceneBase> m_currentScene;
 
-	//eScene‚©‚çA‘Î‰‚·‚éƒV[ƒ“‚ğì‚é
+	//eSceneã‹ã‚‰ã€å¯¾å¿œã™ã‚‹ã‚·ãƒ¼ãƒ³ã‚’ä½œã‚‹
 	std::unique_ptr<SceneBase> CreateScene(eScene sceneType);
 
-	//ƒV[ƒ“‚ÌØ‚è‘Ö‚¦
+	//ã‚·ãƒ¼ãƒ³ã®åˆ‡ã‚Šæ›¿ãˆ
 	bool ChangeScene(eScene nextScene);
 };

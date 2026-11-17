@@ -1,4 +1,4 @@
-#include "TextureLoader.h"
+ï»¿#include "TextureLoader.h"
 
 #include "../DebugSystem/DebugLog.h"
 #include "../Graphics/Graphics.h"
@@ -6,7 +6,7 @@
 #include "../../../thirdParty/stb_image/stb_image.h"
 
 //---------------------------------------------------------
-//ƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İ
+//ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿
 //---------------------------------------------------------
 std::shared_ptr<Texture> TextureLoader::Load(const std::string& filePath)
 {
@@ -14,21 +14,21 @@ std::shared_ptr<Texture> TextureLoader::Load(const std::string& filePath)
 	int height = 0;
 	int channelsCount = 0;
 
-	//stb_image‚Å‰æ‘œ“Ç‚İ‚İ
+	//stb_imageã§ç”»åƒèª­ã¿è¾¼ã¿
 	unsigned char* pImageData;
 	pImageData = stbi_load(filePath.c_str(), &width, &height, &channelsCount, STBI_rgb_alpha);
 
-	//‰æ‘œ“Ç‚İ‚İ‚ª¸”s‚µ‚½Û‚ÉƒRƒƒ“ƒgƒAƒEƒg‚ğ‰ğœ‚·‚é
+	//ç”»åƒèª­ã¿è¾¼ã¿ãŒå¤±æ•—ã—ãŸéš›ã«ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆã‚’è§£é™¤ã™ã‚‹
 	//DebugLogWrite(filePath.c_str());
 	if (pImageData == nullptr)
 	{
-		DebugLogWrite("‰æ‘œ“Ç¸”s / Failed to load image");
+		DebugLogWrite("ç”»åƒèª­è¾¼å¤±æ•— / Failed to load image");
 		return nullptr;
 	}
 	//m_width = width;
 	//m_height = height;
 
-	//“Ç‚İ‚ñ‚¾‰æ‘œ‚Ìİ’è
+	//èª­ã¿è¾¼ã‚“ã ç”»åƒã®è¨­å®š
 	D3D11_TEXTURE2D_DESC textureDesc = {};
 
 	textureDesc.Width = static_cast<UINT>(width);
@@ -40,30 +40,30 @@ std::shared_ptr<Texture> TextureLoader::Load(const std::string& filePath)
 	textureDesc.Usage = D3D11_USAGE_DEFAULT;
 	textureDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
 
-	//‰æ‘œ‚ğCPU‚É“]‘—
+	//ç”»åƒã‚’CPUã«è»¢é€
 	D3D11_SUBRESOURCE_DATA textureData = {};
 	textureData.pSysMem = pImageData;
 	textureData.SysMemPitch = static_cast<UINT>(width * 4);
 
-	//Texture‚ğ¶¬
+	//Textureã‚’ç”Ÿæˆ
 	std::shared_ptr<Texture> texture(new Texture());
 
-	//GPUã‚ÉTexture2D‚ğì¬
+	//GPUä¸Šã«Texture2Dã‚’ä½œæˆ
 	HRESULT createTexture2DResult = Graphics::GetInstance().GetDevice()->CreateTexture2D(
 		&textureDesc,
 		&textureData,
 		texture->m_texture.GetAddressOf());
 
 
-	//CPU‘¤‚Ì‰æ‘œƒf[ƒ^‚ÍTexture2Dì¬Œã‚É‰ğ•ú
+	//CPUå´ã®ç”»åƒãƒ‡ãƒ¼ã‚¿ã¯Texture2Dä½œæˆå¾Œã«è§£æ”¾
 	stbi_image_free(pImageData);
 	if (FAILED(createTexture2DResult))
 	{
-		DebugLogWrite("Texture2Dì¬¸”s / Failed to create Texture2D");
+		DebugLogWrite("Texture2Dä½œæˆå¤±æ•— / Failed to create Texture2D");
 		return nullptr;
 	}
 
-	//SshaderResourceViewì¬APixelShader‚©‚çQÆ‚·‚é‚½‚ß‚É•K—v
+	//SshaderResourceViewä½œæˆã€PixelShaderã‹ã‚‰å‚ç…§ã™ã‚‹ãŸã‚ã«å¿…è¦
 	HRESULT createSrvResult = Graphics::GetInstance().GetDevice()->CreateShaderResourceView(
 		texture->m_texture.Get(),
 		nullptr,
@@ -71,13 +71,13 @@ std::shared_ptr<Texture> TextureLoader::Load(const std::string& filePath)
 
 	if (FAILED(createSrvResult))
 	{
-		DebugLogWrite("ShaderResourceViewì¬¸”s / Failed to create ShaderResourceView");
+		DebugLogWrite("ShaderResourceViewä½œæˆå¤±æ•— / Failed to create ShaderResourceView");
 		return nullptr;
 	}
 
-	//‰æ‘œƒTƒCƒY‚ğ•Û‘¶
+	//ç”»åƒã‚µã‚¤ã‚ºã‚’ä¿å­˜
 	texture->m_width = static_cast<UINT>(width);
 	texture->m_height = static_cast<UINT>(height);
-	//DebugLogWrite("Texture“Ç‚İ‚İ¬Œ÷");
+	//DebugLogWrite("Textureèª­ã¿è¾¼ã¿æˆåŠŸ");
 	return texture;
 }

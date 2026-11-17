@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <memory>
 #include <string>
@@ -8,7 +8,7 @@ class Texture;
 class TextureLoader
 {
 public:
-	//‰æ‘œƒtƒ@ƒCƒ‹‚©‚çTexture‚ğì¬
+	//ç”»åƒãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰Textureã‚’ä½œæˆ
 	static std::shared_ptr<Texture> Load(const std::string& filePath);
 private:
 	TextureLoader() = delete;

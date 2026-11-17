@@ -1,4 +1,4 @@
-#include "SpriteObjectBase.h"
+ï»¿#include "SpriteObjectBase.h"
 
 #include "../../Component/ShowObject/CShowObject.h"
 #include "../../Component/Transform/CTransform.h"
@@ -8,35 +8,35 @@
 #include "../../../Framework/DebugSystem/DebugLog.h"
 
 //---------------------------------------------------------
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //---------------------------------------------------------
 SpriteObjectBase::SpriteObjectBase(const std::string& filePath) : m_filePath(filePath)
 {
-	//‰æ‘œ•\¦‚É‚ÍˆÊ’u‚ª•K—v‚È‚Ì‚Åæ‚É‚Â‚¯‚Ä‚¨‚­
-	//OnInit()AƒV[ƒ“‚©‚ç‚à‚·‚®‚ÉCTransform‚ğg‚¦‚é
+	//ç”»åƒè¡¨ç¤ºã«ã¯ä½ç½®ãŒå¿…è¦ãªã®ã§å…ˆã«ã¤ã‘ã¦ãŠã
+	//OnInit()ã€ã‚·ãƒ¼ãƒ³ã‹ã‚‰ã‚‚ã™ãã«CTransformã‚’ä½¿ãˆã‚‹
 	AddComponent<CTransform>();
 }
 
 //---------------------------------------------------------
-//‰Šú‰»
+//åˆæœŸåŒ–
 //---------------------------------------------------------
 bool SpriteObjectBase::Initialize()
 {
 	if (m_filePath.empty())
 	{
-		DebugLogWrite("SpriteObjectBase‚Ìƒtƒ@ƒCƒ‹ƒpƒX‚ª‹ó / The file path for SpriteObjectBase is empty");
+		DebugLogWrite("SpriteObjectBaseã®ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ãŒç©º / The file path for SpriteObjectBase is empty");
 		return false;
 	}
 
-	//TextureManager‚©‚ç‰æ‘œ‚ğæ“¾
+	//TextureManagerã‹ã‚‰ç”»åƒã‚’å–å¾—
 	m_texture = TextureManager::GetInstance().LoadTexture(m_filePath);
 	if (m_texture == nullptr)
 	{
-		DebugLogWrite("SpriteObjectBase‚Ì‰æ‘œ“Ç‚İ‚İ¸”s / SpriteObjectBase image load failure");
+		DebugLogWrite("SpriteObjectBaseã®ç”»åƒèª­ã¿è¾¼ã¿å¤±æ•— / SpriteObjectBase image load failure");
 		return false;
 	}
 
-	//ƒTƒCƒY‚ªİ’è‚³‚ê‚Ä‚¢‚È‚¯‚ê‚ÎA“Ç‚İ‚ñ‚¾‰æ‘œ–{—ˆ‚ÌƒTƒCƒY‚ğg—p‚·‚é
+	//ã‚µã‚¤ã‚ºãŒè¨­å®šã•ã‚Œã¦ã„ãªã‘ã‚Œã°ã€èª­ã¿è¾¼ã‚“ã ç”»åƒæœ¬æ¥ã®ã‚µã‚¤ã‚ºã‚’ä½¿ç”¨ã™ã‚‹
 	if (m_width <= 0.0f)
 	{
 		m_width = static_cast<float>(m_texture->GetWidth());
@@ -53,7 +53,7 @@ bool SpriteObjectBase::Initialize()
 
 void SpriteObjectBase::Update()
 {
-	//æ‚ÉƒRƒ“ƒ|[ƒlƒ“ƒg‚ğXV
+	//å…ˆã«ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’æ›´æ–°
 	UpdateComponents();
 
 	OnUpdate();
@@ -61,10 +61,10 @@ void SpriteObjectBase::Update()
 
 void SpriteObjectBase::Draw()
 {
-	//ShowObjectComponent‚ª•t‚¢‚Ä‚¢‚é‚©Šm”F
+	//ShowObjectComponentãŒä»˜ã„ã¦ã„ã‚‹ã‹ç¢ºèª
 	std::shared_ptr<CShowObject> showComponent = GetComponent<CShowObject>();
 
-	//ƒRƒ“ƒ|[ƒlƒ“ƒg‚ª‘¶İ‚µ‚ÄA‚©‚Â”ñ•\¦‚É‚È‚¢‚¢‚Ä‚¢‚½‚ç•`‰æ‚µ‚È‚¢
+	//ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãŒå­˜åœ¨ã—ã¦ã€ã‹ã¤éè¡¨ç¤ºã«ãªã„ã„ã¦ã„ãŸã‚‰æç”»ã—ãªã„
 	if (showComponent != nullptr && !showComponent->IsVisible())
 	{
 		return;
@@ -75,7 +75,7 @@ void SpriteObjectBase::Draw()
 		return;
 	}
 
-	////SpriteRenderer‚ÉTextureAˆÊ’uAƒTƒCƒY‚ğ“n‚µ‚Ä•`‰æ‚·‚é
+	////SpriteRendererã«Textureã€ä½ç½®ã€ã‚µã‚¤ã‚ºã‚’æ¸¡ã—ã¦æç”»ã™ã‚‹
 	//SpriteRenderer::GetInstance().Draw(m_texture.get(), m_x, m_y, m_width, m_height, m_color, m_blendMode);
 	std::shared_ptr<CTransform> transform = GetComponent<CTransform>();
 
@@ -95,7 +95,7 @@ void SpriteObjectBase::Draw()
 }
 
 //---------------------------------------------------------
-//•\¦ˆÊ’uİ’è
+//è¡¨ç¤ºä½ç½®è¨­å®š
 //---------------------------------------------------------
 void SpriteObjectBase::SetPosition(float x, float y, float z)
 {
@@ -108,7 +108,7 @@ void SpriteObjectBase::SetPosition(float x, float y, float z)
 }
 
 //---------------------------------------------------------
-//•\¦ƒTƒCƒYİ’è
+//è¡¨ç¤ºã‚µã‚¤ã‚ºè¨­å®š
 //---------------------------------------------------------
 void SpriteObjectBase::SetSize(float width, float height)
 {

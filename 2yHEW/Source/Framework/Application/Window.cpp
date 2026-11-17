@@ -1,28 +1,28 @@
-#include "Window.h"
+ï»¿#include "Window.h"
 #include "Application.h"
 #include "../DebugSystem/DebugLog.h"
 #include "../DebugSystem/ImGuiManager.h"
 
 //---------------------------------------------------------
-//ƒEƒBƒ“ƒhƒE¶¬
+//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ç”Ÿæˆ
 //---------------------------------------------------------
 bool Window::Create(int width, int height, const wchar_t* title)
 {
-	//ƒEƒBƒ“ƒhƒEƒNƒ‰ƒXî•ñ
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹æƒ…å ±
 	WNDCLASSEX windowClass{};
 
-	windowClass.cbSize = sizeof(WNDCLASSEX);				//\‘¢‘ÌƒTƒCƒY‚ğİ’è
-	windowClass.lpfnWndProc = WndProc;					//ƒƒbƒZ[ƒWˆ—ŠÖ”
-	windowClass.hInstance = GetModuleHandle(nullptr);	//Às’†‚ÌƒAƒvƒŠƒP[ƒVƒ‡ƒ“î•ñ
-	windowClass.lpszClassName = L"WindowClass";			//ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX–¼
+	windowClass.cbSize = sizeof(WNDCLASSEX);				//æ§‹é€ ä½“ã‚µã‚¤ã‚ºã‚’è¨­å®š
+	windowClass.lpfnWndProc = WndProc;					//ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å‡¦ç†é–¢æ•°
+	windowClass.hInstance = GetModuleHandle(nullptr);	//å®Ÿè¡Œä¸­ã®ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³æƒ…å ±
+	windowClass.lpszClassName = L"WindowClass";			//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹å
 
-	//Windows‚ÉƒEƒBƒ“ƒhƒEƒNƒ‰ƒX‚ğ“o˜^
+	//Windowsã«ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹ã‚’ç™»éŒ²
 	if (RegisterClassEx(&windowClass) == 0)
 	{
 		return false;
 	}
 
-	//ƒEƒBƒ“ƒhƒE‚Éƒ^ƒCƒgƒ‹ƒo[‚Æ‚©˜g‚ªŠÜ‚Ü‚ê‚Ä‚¢‚é‚Ì‚ÅAƒTƒCƒY‚ğ³‚µ‚­‚·‚é‚½‚ß‚Ì‘Îô
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã«ã‚¿ã‚¤ãƒˆãƒ«ãƒãƒ¼ã¨ã‹æ ãŒå«ã¾ã‚Œã¦ã„ã‚‹ã®ã§ã€ã‚µã‚¤ã‚ºã‚’æ­£ã—ãã™ã‚‹ãŸã‚ã®å¯¾ç­–
 	RECT windowRect =
 	{
 		0,
@@ -36,7 +36,7 @@ bool Window::Create(int width, int height, const wchar_t* title)
 		FALSE
 	);
 
-	//ƒEƒBƒ“ƒhƒE‚ğ¶¬
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ç”Ÿæˆ
 	m_hWnd = CreateWindowEx(
 		0,
 		L"WindowClass",
@@ -52,24 +52,24 @@ bool Window::Create(int width, int height, const wchar_t* title)
 		nullptr
 	);
 
-	//ì¬¸”s‚µ‚½‚Æ‚«‚Ífalse‚ğ•Ô‚·
+	//ä½œæˆå¤±æ•—ã—ãŸã¨ãã¯falseã‚’è¿”ã™
 	if (!m_hWnd)
 	{
 		return false;
 	}
 
-	//ƒEƒBƒ“ƒhƒE•\¦
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦è¡¨ç¤º
 	ShowWindow(m_hWnd, SW_SHOW);
 
 	return true;
 }
 
 //---------------------------------------------------------
-//WindowsƒƒbƒZ[ƒWˆ—
+//Windowsãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å‡¦ç†
 //---------------------------------------------------------
 LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
 {
-	//ImGui‚É“ü—Í‚ğ“n‚·
+	//ImGuiã«å…¥åŠ›ã‚’æ¸¡ã™
 	if (ImGuiManager::WndProcHandler(hWnd, msg, wp, lp))
 	{
 		return true;
@@ -79,18 +79,18 @@ LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
 	{
 	case WM_DESTROY:
 	{
-		//ƒEƒBƒ“ƒhƒE‚ª•Â‚¶‚ç‚ê‚½‚çWM_QUIT‚ğ‘—‚Á‚ÄƒQ[ƒ€ƒ‹[ƒvI—¹
+		//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒé–‰ã˜ã‚‰ã‚ŒãŸã‚‰WM_QUITã‚’é€ã£ã¦ã‚²ãƒ¼ãƒ ãƒ«ãƒ¼ãƒ—çµ‚äº†
 		PostQuitMessage(0);
 		break;
 	}
-	case WM_CLOSE: //uxvƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚ç
+	case WM_CLOSE: //ã€Œxã€ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚ŒãŸã‚‰
 	{
-		DestroyWindow(hWnd); // ƒƒbƒZ[ƒWƒ‹[ƒv‚ÉWM_QUIT‚ğ‘—‚é
+		DestroyWindow(hWnd); // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã«WM_QUITã‚’é€ã‚‹
 		break;
 	}
 	case WM_KEYDOWN:
 	{
-		////ESCƒL[‚ª‰Ÿ‚³‚ê‚½‚çƒEƒBƒ“ƒhƒE‚ğ•Â‚¶‚é
+		////ESCã‚­ãƒ¼ãŒæŠ¼ã•ã‚ŒãŸã‚‰ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‰ã˜ã‚‹
 		//if (wp == VK_ESCAPE)
 		//{
 		//	DestroyWindow(hWnd);
@@ -100,11 +100,11 @@ LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
 	}
 	case WM_SETCURSOR:
 	{
-		SetCursor(LoadCursor(nullptr, IDC_ARROW)); // –îˆóƒJ[ƒ\ƒ‹‚ğİ’è
+		SetCursor(LoadCursor(nullptr, IDC_ARROW)); // çŸ¢å°ã‚«ãƒ¼ã‚½ãƒ«ã‚’è¨­å®š
 		break;
 	}
 	default:
-		//–¢ˆ—ƒƒbƒZ[ƒW‚ÍWindows•W€ˆ—‚É”C‚¹‚é
+		//æœªå‡¦ç†ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã¯Windowsæ¨™æº–å‡¦ç†ã«ä»»ã›ã‚‹
 		return DefWindowProc(hWnd, msg, wp, lp);
 	}
 

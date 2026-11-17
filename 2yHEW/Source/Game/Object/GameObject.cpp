@@ -1,2 +1,2 @@
-#include "GameObject.h"
-//���Ƃ��狤�ʂ�Update()�Ȃǂ�ǉ����Ă���
+﻿#include "GameObject.h"
+//あとから共通のUpdate()などを追加していく

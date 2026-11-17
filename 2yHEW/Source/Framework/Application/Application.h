@@ -1,10 +1,10 @@
-#pragma once
+ï»¿#pragma once
 #include "Window.h"
 class Application
 {
 public:
 
-	//ƒVƒ“ƒOƒ‹ƒgƒ“æ“¾
+	//ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³å–å¾—
 	static Application& GetInstance()
 	{
 		static Application instance;
@@ -15,19 +15,19 @@ public:
 	void AppLoop();
 	void UnInit();
 
-	//ƒEƒBƒ“ƒhƒEæ“¾
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦å–å¾—
 	Window& GetWindow() { return m_window; }
 
-	//HWNDæ“¾
+	//HWNDå–å¾—
 	HWND GetHwnd() { return m_window.GetHwnd(); }
 
 private:
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^EƒfƒXƒgƒ‰ƒNƒ^
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãƒ»ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Application() = default;
 	~Application() = default;
 
-	//ƒVƒ“ƒOƒ‹ƒgƒ“‚ğƒRƒs[‚Å‚«‚é‚ÆAApplication‚ª•¡”‘¶İ‚µ‚Ä‚µ‚Ü‚¤
-	//‚»‚ê‚ğƒRƒ“ƒpƒCƒ‹‚É–h‚®‚½‚ßAƒRƒs[ˆ—‚ğíœ‚·‚é
+	//ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã‚’ã‚³ãƒ”ãƒ¼ã§ãã‚‹ã¨ã€ApplicationãŒè¤‡æ•°å­˜åœ¨ã—ã¦ã—ã¾ã†
+	//ãã‚Œã‚’ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«æ™‚ã«é˜²ããŸã‚ã€ã‚³ãƒ”ãƒ¼å‡¦ç†ã‚’å‰Šé™¤ã™ã‚‹
 	Application(const Application&) = delete;
 	Application& operator=(const Application&) = delete;
 	Application(const Application&&) = delete;
