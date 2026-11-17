@@ -5,6 +5,7 @@
 #include <memory>
 #include <vector>
 #include <concepts>
+#include <utility>   // std::forward
 
 //AddComponent<T>()RemoveComponent<T>()GetComponent<T>()はテンプレート関数なので実装もヘッダーに書く
 class GameObject

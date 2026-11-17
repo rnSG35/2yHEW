@@ -21,7 +21,7 @@ public:
 	void Draw() override;
 
 	//表示位置設定
-	void SetPosition(float x, float y);
+	void SetPosition(float x, float y,float z = 0.0f);
 
 	//表示サイズ設定
 	void SetSize(float width, float height);
@@ -46,10 +46,6 @@ private:
 
 	//派生クラスのコンストラクタで設定する画像パス
 	std::string m_filePath;
-
-	//画像左上の表示位置
-	float m_x = 0.0f;
-	float m_y = 0.0f;
 
 	//画像の表示サイズ
 	float m_width = 0.0f;

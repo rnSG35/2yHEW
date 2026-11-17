@@ -1,6 +1,7 @@
 #include "SpriteObjectBase.h"
 
 #include "../../Component/ShowObject/CShowObject.h"
+#include "../../Component/Transform/CTransform.h"
 #include "../../../Framework/Renderer/SpriteRenderer.h"
 #include "../../../Framework/Texture/Texture.h"
 #include "../../../Framework/Texture/TextureManager.h"
@@ -10,7 +11,9 @@
 //コンストラクタ
 //---------------------------------------------------------
 SpriteObjectBase::SpriteObjectBase(const std::string& filePath) : m_filePath(filePath)
-{}
+{
+	AddComponent<CTransform>();
+}
 
 //---------------------------------------------------------
 //初期化
@@ -70,8 +73,21 @@ void SpriteObjectBase::Draw()
 		return;
 	}
 
-	//SpriteRendererにTexture、位置、サイズを渡して描画する
-	SpriteRenderer::GetInstance().Draw(m_texture.get(), m_x, m_y, m_width, m_height, m_color, m_blendMode);
+	////SpriteRendererにTexture、位置、サイズを渡して描画する
+	//SpriteRenderer::GetInstance().Draw(m_texture.get(), m_x, m_y, m_width, m_height, m_color, m_blendMode);
+	std::shared_ptr<CTransform> transform = GetComponent<CTransform>();
+
+	DirectX::SimpleMath::Vector3 position =
+		transform ? transform->GetPosition() : DirectX::SimpleMath::Vector3::Zero;
+
+	SpriteRenderer::GetInstance().Draw(
+		m_texture.get(),
+		position.x,
+		position.y,
+		m_width,
+		m_height,
+		m_color,
+		m_blendMode);
 
 	OnDraw();
 }
@@ -79,10 +95,14 @@ void SpriteObjectBase::Draw()
 //---------------------------------------------------------
 //表示位置設定
 //---------------------------------------------------------
-void SpriteObjectBase::SetPosition(float x, float y)
+void SpriteObjectBase::SetPosition(float x, float y, float z)
 {
-	m_x = x;
-	m_y = y;
+	std::shared_ptr<CTransform> transform = GetComponent<CTransform>();
+
+	if (transform)
+	{
+		transform->SetPosition(x, y, z);
+	}
 }
 
 //---------------------------------------------------------

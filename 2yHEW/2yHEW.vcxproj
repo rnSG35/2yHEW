@@ -137,6 +137,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Game\Component\KeyMove\CKeyMove.cpp" />
+    <ClCompile Include="Source\Game\Component\Transform\CTransform.cpp" />
     <ClCompile Include="Source\Framework\DebugSystem\ImGuiManager.cpp" />
     <ClCompile Include="Source\Framework\Application\FpsManager.cpp" />
     <ClCompile Include="Source\Framework\Pch.cpp">
@@ -168,6 +170,8 @@
     <ClCompile Include="Source\Game\Scene\Title\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Game\Component\KeyMove\CKeyMove.h" />
+    <ClInclude Include="Source\Game\Component\Transform\CTransform.h" />
     <ClInclude Include="Source\Framework\DebugSystem\ImGuiManager.h" />
     <ClInclude Include="Source\Framework\Application\FpsManager.h" />
     <ClInclude Include="Source\Framework\Pch.h" />
