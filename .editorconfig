@@ -1,6 +1,12 @@
 #このファイルより上のフォルダ設定は使わない
-root = true;
+root = true
 
-# C++・HLSLのファイルは、UTF-8(署名付き)で保存する
-[*.{cpp,h,hlsl}]
+#C++・HLSLのファイルは、UTF-8(署名付き)で保存する
+[*.{cpp,h}]
 charset = utf-8-bom
+
+#HLSLファイルは、HTF-8(署名なし)で保存する
+[*.{hlsl}]
+charset = utf-8
+end_of_line = crlf
+insert_final_newline = true
