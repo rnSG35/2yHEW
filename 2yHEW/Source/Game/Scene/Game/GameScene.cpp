@@ -21,14 +21,14 @@ bool GameScene::Init()
 	//DebugLogWrite("GameScene初期化 / GameScene Init");
 
 	//追加した順番に描画される(後の者が手前)
-	m_pTestSpriteObject = AddGameObject<test>();
+	/*m_pTestSpriteObject =*/ AddGameObject<test>();
 	AddGameObject<laser>();
 
 
-	m_pTest = AddGameObject<Player>();
+	/*m_pTest = */AddGameObject<Player>();
 
 	//キー入力で動かせるようにする
-	m_pTest->AddComponent<CKeyMove>(m_input);
+	//m_pTest->AddComponent<CKeyMove>(m_input);
 
 	return InitGameObjects();
 }
@@ -40,16 +40,16 @@ void GameScene::Update()
 {
 	UpdateGameObjects();
 
-	//スペースキーで表示を切り替える
-	if (m_pTestSpriteObject && m_input.GetKeyTrigger(VK_SPACE))
-	{
-		std::shared_ptr<CShowObject> showComponent = m_pTestSpriteObject->GetComponent<CShowObject>();
+	////スペースキーで表示を切り替える
+	//if (m_pTestSpriteObject && m_input.GetKeyTrigger(VK_SPACE))
+	//{
+	//	std::shared_ptr<CShowObject> showComponent = m_pTestSpriteObject->GetComponent<CShowObject>();
 
-		if (showComponent)
-		{
-			showComponent->Toggle();
-		}
-	}
+	//	if (showComponent)
+	//	{
+	//		showComponent->Toggle();
+	//	}
+	//}
 
 	//エンターキーでタイトルに戻る
 	if (m_input.GetKeyTrigger(VK_RETURN))
@@ -57,36 +57,36 @@ void GameScene::Update()
 		ChangeScene(TITLE);
 	}
 
-
-#ifdef _DEBUG
-	//デバッグ用画面
-	ImGui::Begin("GameScene Debug");
-
-	//「表示」をUTF-8の値で直接書いたもの
-	//ソースの文字コードに関係なく、必ずUTF-8になる
-	ImGui::Text("\xE8\xA1\xA8\xE7\xA4\xBA");
-	//フレームレートを表示
-	ImGui::Text("FPS:%.2f", ImGui::GetIO().Framerate);
-
-	//testの表示・非表示を切り替え
-	if (m_pTestSpriteObject)
-	{
-		std::shared_ptr<CShowObject> showComponent = m_pTestSpriteObject->GetComponent<CShowObject>();
-
-		if (showComponent)
-		{
-			//チェックボックスはboolの変数を書き換えるので、一度コピーする
-			bool isVisible = showComponent->IsVisible();
-
-			//チェックが変わった時だけtrueになる
-			if (ImGui::Checkbox("test表示", &isVisible))
-			{
-				showComponent->SetVisible(isVisible);
-			}
-		}
-	}
-	ImGui::End();
-#endif
+//
+//#ifdef _DEBUG
+//	//デバッグ用画面
+//	ImGui::Begin("GameScene Debug");
+//
+//	//「表示」をUTF-8の値で直接書いたもの
+//	//ソースの文字コードに関係なく、必ずUTF-8になる
+//	ImGui::Text("\xE8\xA1\xA8\xE7\xA4\xBA");
+//	//フレームレートを表示
+//	ImGui::Text("FPS:%.2f", ImGui::GetIO().Framerate);
+//
+//	//testの表示・非表示を切り替え
+//	if (m_pTestSpriteObject)
+//	{
+//		std::shared_ptr<CShowObject> showComponent = m_pTestSpriteObject->GetComponent<CShowObject>();
+//
+//		if (showComponent)
+//		{
+//			//チェックボックスはboolの変数を書き換えるので、一度コピーする
+//			bool isVisible = showComponent->IsVisible();
+//
+//			//チェックが変わった時だけtrueになる
+//			if (ImGui::Checkbox("test表示", &isVisible))
+//			{
+//				showComponent->SetVisible(isVisible);
+//			}
+//		}
+//	}
+//	ImGui::End();
+//#endif
 }
 
 //---------------------------------------------------------

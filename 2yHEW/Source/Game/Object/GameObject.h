@@ -7,6 +7,9 @@
 #include <concepts>
 #include <utility>   // std::forward
 
+class Input;
+class SceneBase;
+
 //AddComponent<T>()RemoveComponent<T>()GetComponent<T>()はテンプレート関数なので実装もヘッダーに書く
 class GameObject
 {
@@ -115,4 +118,13 @@ public:
 protected:
 	//vector型、登録されたコンポーネントを保持する
 	std::vector<std::shared_ptr<ComponentBase>> m_components;
+
+	//入力、シーンが持っているものを指す
+	//持ち主はGameManager
+	Input* m_pInput = nullptr;
+
+private:
+	//m_pInputを設定できるのはSceneBaseだけ
+	friend class SceneBase;
+
 };

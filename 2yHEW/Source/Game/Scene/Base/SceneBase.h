@@ -94,6 +94,9 @@ protected:
 	{
 		std::unique_ptr<T> gameObject = std::make_unique<T>();
 
+		//シーンが持っている入力をオブジェクトに渡す
+		gameObject->m_pInput = &m_input;
+
 		//moveすると空になるので、先にポインタを取っておく
 		T* pGameObjectPointer = gameObject.get();
 
