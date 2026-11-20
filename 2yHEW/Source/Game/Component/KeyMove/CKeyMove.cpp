@@ -55,11 +55,7 @@ void CKeyMove::Update()
 	if (m_input.GetKeyPress(VK_DOWN) || m_input.GetKeyPress(VK_S)) { moveDirection.y += 1.0f; }
 	
 	//斜め移動
-	if (moveDirection.Length() > 0.0f)
-	{
-		moveDirection.Normalized();
-	}
-
+	moveDirection = moveDirection.Normalized() * m_moveSpeed;
 
 	// 前後関係(押した瞬間に1段ずつ変える)
 	//

@@ -1,4 +1,1 @@
 [FilePath：Source\Framework\Application\Application.cpp：Line126]起動処理完了 / Startup Complete
-[FilePath：Source\Framework\Application\Application.cpp：Line96]ゲーム終了 / Game Quit
-[FilePath：Source\Framework\Texture\TextureManager.cpp：Line60]TextureManager解放完了 / TextureManagerの解放が完了しました
-[FilePath：Source\Framework\Renderer\SpriteRenderer.cpp：Line631]SpriteRenderer終了処理完了 / SpriteRenderer Cleanup Complete

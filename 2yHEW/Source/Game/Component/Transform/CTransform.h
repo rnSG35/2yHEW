@@ -10,9 +10,9 @@ class CTransform :
 {
 public:
 	/// <summary>
-	/// Vector3型を使った位置の設定
+	/// Float3を使った位置の設定
 	/// </summary>
-	/// <param name="position">DirectXでのVector3型のposition</param>
+	/// <param name="position">x:(右がプラス) y:(下がプラス) z:(小さいほど手前)</param>
 	void SetPosition(const Float3& position) { m_position = position; }
 	/// <summary>
 	/// 数値をそのまま使った位置の設定
@@ -25,16 +25,16 @@ public:
 	/// <summary>
 	/// 位置の取得
 	/// </summary>
-	/// <returns>Vector3型のm_position</returns>
+	/// <returns>Float3型のm_position</returns>
 	const Float3& GetPosition() const { return m_position; }
 
 	/// <summary>
 	/// 今の位置から、指定した量だけ動かす
 	/// </summary>
-	/// <param name="moveAmount">Vector3型の指定した位置からどれだけ動かすか</param>
+	/// <param name="moveAmount">Float3型の指定した位置からどれだけ動かすか</param>
 	void Translate(const Float3& moveAmount) { m_position += moveAmount; }
 
 private:
-	//Vector3型の位置を表す変数
+	//Float3型の位置を表す変数
 	Float3 m_position = FLOAT3_ZERO;
 };
