@@ -5,6 +5,7 @@
 #include <memory>
 #include <string>
 #include "../../../Framework/Renderer/SpriteRenderer.h"
+#include "../../../Framework/Math/MathTypes.h"
 
 class Texture;
 
@@ -33,23 +34,45 @@ public:
 	/// </summary>
 	void Draw() override;
 
+
+
 	/// <summary>
-	/// 描画する位置の設定
+	/// 表示位置設定(Float3で指定)
+	/// </summary>
+	/// <param name="position">x:横位置　y:縦位置　z:前後</param>
+	void SetPosition(const Float3& position);
+	/// <summary>
+	/// 描画する位置の設定(Float2とz数値で指定)
+	/// </summary>
+	/// <param name="position">x:横位置　y:縦位置</param>
+	/// <param name="z">前後：(省略で0)</param>
+	void SetPosition(const Float2& position, float z = 0.0f);
+	/// <summary>
+	/// 表示位置設定(数値で指定)
 	/// </summary>
 	/// <param name="x">横位置：右がプラス</param>
 	/// <param name="y">縦位置：下がプラス</param>
-	/// <param name="z">奥行き：無くてもいい、手前がプラス</param>
+	/// <param name="z">前後：小さいほど手前</param>
 	void SetPosition(float x, float y,float z = 0.0f/*zは省略可能*/);
 
+
+
 	/// <summary>
-	/// 表示サイズ設定
+	/// 表示サイズ設定(Float2で指定)
+	/// </summary>
+	/// <param name="size">x:横幅　y:縦幅</param>
+	void SetSize(const Float2& size);
+	/// <summary>
+	/// 数値で指定
 	/// </summary>
 	/// <param name="width">横幅</param>
 	/// <param name="height">縦幅</param>
 	void SetSize(float width, float height);
 
+
+
 	/// <summary>
-	/// 色設定、基本的にしなくていい
+	/// 色設定(数値で指定)、基本的にしなくていい
 	/// </summary>
 	/// <param name="red">赤</param>
 	/// <param name="green">緑</param>
@@ -60,6 +83,12 @@ public:
 		float green,
 		float blue,
 		float alpha);
+
+	/// <summary>
+	/// 色設定(Float4)
+	/// </summary>
+	/// <param name="color"></param>
+	void SetColor(const Float4& color);
 
 	/// <summary>
 	/// ブレンドステートの型、合成方法設定
@@ -80,18 +109,11 @@ private:
 	//string型、派生クラスのコンストラクタで設定する画像パス
 	std::string m_filePath;
 
-	//float型、画像の表示サイズ
-	float m_width = 0.0f;
-	float m_height = 0.0f;
+	//Float2型、画像の表示サイズ
+	Float2 m_size = FLOAT2_ZERO;
 
-	//XMFLOAT4描画するときに画像に掛ける色
-	DirectX::XMFLOAT4 m_color =
-	{
-		1.0f,
-		1.0f,
-		1.0f,
-		1.0f
-	};
+	//Float4型、描画するときに画像に掛ける色
+	Float4 m_color = COLOR_WHITE;
 
 	//eSpriteBlendMode、描画時の合成方法
 	eSpriteBlendMode m_blendMode = eSpriteBlendMode::ALPHA;

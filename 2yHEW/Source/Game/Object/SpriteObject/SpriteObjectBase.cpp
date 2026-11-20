@@ -37,13 +37,13 @@ bool SpriteObjectBase::Initialize()
 	}
 
 	//サイズが設定されていなければ、読み込んだ画像本来のサイズを使用する
-	if (m_width <= 0.0f)
+	if (m_size.x <= 0.0f)
 	{
-		m_width = static_cast<float>(m_texture->GetWidth());
+		m_size.x = static_cast<float>(m_texture->GetWidth());
 	}
-	if (m_height <= 0.0f)
+	if (m_size.y <= 0.0f)
 	{
-		m_height = static_cast<float>(m_texture->GetHeight());
+		m_size.y = static_cast<float>(m_texture->GetHeight());
 	}
 
 	OnInit();
@@ -81,8 +81,7 @@ void SpriteObjectBase::Draw()
 		return;
 	}
 
-	////SpriteRendererにTexture、位置、サイズを渡して描画する
-	//SpriteRenderer::GetInstance().Draw(m_texture.get(), m_x, m_y, m_width, m_height, m_color, m_blendMode);
+	//SpriteRendererにTexture、位置、サイズを渡して描画する
 	std::shared_ptr<CTransform> transform = GetComponent<CTransform>();
 
 	Float3 position =
@@ -92,8 +91,8 @@ void SpriteObjectBase::Draw()
 		m_texture.get(),
 		position.x,
 		position.y,
-		m_width,
-		m_height,
+		m_size.x,
+		m_size.y,
 		m_color,
 		m_blendMode);
 
@@ -101,29 +100,58 @@ void SpriteObjectBase::Draw()
 }
 
 //---------------------------------------------------------
-//位置設定
+//位置設定(Float3で指定)
 //---------------------------------------------------------
-void SpriteObjectBase::SetPosition(float x, float y, float z)
+void SpriteObjectBase::SetPosition(const Float3& position)
 {
 	std::shared_ptr<CTransform> transform = GetComponent<CTransform>();
 
 	if (transform)
 	{
-		transform->SetPosition(x, y, z);
+		transform->SetPosition(position);
 	}
 }
 
 //---------------------------------------------------------
-//表示サイズ設定
+//位置設定(数値で指定)
 //---------------------------------------------------------
-void SpriteObjectBase::SetSize(float width, float height)
+void SpriteObjectBase::SetPosition(float x, float y, float z)
 {
-	m_width = width;
-	m_height = height;
+	//中身はFloat3のほうに任せる
+	SetPosition(Float3(x, y, z));
+}
+
+void SpriteObjectBase::SetPosition(const Float2& position, float z)
+{
+	SetPosition(Float3(position.x, position.y, z));
 }
 
 //---------------------------------------------------------
-//色設定、基本的にしなくていい
+//表示サイズ設定(Float2で指定)
+//---------------------------------------------------------
+void SpriteObjectBase::SetSize(const Float2& size)
+{
+	m_size = size;
+}
+
+//---------------------------------------------------------
+//表示サイズ設定(数値で指定)
+//---------------------------------------------------------
+void SpriteObjectBase::SetSize(float width, float height)
+{
+	m_size = Float2(width, height);
+}
+
+//---------------------------------------------------------
+//色設定(Float4で指定)
+//---------------------------------------------------------
+void SpriteObjectBase::SetColor(const Float4& color)
+{
+	m_color = color;
+}
+
+//---------------------------------------------------------
+//色設定(数値で指定)
 //---------------------------------------------------------
 void SpriteObjectBase::SetColor(float red, float green, float blue, float alpha)
 {
