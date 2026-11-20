@@ -27,9 +27,13 @@ public:
 	//終了
 	virtual void UnInitialize(){}
 
-	//---------------------------------------------------------
-	//コンポーネント追加
-	//---------------------------------------------------------
+	/// <summary>
+	/// コンポーネント追加
+	/// </summary>
+	/// <typeparam name="...Args">追加したいコンポーネント</typeparam>
+	/// <typeparam name="T">追加したいコンポーネント</typeparam>
+	/// <param name="...args"></param>
+	/// <returns></returns>
 	template<std::derived_from<ComponentBase> T,class...Args>
 	std::shared_ptr<T> AddComponent(Args&&...args)
 	{
@@ -53,9 +57,10 @@ public:
 		return component;
 	}
 
-	//---------------------------------------------------------
-	//コンポーネント削除
-	//---------------------------------------------------------
+	/// <summary>
+	/// コンポーネント削除
+	/// </summary>
+	/// <typeparam name="T">削除したいコンポーネント</typeparam>
 	template<std::derived_from<ComponentBase> T>
 	void RemoveComponent()
 	{
@@ -77,9 +82,11 @@ public:
 		}
 	}
 
-	//---------------------------------------------------------
-	//コンポーネント取得
-	//---------------------------------------------------------
+	/// <summary>
+	/// コンポーネント取得
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <returns></returns>
 	template<std::derived_from<ComponentBase> T>
 	std::shared_ptr<T> GetComponent()
 	{
@@ -94,11 +101,9 @@ public:
 		return nullptr;
 	}
 
-	//---------------------------------------------------------
-	//付いている全コンポーネントを更新
-	//コンポーネントが自分で動けるようにするため
-	//毎フレームここからUpdate()を呼ぶ
-	//---------------------------------------------------------
+	/// <summary>
+	/// コンポーネント更新
+	/// </summary>
 	void UpdateComponents()
 	{
 		for (const auto& component : m_components)
@@ -108,6 +113,6 @@ public:
 	}
 
 protected:
-	//登録されたコンポーネント
+	//vector型、登録されたコンポーネントを保持する
 	std::vector<std::shared_ptr<ComponentBase>> m_components;
 };

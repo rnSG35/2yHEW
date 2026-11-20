@@ -15,13 +15,29 @@ public:
 	GameManager() = default;
 	~GameManager() = default;
 
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <returns>true:成功　false:失敗</returns>
 	bool Init();
+	/// <summary>
+	/// 更新
+	/// </summary>
 	void Update();
+	/// <summary>
+	/// 描画
+	/// </summary>
 	void Draw();
+	/// <summary>
+	/// 終了
+	/// </summary>
 	void Exit();
 
-	//今のシーンからゲーム終了が依頼されているか
-	//シーンがないときはfalse、m_currentSceneが空のままだと落ちるため、先に確認
+	/// <summary>
+	/// 今のシーンからゲーム終了が依頼されているか
+	/// シーンがないときはfalse、m_currentSceneが空のままだと落ちるため、先に確認
+	/// </summary>
+	/// <returns>動いているシーンと、動いているシーンにゲーム終了が依頼されているか</returns>
 	bool IsQuitRequested() const
 	{
 		return m_currentScene && m_currentScene->IsQuitRequested();
@@ -34,14 +50,25 @@ public:
 		return m_currentScene ? m_currentScene->GetSceneName() : L"None";
 	}
 private:
+	/// <summary>
+	/// ゲームの入力
+	/// </summary>
 	Input m_input;
 
 	//動いているシーン
 	std::unique_ptr<SceneBase> m_currentScene;
 
-	//eSceneから、対応するシーンを作る
+	/// <summary>
+	/// eSceneから、対応するシーンを作る、新しくシーンを増やしたらcaseを追加
+	/// </summary>
+	/// <param name="sceneType">新しく作るシーン</param>
+	/// <returns></returns>
 	std::unique_ptr<SceneBase> CreateScene(eScene sceneType);
 
-	//シーンの切り替え
+	/// <summary>
+	/// シーン切り替え
+	/// </summary>
+	/// <param name="nextScene">次のシーン</param>
+	/// <returns>true:成功　false:失敗</returns>
 	bool ChangeScene(eScene nextScene);
 };

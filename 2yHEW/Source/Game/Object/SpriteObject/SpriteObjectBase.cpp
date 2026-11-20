@@ -51,6 +51,9 @@ bool SpriteObjectBase::Initialize()
 	return true;
 }
 
+//---------------------------------------------------------
+//更新
+//---------------------------------------------------------
 void SpriteObjectBase::Update()
 {
 	//先にコンポーネントを更新
@@ -59,6 +62,9 @@ void SpriteObjectBase::Update()
 	OnUpdate();
 }
 
+//---------------------------------------------------------
+//描画
+//---------------------------------------------------------
 void SpriteObjectBase::Draw()
 {
 	//ShowObjectComponentが付いているか確認
@@ -95,7 +101,7 @@ void SpriteObjectBase::Draw()
 }
 
 //---------------------------------------------------------
-//表示位置設定
+//位置設定
 //---------------------------------------------------------
 void SpriteObjectBase::SetPosition(float x, float y, float z)
 {
@@ -116,6 +122,9 @@ void SpriteObjectBase::SetSize(float width, float height)
 	m_height = height;
 }
 
+//---------------------------------------------------------
+//色設定、基本的にしなくていい
+//---------------------------------------------------------
 void SpriteObjectBase::SetColor(float red, float green, float blue, float alpha)
 {
 	m_color =
@@ -127,6 +136,9 @@ void SpriteObjectBase::SetColor(float red, float green, float blue, float alpha)
 	};
 }
 
+//---------------------------------------------------------
+//ブレンドステートの型、合成方法設定
+//---------------------------------------------------------
 void SpriteObjectBase::SetBlendMode(eSpriteBlendMode blendMode)
 {
 	m_blendMode = blendMode;

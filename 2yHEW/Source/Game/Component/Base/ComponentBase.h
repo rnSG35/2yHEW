@@ -12,17 +12,26 @@ class GameObject;
 class ComponentBase
 {
 public:
-	//デストラクタ
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
 	virtual ~ComponentBase() = default;
 
-	//初期化、AddComponent()関数の中でm_ownerを設定した後に呼ばれるため
-	//ここではm_ownerを使用可能
+	/// <summary>
+	/// 初期化、AddComponent()関数の中でm_ownerを設定した後に呼ばれるため
+	/// ここではm_ownerを使用可能
+	/// </summary>
 	virtual void Initialize() {}
 
-	//更新
+	/// <summary>
+	/// 更新
+	/// </summary>
 	virtual void Update() {}
 
-	//自分が付いているGameObjectを取得
+	/// <summary>
+	/// 自分が付いているGameObjectを取得
+	/// </summary>
+	/// <returns>自分がついているGameObjectのポインタ</returns>
 	GameObject* GetOwner() const { return m_pOwner; }
 
 protected:

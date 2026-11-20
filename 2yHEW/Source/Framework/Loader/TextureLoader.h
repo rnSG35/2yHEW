@@ -8,7 +8,11 @@ class Texture;
 class TextureLoader
 {
 public:
-	//画像ファイルからTextureを作成
+	/// <summary>
+	/// 画像ファイルからTextureを作成
+	/// </summary>
+	/// <param name="filePath">画像ファイルのパス</param>
+	/// <returns></returns>
 	static std::shared_ptr<Texture> Load(const std::string& filePath);
 private:
 	TextureLoader() = delete;

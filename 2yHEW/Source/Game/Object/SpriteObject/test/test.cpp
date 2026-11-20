@@ -2,9 +2,6 @@
 #include "../../../Component/ShowObject/CShowObject.h"
 #include "../../../../Framework/DebugSystem/DebugLog.h"
 
-//---------------------------------------------------------
-//コンストラクタ
-//---------------------------------------------------------
 test::test()
 	: SpriteObjectBase(
 		"AppData/Assets/Textures/test1.png")

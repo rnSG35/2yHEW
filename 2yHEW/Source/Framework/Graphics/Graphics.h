@@ -8,29 +8,45 @@ using Microsoft::WRL::ComPtr;
 class Graphics
 {
 public:
-	//シングルトン取得
-	//Deviceを複数作るとVRAMが無駄に消費されるため、シングルトンで１つだけ生成する
+	/// <summary>
+	/// シングルトン取得
+	/// </summary>
+	/// <returns></returns>
+	/// <remarks>Deviceを複数作るとVRAMが無駄に消費されるため、シングルトンで１つだけ生成する</remarks>
 	static Graphics& GetInstance();
 
-	//初期化
-	// hwnd : 描画先ウィンドウ
-	// width : 画面横幅
-	// height : 画面縦幅
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="hwnd">描画先ウィンドウ</param>
+	/// <param name="width">画面横幅</param>
+	/// <param name="height">画面縦幅</param>
+	/// <returns></returns>
 	bool Initialize(
 		HWND hwnd,
 		UINT width,
 		UINT height
 	);
 
-	//終了処理
+	/// <summary>
+	/// 終了処理
+	/// </summary>
 	void UnInitialize();
 
-	//フレーム開始、毎フレーム最初に呼ぶ
+	/// <summary>
+	/// フレーム開始、毎フレーム最初に呼ぶ
+	/// </summary>
 	void BeginFrame();
 
-	//フレーム終了、描画結果を画面に表示
+	/// <summary>
+	/// フレーム終了、描画結果を画面に表示
+	/// </summary>
 	void EndFrame();
 
+	/// <summary>
+	/// Presentが成功したかどうか
+	/// </summary>
+	/// <returns>true:成功　false:失敗</returns>
 	bool IsLastPresentSucceeded() const
 	{
 		return m_isLastPresentSucceeded;

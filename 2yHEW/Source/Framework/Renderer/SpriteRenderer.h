@@ -6,7 +6,9 @@
 
 class Texture;
 
-//スプライトの合成方法
+/// <summary>
+/// スプライトの合成方法
+/// </summary>
 enum class eSpriteBlendMode
 {
 	ALPHA,	//通常の半透明
@@ -16,20 +18,30 @@ enum class eSpriteBlendMode
 class SpriteRenderer
 {
 public:
-	//シングルトン取得
+	/// <summary>
+	/// シングルトン取得
+	/// </summary>
+	/// <returns></returns>
 	static SpriteRenderer& GetInstance();
 
-	//初期化
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="screenWidth">ウィンドウ横幅</param>
+	/// <param name="screenHeight">ウィンドウ縦幅</param>
+	/// <returns>true:成功　失敗:false</returns>
 	bool Initialize(UINT screenWidth, UINT screenHeight);
 
-	//描画
-	//texture：描画する画像
-	//x		 ：画像左上のX座標
-	//y		 ：画像左上のY座標
-	//width	 ：描画横幅
-	//height ：描画縦幅
-	//color  :スプライトにかける色
-	//blendMode:合成方法
+	/// <summary>
+	/// 描画
+	/// </summary>
+	/// <param name="pTexture">描画する画像</param>
+	/// <param name="x">画像左上のX座標</param>
+	/// <param name="y">画像左上のY座標</param>
+	/// <param name="width">描画横幅</param>
+	/// <param name="height">描画縦幅</param>
+	/// <param name="color">スプライトにかける色</param>
+	/// <param name="blendMode">合成方法</param>
 	void Draw(Texture* pTexture,
 		float x,
 		float y,
@@ -38,10 +50,14 @@ public:
 		const DirectX::XMFLOAT4& color = DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f),
 		eSpriteBlendMode blendMode = eSpriteBlendMode::ALPHA);
 
-	//終了処理
+	/// <summary>
+	/// 終了処理
+	/// </summary>
 	void UnInitialize();
 private:
-	//HLSLのConstBufferと同じ並びにする
+	/// <summary>
+	/// HLSLのConstBufferと同じ並びにする
+	/// </summary>
 	struct ConstantBufferData
 	{
 		DirectX::XMFLOAT4 vertexColor;
@@ -56,28 +72,59 @@ private:
 	SpriteRenderer(const SpriteRenderer&) = delete;
 	SpriteRenderer& operator=(const SpriteRenderer&) = delete;
 
-	//シェーダーファイル読み込み
+	/// <summary>
+	/// シェーダーファイル読み込み
+	/// </summary>
+	/// <param name="csoPath">csoファイルのパス</param>
+	/// <param name="hlslPath">hlslファイルのパス</param>
+	/// <param name="shaderBlob">ComPtr<ID3DBlob>&</param>
+	/// <returns></returns>
 	bool LoadVertexShaderBlob(
 		const wchar_t* csoPath,
 		const wchar_t* hlslPath,
 		Microsoft::WRL::ComPtr<ID3DBlob>& shaderBlob);
+	/// <summary>
+	/// シェーダーファイル読み込み
+	/// </summary>
+	/// <param name="csoPath">csoファイルのパス</param>
+	/// <param name="hlslPath">hlslファイルのパス</param>
+	/// <param name="shaderBlob">ComPtr<ID3DBlob>&</param>
+	/// <returns></returns>
 	bool LoadPixelShaderBlob(
 		const wchar_t* csoPath,
 		const wchar_t* hlslPath,
 		Microsoft::WRL::ComPtr<ID3DBlob>& shaderBlob);
 
-	//csoからシェーダー作成
+	/// <summary>
+	/// csoからシェーダー作成
+	/// </summary>
+	/// <returns>true:成功　false:失敗</returns>
 	bool CreateShaders();
-	//頂点バッファ作成
+	/// <summary>
+	/// 頂点バッファ作成
+	/// </summary>
+	/// <returns>true:成功　false:失敗</returns>
 	bool CreateVertexBuffer();
-	//定数バッファ作成
+	/// <summary>
+	/// 定数バッファ作成	
+	/// </summary>
+	/// <returns>true:成功　false:失敗</returns>
 	bool CreateConstantBuffer();
-	//サンプラーステート作成
+	/// <summary>
+	/// サンプラーステート作成
+	/// </summary>
+	/// <returns>true:成功　false:失敗</returns>
 	bool CreateSamplerState();
-	//ブレンドステート作成
+	/// <summary>
+	///ブレンドステート作成
+	/// </summary>
+	/// <returns>true:成功　false:失敗</returns>
 	bool CreateBlendState();
-	//深度ステンシルステート作成
-	//2Dスプライトでは深度てえストを使わず、書いた順番で前後関係を決めるため
+	/// <summary>
+	/// 深度ステンシルステート作成
+	/// </summary>
+	/// <returns>true:成功　false:失敗</returns>
+	/// <remarks>2Dスプライトでは深度テストを使わず、書いた順番で前後関係を決めるため</remarks>
 	bool CreateDepthStencilState();
 
 private:

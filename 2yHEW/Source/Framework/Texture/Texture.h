@@ -13,15 +13,27 @@ public:
 	//shared_ptrがTextureを破棄できるようにpublicにする
 	~Texture() = default;
 
-	//ピクセルシェーダーへテクスチャーを設定
-	//slot : シェーダーのテクスチャスロット番号(t0, t1, t2...)
+	/// <summary>
+	/// ピクセルシェーダーへテクスチャーを設定
+	/// </summary>
+	/// <param name="slot">シェーダーのテクスチャスロット番号(t0, t1, t2...)</param>
 	void SetPS(UINT slot = 0) const;
 
-	//SRV取得
+	/// <summary>
+	/// SRV取得
+	/// </summary>
+	/// <returns>ID3D11ShaderResourceView*</returns>
 	ID3D11ShaderResourceView* GetSRV() const;
 	
-	//画像サイズ取得
+	/// <summary>
+	/// 画像サイズ横幅取得
+	/// </summary>
+	/// <returns></returns>
 	UINT GetWidth() const;
+	/// <summary>
+	/// 画像サイズ縦幅取得
+	/// </summary>
+	/// <returns></returns>
 	UINT GetHeight() const;
 
 private:
