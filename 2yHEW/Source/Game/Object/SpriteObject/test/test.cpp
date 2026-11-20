@@ -19,9 +19,9 @@ void test::OnInit()
 	//画面に表示する大きさ
 	SetSize(Float2(256.0f, 256.0f));
 
-	auto showComponent = AddComponent<CShowObject>();
+	m_pShowComponent = AddComponent<CShowObject>().get();
 
-	if (showComponent->GetOwner() == this)
+	if (m_pShowComponent->GetOwner() == this)
 	{
 		//DebugLogWrite("CShowObjectのm_owner設定成功");
 	}
@@ -29,14 +29,12 @@ void test::OnInit()
 
 void test::OnUpdate()
 {
-	std::shared_ptr<CShowObject> showComponent = GetComponent<CShowObject>();
+
 	if (m_pInput && m_pInput->GetKeyTrigger(VK_SPACE))
 	{
-
-
-		if (showComponent)
+		if (m_pShowComponent)
 		{
-			showComponent->Toggle();
+			m_pShowComponent->Toggle();
 		}
 	}
 
@@ -46,14 +44,14 @@ void test::OnUpdate()
 	//フレームレートを表示
 	ImGui::Text("FPS:%.2f", ImGui::GetIO().Framerate);
 
-	if (showComponent)
+	if (m_pShowComponent)
 	{
 		//一度コピー
-		bool isVisible = showComponent->IsVisible();
+		bool isVisible = m_pShowComponent->IsVisible();
 		
 		if (ImGui::Checkbox("test表示オンオフ", &isVisible))
 		{
-			showComponent->SetVisible(isVisible);
+			m_pShowComponent->SetVisible(isVisible);
 		}
 	}
 
