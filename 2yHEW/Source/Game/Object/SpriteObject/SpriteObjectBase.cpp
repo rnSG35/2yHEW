@@ -70,7 +70,7 @@ void SpriteObjectBase::Draw()
 	//ShowObjectComponentが付いているか確認
 	std::shared_ptr<CShowObject> showComponent = GetComponent<CShowObject>();
 
-	//コンポーネントが存在して、かつ非表示にないいていたら描画しない
+	//コンポーネントが存在して、かつ非表示になっていたら描画しない
 	if (showComponent != nullptr && !showComponent->IsVisible())
 	{
 		return;
