@@ -182,6 +182,9 @@
     <ClInclude Include="Source\Game\Component\KeyMove\CKeyMove.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Framework\Math\MathTypes.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Shader\SpritePixelShader.hlsl" />

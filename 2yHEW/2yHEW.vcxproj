@@ -173,6 +173,7 @@
     <ClCompile Include="Source\Game\Scene\Title\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Framework\Math\MathTypes.h" />
     <ClInclude Include="Source\Game\Component\KeyMove\CKeyMove.h" />
     <ClInclude Include="Source\Game\Component\Transform\CTransform.h" />
     <ClInclude Include="Source\Framework\DebugSystem\ImGuiManager.h" />

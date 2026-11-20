@@ -4,9 +4,6 @@
 #include "../../../Framework/Input/input.h"
 #include "../../../Framework/DebugSystem/DebugLog.h"
 
-using DirectX::SimpleMath::Vector2;
-using DirectX::SimpleMath::Vector3;
-
 namespace
 {
 	//1回押したときに変わる前後関係(z)の量
@@ -51,15 +48,16 @@ void CKeyMove::Update()
 	}
 
 	//上下左右を押している間、移動する
-	Vector2 moveDirection = Vector2::Zero;
+	Float2 moveDirection = FLOAT2_ZERO;
 	if (m_input.GetKeyPress(VK_LEFT) || m_input.GetKeyPress(VK_A)) { moveDirection.x -= 1.0f; }
 	if (m_input.GetKeyPress(VK_RIGHT)|| m_input.GetKeyPress(VK_D)) { moveDirection.x += 1.0f; }
 	if (m_input.GetKeyPress(VK_UP)	 || m_input.GetKeyPress(VK_W)) { moveDirection.y -= 1.0f; }
 	if (m_input.GetKeyPress(VK_DOWN) || m_input.GetKeyPress(VK_S)) { moveDirection.y += 1.0f; }
+	
 	//斜め移動
-	if (moveDirection.LengthSquared() > 0.0f)
+	if (moveDirection.Length() > 0.0f)
 	{
-		moveDirection.Normalize();
+		moveDirection.Normalized();
 	}
 
 
@@ -72,8 +70,8 @@ void CKeyMove::Update()
 	if (m_input.GetKeyTrigger('Q')) { depthAmount -= DEPTH_STEP; }   // 手前へ
 	if (m_input.GetKeyTrigger('E')) { depthAmount += DEPTH_STEP; }   // 奥へ
 
-	transform->Translate(Vector3(
+	transform->Translate({
 		moveDirection.x * m_moveSpeed,
 		moveDirection.y * m_moveSpeed,
-		depthAmount));
+		depthAmount });
 }

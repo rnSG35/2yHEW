@@ -85,8 +85,8 @@ void SpriteObjectBase::Draw()
 	//SpriteRenderer::GetInstance().Draw(m_texture.get(), m_x, m_y, m_width, m_height, m_color, m_blendMode);
 	std::shared_ptr<CTransform> transform = GetComponent<CTransform>();
 
-	DirectX::SimpleMath::Vector3 position =
-		transform ? transform->GetPosition() : DirectX::SimpleMath::Vector3::Zero;
+	Float3 position =
+		transform ? transform->GetPosition() : FLOAT3_ZERO;
 
 	SpriteRenderer::GetInstance().Draw(
 		m_texture.get(),

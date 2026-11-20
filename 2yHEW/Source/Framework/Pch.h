@@ -27,3 +27,6 @@
 #include <xaudio2.h>
 #include <fstream>
 #include <source_location>
+
+//ほとんど変更する予定がない自作ヘッダファイル
+#include "../Framework/Math/MathTypes.h"
