@@ -8,21 +8,13 @@ laser::laser()
 void laser::OnInit()
 {
 	// レーザーの位置
-	SetPosition(
-		100.0f,
-		0.0f);
+	SetPosition(Float2(100.0f,0.0f));
 
 	// レーザーのサイズ
-	SetSize(
-		600.0f,
-		600.0f);
+	SetSize(Float2(100.0f,100.0f));
 
-	// 青白いレーザー
-	SetColor(
-		1.0f,
-		1.0f,
-		1.0f,
-		1.0f);
+	//色
+	SetColor(COLOR_WHITE);
 
 	// 光なので加算合成
 	SetBlendMode(eSpriteBlendMode::ADDITIVE);
