@@ -84,8 +84,8 @@ void SpriteObjectBase::Draw()
 	//SpriteRendererにTexture、位置、サイズを渡して描画する
 	std::shared_ptr<CTransform> transform = GetComponent<CTransform>();
 
-	Float3 position =
-		transform ? transform->GetPosition() : FLOAT3_ZERO;
+	Float3 position = transform ? transform->GetPosition() : FLOAT3_ZERO;
+	Float3 rotation = transform ? transform->GetRotation() : FLOAT3_ZERO;
 
 	SpriteRenderer::GetInstance().Draw(
 		m_texture.get(),
@@ -94,7 +94,8 @@ void SpriteObjectBase::Draw()
 		m_size.x,
 		m_size.y,
 		m_color,
-		m_blendMode);
+		m_blendMode,
+		rotation.z);
 
 	OnDraw();
 }

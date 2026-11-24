@@ -1,5 +1,7 @@
 ﻿#include "test.h"
 #include "../../../Component/ShowObject/CShowObject.h"
+#include "../../../Component/Transform/CTransform.h"
+
 #include "../../../../Framework/Input/input.h"
 #include "../../../../Framework/DebugSystem/DebugLog.h"
 
@@ -35,6 +37,15 @@ void test::OnUpdate()
 		if (m_pShowComponent)
 		{
 			m_pShowComponent->Toggle();
+		}
+	}
+
+	if (m_pInput && m_pInput->GetKeyPress(VK_R))
+	{
+		std::shared_ptr<CTransform> transform = GetComponent<CTransform>();
+		if (transform)
+		{
+			transform->Rotate(Float3(0.0f, 0.0f, 2.0f));
 		}
 	}
 

@@ -3,6 +3,7 @@
 #include <d3d11.h>
 #include <wrl/client.h>
 #include <DirectXMath.h>
+//#include "../Math/MathTypes.h"
 
 class Texture;
 
@@ -47,8 +48,9 @@ public:
 		float y,
 		float width,
 		float height,
-		const DirectX::XMFLOAT4& color = DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f),
-		eSpriteBlendMode blendMode = eSpriteBlendMode::ALPHA);
+		const Float4& color,
+		eSpriteBlendMode blendMode = eSpriteBlendMode::ALPHA,
+		float rotationDegrees = 0.0f);
 
 	/// <summary>
 	/// 終了処理
@@ -146,7 +148,7 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11BlendState> m_additiveBlendState;
 	//新でテストと深度書き込みを無効にする設定
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> m_depthStencilState;
-	
+
 	//画面サイズ
 	UINT m_screenWidth = 0;
 	UINT m_screenHeight = 0;

@@ -23,6 +23,10 @@ namespace
 		//画像のどこを使用するかを表す座標
 		float uv[2];
 	};
+
+	//度をラジアンに変換するための値
+	//sin,cosはラジアンで解散するが、度のほうがわかりやすいはずなので、描画の直前で変換
+	constexpr float DEG_TO_RAD = std::numbers::pi_v<float> / 180.0f;
 }
 
 //---------------------------------------------------------
@@ -143,7 +147,7 @@ bool SpriteRenderer::LoadPixelShaderBlob(const wchar_t* csoPath, const wchar_t* 
 		shaderBlob.GetAddressOf());
 	if (SUCCEEDED(readShaderResult))
 	{
-		DebugLogWrite("VertexShader.cso読み込み成功 / VertexShader.cso loaded successfully");
+		DebugLogWrite("PixelShader.cso読み込み成功 / PixelShader.cso loaded successfully");
 		return true;
 	}
 	DebugLogWrite("PixelShader.csoが無いためHLSLをコンパイル / Compile HLSL because PixelShader.cso is missing");
@@ -412,8 +416,8 @@ bool SpriteRenderer::CreateBlendState()
 	additiveBlendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
 	HRESULT createAdditiveBlendStateResult = pDevice->CreateBlendState(
-			&additiveBlendDesc,
-			m_additiveBlendState.GetAddressOf());
+		&additiveBlendDesc,
+		m_additiveBlendState.GetAddressOf());
 
 	if (FAILED(createAdditiveBlendStateResult))
 	{
@@ -460,8 +464,8 @@ bool SpriteRenderer::CreateDepthStencilState()
 //---------------------------------------------------------
 //画像描画
 //---------------------------------------------------------
-void SpriteRenderer::Draw(Texture* pTexture, float x, float y, float width, float height,const DirectX::XMFLOAT4& color,
-	eSpriteBlendMode blendMode)
+void SpriteRenderer::Draw(Texture* pTexture, float x, float y, float width, float height, const Float4& color,
+	eSpriteBlendMode blendMode, float rotationDegrees)
 {
 	if (pTexture == nullptr)
 	{
@@ -477,22 +481,55 @@ void SpriteRenderer::Draw(Texture* pTexture, float x, float y, float width, floa
 		return;
 	}
 
-	//ピクセル座標をDirectXの座標へ変換する
-	float left = (x / static_cast<float>(m_screenWidth)) * 2.0f - 1.0f;
-	float right = ((x + width) / static_cast<float>(m_screenWidth)) * 2.0f - 1.0f;
-	float top = 1.0f - (y / static_cast<float>(m_screenHeight)) * 2.0f;
-	float bottom = 1.0f - ((y + height) / static_cast<float>(m_screenHeight)) * 2.0f;
+	//画像(回転)の中心
+	const float centerX = x + width * 0.5f;
+	const float centerY = y + height * 0.5f;
+
+	//中心から見た、画像の半分の大きさ
+	const float halfWidth = width * 0.5f;
+	const float halfHeight = height * 0.5f;
+
+	//回転に使うsin,cos
+	const float radian = rotationDegrees * DEG_TO_RAD;
+	const float sinValue = std::sin(radian);
+	const float cosValue = std::cos(radian);
+
+	//中心から見た角の位置を回転させて、DirectXの座標(-1 ~ 1)に変換
+	//offsetX,offsetY-->中心から見た角の位置(ピクセル)
+	//戻り値-->画面上の位置(DirectXの座標)
+	//ラムダ式にしているのは、4つの角で同じ計算をするため
+	auto toScreen = [&](float offsetX, float offsetY)
+		{
+			//回転
+			const float rotatedX = offsetX * cosValue - offsetY * sinValue;
+			const float rotatedY = offsetX * sinValue + offsetY * cosValue;
+
+			//中心の位置に戻して、ピクセルの座標にする
+			const float pixelX = centerX + rotatedX;
+			const float pixelY = centerY + rotatedY;
+
+			//ピクセルの座標をDirectXの座標に変換する
+			const float screenX = (pixelX / static_cast<float>(m_screenWidth)) * 2.0f - 1.0f;
+			const float screenY = 1.0f - (pixelY / static_cast<float>(m_screenHeight)) * 2.0f;
+			return Float2(screenX, screenY);
+		};
+
+	//4つの角の位置(回転後)
+	const Float2 leftTop = toScreen(-halfWidth, -halfHeight);
+	const Float2 rightTop = toScreen(halfWidth, -halfHeight);
+	const Float2 leftBottom = toScreen(-halfWidth, halfHeight);
+	const Float2 rightBottom = toScreen(halfWidth, halfHeight);
 
 	//四角形を構成する6頂点
 	sSpriteVertex vertices[6] =
 	{
-		{{left  ,	top,0.0f, 1.0f},{1.0f,1.0f,1.0f,1.0f},{0.0f,0.0f}},
-		{{right ,	top,0.0f, 1.0f},{1.0f,1.0f,1.0f,1.0f},{1.0f,0.0f}},
-		{{left  ,bottom,0.0f, 1.0f},{1.0f,1.0f,1.0f,1.0f},{0.0f,1.0f}},
+		{ { leftTop.x		, leftTop.y		, 0.0f, 1.0f },{ 1.0f,1.0f,1.0f,1.0f },{ 0.0f,0.0f } },
+		{ { rightTop.x		, rightTop.y	, 0.0f, 1.0f },{ 1.0f,1.0f,1.0f,1.0f },{ 1.0f,0.0f } },
+		{ { leftBottom.x	, leftBottom.y	, 0.0f, 1.0f },{ 1.0f,1.0f,1.0f,1.0f },{ 0.0f,1.0f } },
 
-		{{left  ,bottom,0.0f, 1.0f},{1.0f,1.0f,1.0f,1.0f},{0.0f,1.0f}},
-		{{right ,   top,0.0f, 1.0f},{1.0f,1.0f,1.0f,1.0f},{1.0f,0.0f}},
-		{{right ,bottom,0.0f, 1.0f},{1.0f,1.0f,1.0f,1.0f},{1.0f,1.0f}},
+		{ { leftBottom.x	, leftBottom.y	, 0.0f, 1.0f },{ 1.0f,1.0f,1.0f,1.0f },{ 0.0f,1.0f } },
+		{ { rightTop.x		, rightTop.y	, 0.0f, 1.0f },{ 1.0f,1.0f,1.0f,1.0f },{ 1.0f,0.0f } },
+		{ { rightBottom.x	, rightBottom.y	, 0.0f, 1.0f },{ 1.0f,1.0f,1.0f,1.0f },{ 1.0f,1.0f } },
 	};
 
 	//頂点バッファを置き換え可能な状態にする
@@ -589,7 +626,8 @@ void SpriteRenderer::Draw(Texture* pTexture, float x, float y, float width, floa
 	}
 	case eSpriteBlendMode::ALPHA:
 	{
-
+		//UI、通常画像、煙など
+		blendState = m_alphaBlendState.Get();
 		break;
 	}
 	default:
@@ -617,7 +655,6 @@ void SpriteRenderer::Draw(Texture* pTexture, float x, float y, float width, floa
 //---------------------------------------------------------
 void SpriteRenderer::UnInitialize()
 {
-	m_alphaBlendState.Reset();
 	m_samplerState.Reset();
 	m_vertexBuffer.Reset();
 	m_constantBuffer.Reset();
