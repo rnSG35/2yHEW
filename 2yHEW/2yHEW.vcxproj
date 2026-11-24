@@ -150,7 +150,6 @@
     </ClCompile>
     <ClCompile Include="Source\Game\Scene\Game\GameScene.cpp" />
     <ClCompile Include="Source\Game\Scene\Base\SceneBase.cpp" />
-    <ClCompile Include="Source\Game\Object\SpriteObject\laser\laser.cpp" />
     <ClCompile Include="Source\Game\Object\GameObject.cpp" />
     <ClCompile Include="Source\Game\Component\ShowObject\CShowObject.cpp" />
     <ClCompile Include="Source\Game\Component\Base\ComponentBase.cpp" />
@@ -181,7 +180,6 @@
     <ClInclude Include="Source\Framework\Pch.h" />
     <ClInclude Include="Source\Game\Scene\Game\GameScene.h" />
     <ClInclude Include="Source\Game\Scene\Base\SceneBase.h" />
-    <ClInclude Include="Source\Game\Object\SpriteObject\laser\laser.h" />
     <ClInclude Include="Source\Game\Object\GameObject.h" />
     <ClInclude Include="Source\Game\Component\ShowObject\CShowObject.h" />
     <ClInclude Include="Source\Game\Component\Base\ComponentBase.h" />

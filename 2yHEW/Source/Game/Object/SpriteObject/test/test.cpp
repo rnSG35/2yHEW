@@ -10,7 +10,7 @@
 #endif
 test::test()
 	: SpriteObjectBase(
-		"AppData/Assets/Textures/test1.png")
+		"AppData/Assets/Textures/test.png")
 {}
 
 void test::OnInit()
