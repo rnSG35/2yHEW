@@ -22,7 +22,14 @@ void Test::OnInit()
 	SetSize(Float2(256.0f, 256.0f));
 
 	m_pShowComponent = GetComponent<CShowObject>().get();
-	m_pShowComponent->Hide();
+	if (m_pShowComponent)
+	{
+		m_pShowComponent->Hide();
+	}
+	else
+	{
+		DebugLogWrite("TestにCShowObjectが付いていない / CShowObject not found in Test");
+	}
 
 	if (m_pShowComponent->GetOwner() == this)
 	{
