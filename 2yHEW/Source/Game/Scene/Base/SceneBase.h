@@ -36,11 +36,11 @@ public:
 	virtual ~SceneBase() = default;
 
 	//派生クラスで上書きする関数、純粋仮想関数にすることで派生クラスに実装を強制
-	virtual bool Init() = 0;	
-	virtual void Update() = 0;	
-	virtual void Draw() = 0;	
-	virtual void UnInit() = 0;	
-	
+	virtual bool Init() = 0;
+	virtual void Update() = 0;
+	virtual void Draw() = 0;
+	virtual void UnInit() = 0;
+
 	/// <summary>
 	/// ゲーム終了が依頼されているか取得
 	/// </summary>
@@ -134,5 +134,5 @@ private:
 	std::vector<GameObject*> m_drawObjects;
 
 	//vector型シーンにおいてあるオブジェクト
-	std::vector < std::unique_ptr<GameObject>> m_gameObjects;
+	std::vector<std::unique_ptr<GameObject>> m_gameObjects;
 };

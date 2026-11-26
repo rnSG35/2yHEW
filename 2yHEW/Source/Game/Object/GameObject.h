@@ -28,7 +28,7 @@ public:
 	virtual void Draw() {}
 
 	//終了
-	virtual void UnInitialize(){}
+	virtual void UnInitialize() {}
 
 	/// <summary>
 	/// コンポーネント追加
@@ -37,7 +37,7 @@ public:
 	/// <typeparam name="T">追加したいコンポーネント</typeparam>
 	/// <param name="...args"></param>
 	/// <returns></returns>
-	template<std::derived_from<ComponentBase> T,class...Args>
+	template<std::derived_from<ComponentBase> T, class...Args>
 	std::shared_ptr<T> AddComponent(Args&&...args)
 	{
 		//コンポーネント生成

@@ -24,7 +24,7 @@ public:
 	/// </summary>
 	/// <returns>ID3D11ShaderResourceView*</returns>
 	ID3D11ShaderResourceView* GetSRV() const;
-	
+
 	/// <summary>
 	/// 画像サイズ横幅取得
 	/// </summary>

@@ -11,7 +11,7 @@ public:
 		return instance;
 	}
 
-	bool AppInit(int nShowCmd,bool isFullScreen,int screenWidth,int screenHeight);
+	bool AppInit(int nShowCmd, bool isFullScreen, int screenWidth, int screenHeight);
 	void AppLoop();
 	void UnInit();
 

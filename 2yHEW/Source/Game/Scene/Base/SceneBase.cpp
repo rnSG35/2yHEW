@@ -75,7 +75,7 @@ void SceneBase::DrawGameObjects()
 	// [](引数){ 処理 } はラムダ式(その場で作る小さな関数)
 	// stable_sortは「2つを比べてどちらを先にするか」を
 	// この関数で判断する。trueならpLeftが先に描画される
-	std::stable_sort(m_drawObjects.begin(), m_drawObjects.end(),[]( GameObject* pLeft, GameObject* pRight)
+	std::stable_sort(m_drawObjects.begin(), m_drawObjects.end(), [](GameObject* pLeft, GameObject* pRight)
 		{
 			return GetDrawDepth(pLeft) > GetDrawDepth(pRight);
 		});

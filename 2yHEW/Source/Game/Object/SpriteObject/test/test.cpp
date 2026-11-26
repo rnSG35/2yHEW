@@ -59,7 +59,7 @@ void test::OnUpdate()
 	{
 		//一度コピー
 		bool isVisible = m_pShowComponent->IsVisible();
-		
+
 		if (ImGui::Checkbox("test表示オンオフ", &isVisible))
 		{
 			m_pShowComponent->SetVisible(isVisible);

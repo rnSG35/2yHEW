@@ -514,7 +514,7 @@ void SpriteRenderer::Draw(Texture* pTexture, float x, float y, float width, floa
 			//const float screenX = (pixelX / static_cast<float>(m_screenWidth)) * 2.0f - 1.0f;
 			//const float screenY = 1.0f - (pixelY / static_cast<float>(m_screenHeight)) * 2.0f;
 			//return Float2(screenX, screenY);
-		
+
 			return Float2(x + rotatedX, y + rotatedY);
 		};
 

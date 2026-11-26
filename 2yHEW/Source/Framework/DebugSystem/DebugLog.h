@@ -11,7 +11,7 @@ class DebugLog
 public:
 
 	// ログ出力
-	static void Write(const char* text,const std::source_location& location = std::source_location::current());
+	static void Write(const char* text, const std::source_location& location = std::source_location::current());
 
 	//ログを空にする
 	static void Clear();

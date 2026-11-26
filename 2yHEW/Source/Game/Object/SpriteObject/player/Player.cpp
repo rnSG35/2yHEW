@@ -16,10 +16,10 @@ Player::Player()
 void Player::OnInit()
 {
 	// レーザーの位置
-	SetPosition(Float2(500.0f,0.0f));
+	SetPosition(Float2(500.0f, 0.0f));
 
 	// レーザーのサイズ
-	SetSize(Float2(550.0f,500.0f));
+	SetSize(Float2(550.0f, 500.0f));
 
 	// 青白いレーザー
 	SetColor(COLOR_WHITE);
@@ -71,22 +71,22 @@ void Player::OnUpdate()
 	}
 
 #ifdef _DEBUG	//デバッグ用画面
-		ImGui::Begin("GameScene Debug");
+	ImGui::Begin("GameScene Debug");
 
-		//座標を表示
-		const Float3& currentPosition = m_pPlayerTransform->GetPosition();
-		ImGui::Text("Player X:%.2f Y:%.2f Z:%.2f", currentPosition.x, currentPosition.y, currentPosition.z);
-		
-		//テキスト入力で座標を変える
-		Float3 inputPosition = currentPosition;
-		if (ImGui::InputFloat3("Player位置", &inputPosition.x, "%.2f", ImGuiInputTextFlags_EnterReturnsTrue))
-		{
-			m_pPlayerTransform->SetPosition(inputPosition);
-		}
+	//座標を表示
+	const Float3& currentPosition = m_pPlayerTransform->GetPosition();
+	ImGui::Text("Player X:%.2f Y:%.2f Z:%.2f", currentPosition.x, currentPosition.y, currentPosition.z);
 
-		ImGui::End();
+	//テキスト入力で座標を変える
+	Float3 inputPosition = currentPosition;
+	if (ImGui::InputFloat3("Player位置", &inputPosition.x, "%.2f", ImGuiInputTextFlags_EnterReturnsTrue))
+	{
+		m_pPlayerTransform->SetPosition(inputPosition);
+	}
+
+	ImGui::End();
 #endif
-	
+
 }
 
 void Player::OnDraw()

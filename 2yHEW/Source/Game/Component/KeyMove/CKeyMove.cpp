@@ -50,10 +50,10 @@ void CKeyMove::Update()
 	//上下左右を押している間、移動する
 	Float2 moveDirection = FLOAT2_ZERO;
 	if (m_input.GetKeyPress(VK_LEFT) || m_input.GetKeyPress(VK_A)) { moveDirection.x -= 1.0f; }
-	if (m_input.GetKeyPress(VK_RIGHT)|| m_input.GetKeyPress(VK_D)) { moveDirection.x += 1.0f; }
-	if (m_input.GetKeyPress(VK_UP)	 || m_input.GetKeyPress(VK_W)) { moveDirection.y -= 1.0f; }
+	if (m_input.GetKeyPress(VK_RIGHT) || m_input.GetKeyPress(VK_D)) { moveDirection.x += 1.0f; }
+	if (m_input.GetKeyPress(VK_UP) || m_input.GetKeyPress(VK_W)) { moveDirection.y -= 1.0f; }
 	if (m_input.GetKeyPress(VK_DOWN) || m_input.GetKeyPress(VK_S)) { moveDirection.y += 1.0f; }
-	
+
 	//斜め移動
 	moveDirection = moveDirection.Normalized() * m_moveSpeed;
 

@@ -39,7 +39,7 @@ bool Graphics::Initialize(
 		return false;
 	}
 	//RenderTargetView作成
-	if (!CreateRenderTargetView(width,height))
+	if (!CreateRenderTargetView(width, height))
 	{
 		DebugLogWrite("RenderTargetView作成失敗 / Failed to create a RenderTargetView");
 		return false;
