@@ -21,7 +21,7 @@ void Test::OnInit()
 	//画面に表示する大きさ
 	SetSize(Float2(256.0f, 256.0f));
 
-	m_pShowComponent = AddComponent<CShowObject>().get();
+	m_pShowComponent = GetComponent<CShowObject>().get();
 
 	if (m_pShowComponent->GetOwner() == this)
 	{
