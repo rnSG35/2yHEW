@@ -12,7 +12,7 @@ public:
 	/// <summary>
 	/// Float3を使った位置の設定
 	/// </summary>
-	/// <param name="position">x:(右がプラス) y:(下がプラス) z:(小さいほど手前)</param>
+	/// <param name="position">x:(右がプラス) y:(上がプラス) z:(小さいほど手前)</param>
 	void SetPosition(const Float3& position) { m_position = position; }
 	/// <summary>
 	/// 数値をそのまま使った位置の設定
@@ -37,7 +37,7 @@ public:
 	/// <summary>
 	/// Float3を使って回転の指定
 	/// </summary>
-	/// <param name="rotation">単位は度。z:画面上の回転(プラスで時計回り)。x,yは未使用</param>
+	/// <param name="rotation">単位は度。z:画面上の回転(プラスで反時計回り)。x,yは未使用</param>
 	void SetRotation(const Float3& rotation) { m_rotation = rotation; }
 	/// <summary>
 	/// 数値をそのまま使った回転を設定

@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Framework\Camera\Camera.cpp" />
     <ClCompile Include="Source\Game\Component\KeyMove\CKeyMove.cpp" />
     <ClCompile Include="Source\Game\Component\Transform\CTransform.cpp" />
     <ClCompile Include="Source\Framework\DebugSystem\ImGuiManager.cpp" />
@@ -172,6 +173,7 @@
     <ClCompile Include="Source\Game\Scene\Title\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Framework\Camera\Camera.h" />
     <ClInclude Include="Source\Framework\Math\MathTypes.h" />
     <ClInclude Include="Source\Game\Component\KeyMove\CKeyMove.h" />
     <ClInclude Include="Source\Game\Component\Transform\CTransform.h" />

@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "../../Object/GameObject.h"
+#include "../../../Framework/Camera/Camera.h"
 
 #include <memory>
 #include <vector>
@@ -72,6 +73,10 @@ public:
 protected:
 	//入力(Gameが持っているもの)
 	Input& m_input;
+
+	//このシーンのカメラ
+	//シーンごとに移し方が違うため、シーンに持たせる
+	Camera m_camera;
 
 	//ゲーム終了を依頼
 	//依頼するだけ、実際はUpdate()が終わったあとにApplicationがやる

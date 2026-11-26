@@ -47,6 +47,12 @@ bool SpriteRenderer::Initialize(UINT screenWidth, UINT screenHeight)
 	m_screenWidth = screenWidth;
 	m_screenHeight = screenHeight;
 
+	//最初は「原点が画面中央・等倍」のカメラのしておく
+	SetViewProjection(XMMatrixOrthographicLH(
+		static_cast<float>(m_screenWidth),
+		static_cast<float>(m_screenHeight),
+		0.0f, 1.0f));
+
 	if (m_screenWidth == 0 || m_screenHeight == 0)
 	{
 		DebugLogWrite("SpriteRendererの画面サイズが0 / The SpriteRenderer's screen size is 0");
@@ -494,31 +500,33 @@ void SpriteRenderer::Draw(Texture* pTexture, float x, float y, float width, floa
 	const float sinValue = std::sin(radian);
 	const float cosValue = std::cos(radian);
 
-	//中心から見た角の位置を回転させて、DirectXの座標(-1 ~ 1)に変換
+	//中心から見た角の位置を回転させて、ゲームの座標にする
 	//offsetX,offsetY-->中心から見た角の位置(ピクセル)
 	//戻り値-->画面上の位置(DirectXの座標)
 	//ラムダ式にしているのは、4つの角で同じ計算をするため
-	auto toScreen = [&](float offsetX, float offsetY)
+	auto toWorld = [&](float offsetX, float offsetY)
 		{
 			//回転
 			const float rotatedX = offsetX * cosValue - offsetY * sinValue;
 			const float rotatedY = offsetX * sinValue + offsetY * cosValue;
 
-			//中心の位置に戻して、ピクセルの座標にする
-			const float pixelX = centerX + rotatedX;
-			const float pixelY = centerY + rotatedY;
+			////中心の位置に戻して、ピクセルの座標にする
+			//const float pixelX = centerX + rotatedX;
+			//const float pixelY = centerY + rotatedY;
 
-			//ピクセルの座標をDirectXの座標に変換する
-			const float screenX = (pixelX / static_cast<float>(m_screenWidth)) * 2.0f - 1.0f;
-			const float screenY = 1.0f - (pixelY / static_cast<float>(m_screenHeight)) * 2.0f;
-			return Float2(screenX, screenY);
+			////ピクセルの座標をDirectXの座標に変換する
+			//const float screenX = (pixelX / static_cast<float>(m_screenWidth)) * 2.0f - 1.0f;
+			//const float screenY = 1.0f - (pixelY / static_cast<float>(m_screenHeight)) * 2.0f;
+			//return Float2(screenX, screenY);
+		
+			return Float2(x + rotatedX, y + rotatedY);
 		};
 
 	//4つの角の位置(回転後)
-	const Float2 leftTop = toScreen(-halfWidth, -halfHeight);
-	const Float2 rightTop = toScreen(halfWidth, -halfHeight);
-	const Float2 leftBottom = toScreen(-halfWidth, halfHeight);
-	const Float2 rightBottom = toScreen(halfWidth, halfHeight);
+	const Float2 leftTop = toWorld(-halfWidth, halfHeight);
+	const Float2 rightTop = toWorld(halfWidth, halfHeight);
+	const Float2 leftBottom = toWorld(-halfWidth, -halfHeight);
+	const Float2 rightBottom = toWorld(halfWidth, -halfHeight);
 
 	//四角形を構成する6頂点
 	sSpriteVertex vertices[6] =
@@ -574,8 +582,11 @@ void SpriteRenderer::Draw(Texture* pTexture, float x, float y, float width, floa
 	XMMATRIX identityMatrix = XMMatrixIdentity();
 
 	XMStoreFloat4x4(&constantBufferData.matrixTex, identityMatrix);
-	XMStoreFloat4x4(&constantBufferData.matrixProj, identityMatrix);
+	//XMStoreFloat4x4(&constantBufferData.matrixProj, identityMatrix);
 	XMStoreFloat4x4(&constantBufferData.matrixWorld, identityMatrix);
+	XMStoreFloat4x4(&constantBufferData.matrixProj, XMMatrixTranspose(XMLoadFloat4x4(&m_viewProjection)));
+
+
 
 	//定数バッファを書き換える
 	D3D11_MAPPED_SUBRESOURCE mappedConstantBuffer = {};
@@ -640,7 +651,7 @@ void SpriteRenderer::Draw(Texture* pTexture, float x, float y, float width, floa
 
 	//透過を有効に
 	float blendFactor[4] = { 0.0f,0.0f,0.0f,0.0f };
-	pContext->OMSetBlendState(m_alphaBlendState.Get(), blendFactor, 0xffffffff);
+	pContext->OMSetBlendState(/*m_alphaBlendState.Get()*/blendState, blendFactor, 0xffffffff);
 	//深度テストを無効にする
 	pContext->OMSetDepthStencilState(m_depthStencilState.Get(), 0);
 	//6頂点を描画
@@ -666,4 +677,9 @@ void SpriteRenderer::UnInitialize()
 	m_alphaBlendState.Reset();
 
 	DebugLogWrite("SpriteRenderer終了処理完了 / SpriteRenderer Cleanup Complete");
+}
+
+void SpriteRenderer::SetViewProjection(const DirectX::XMMATRIX& viewProjectionMatrix)
+{
+	XMStoreFloat4x4(&m_viewProjection, viewProjectionMatrix);
 }

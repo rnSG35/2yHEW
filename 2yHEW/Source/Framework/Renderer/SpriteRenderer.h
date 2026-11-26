@@ -37,12 +37,13 @@ public:
 	/// 描画
 	/// </summary>
 	/// <param name="pTexture">描画する画像</param>
-	/// <param name="x">画像左上のX座標</param>
-	/// <param name="y">画像左上のY座標</param>
+	/// <param name="x">画像中心のX座標</param>
+	/// <param name="y">画像中心のY座標</param>
 	/// <param name="width">描画横幅</param>
 	/// <param name="height">描画縦幅</param>
 	/// <param name="color">スプライトにかける色</param>
 	/// <param name="blendMode">合成方法</param>
+	/// <param name="rotationDegrees">画像の中心を軸にした回転(度)、プラスで反時計回り</param>
 	void Draw(Texture* pTexture,
 		float x,
 		float y,
@@ -56,6 +57,25 @@ public:
 	/// 終了処理
 	/// </summary>
 	void UnInitialize();
+
+	/// <summary>
+	/// カメラの変換行列を設定
+	/// </summary>
+	/// <param name="viewProjectionMatrix">Camera::GetViewProjectionMatrix()で作った行列</param>
+	/// <remarks>シーンの描画の最初に1回呼ぶ。以降のDraw()はすべてこのカメラで描画される</remarks>
+	void SetViewProjection(const DirectX::XMMATRIX& viewProjectionMatrix);
+
+	/// <summary>
+	/// 画面の横幅を取得
+	/// </summary>
+	/// <returns></returns>
+	UINT GetScreenWidth() const { return m_screenWidth; }
+	/// <summary>
+	/// 画面の縦幅を取得
+	/// </summary>
+	/// <returns></returns>
+	UINT GetScreenHeight() const { return m_screenHeight; }
+
 private:
 	/// <summary>
 	/// HLSLのConstBufferと同じ並びにする
@@ -148,6 +168,11 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11BlendState> m_additiveBlendState;
 	//新でテストと深度書き込みを無効にする設定
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> m_depthStencilState;
+
+	//カメラの変換行列
+	//SetViewProjection()で受け取り、Drawのたびに定数バッファに送る
+	//XMMATRIXはメンバ変数に置くと並びの問題が起きやすいため、保存用のXMFLOAT4X4で持つ
+	DirectX::XMFLOAT4X4 m_viewProjection = {};
 
 	//画面サイズ
 	UINT m_screenWidth = 0;

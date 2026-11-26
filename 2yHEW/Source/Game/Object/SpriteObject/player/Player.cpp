@@ -50,8 +50,8 @@ void Player::OnUpdate()
 	Float2 moveDirection = FLOAT2_ZERO;
 	if (m_pInput->GetKeyPress(VK_LEFT) || m_pInput->GetKeyPress(VK_A)) { moveDirection.x -= 1.0f; }
 	if (m_pInput->GetKeyPress(VK_RIGHT) || m_pInput->GetKeyPress(VK_D)) { moveDirection.x += 1.0f; }
-	if (m_pInput->GetKeyPress(VK_UP) || m_pInput->GetKeyPress(VK_W)) { moveDirection.y -= 1.0f; }
-	if (m_pInput->GetKeyPress(VK_DOWN) || m_pInput->GetKeyPress(VK_S)) { moveDirection.y += 1.0f; }
+	if (m_pInput->GetKeyPress(VK_UP) || m_pInput->GetKeyPress(VK_W)) { moveDirection.y += 1.0f; }
+	if (m_pInput->GetKeyPress(VK_DOWN) || m_pInput->GetKeyPress(VK_S)) { moveDirection.y -= 1.0f; }
 
 	moveDirection = moveDirection.Normalized() * m_moveSpeed;
 	//前後関係(押した瞬間に1段ずつ変える)

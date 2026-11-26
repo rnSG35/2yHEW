@@ -5,6 +5,7 @@
 #include "../../Object/SpriteObject/player/Player.h"
 #include "../../Component/ShowObject/CShowObject.h"
 #include "../../Component/KeyMove/CKeyMove.h"
+#include "../../Component/Transform/CTransform.h"
 
 #include "../../../Framework/DebugSystem/DebugLog.h"
 #ifdef _DEBUG
@@ -21,7 +22,7 @@ bool GameScene::Init()
 
 	//追加した順番に描画される(後の者が手前)
 	AddGameObject<test>();
-	AddGameObject<Player>();
+	m_pTest = AddGameObject<Player>();
 
 	return InitGameObjects();
 }
@@ -32,6 +33,24 @@ bool GameScene::Init()
 void GameScene::Update()
 {
 	UpdateGameObjects();
+
+	//---------------------------------------------------------
+//カメラにプレイヤーを追わせる
+//
+//0.1は「1フレームで残りの距離の1割だけ近づく」という意味
+//すぐ追いつくより、少し遅れて追う方が画面の動きが滑らかに見える
+//---------------------------------------------------------
+	if (m_pTest)
+	{
+		std::shared_ptr<CTransform> transform = m_pTest->GetComponent<CTransform>();
+
+		if (transform)
+
+		{
+			const Float3& playerPosition = transform->GetPosition();
+			m_camera.Follow(Float2(playerPosition.x, playerPosition.y), 0.1f);
+		}
+	}
 
 	//エンターキーでタイトルに戻る
 	if (m_input.GetKeyTrigger(VK_RETURN))
@@ -55,7 +74,7 @@ void GameScene::UnInit()
 {
 	//配列が解放される前に、参照を消しておく
 	m_pTestSpriteObject = nullptr;
-
+	m_pTest = nullptr;
 	//オブジェクトの解放は基底クラスに任せる
 	SceneBase::UnInit();
 }

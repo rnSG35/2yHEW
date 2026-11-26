@@ -1,6 +1,7 @@
 ﻿#include "SceneBase.h"
 #include "../../Component/Transform/CTransform.h"
 #include <algorithm>
+#include "../../../Framework/Renderer/SpriteRenderer.h"
 
 #include "../../../Framework/DebugSystem/DebugLog.h"
 
@@ -19,7 +20,12 @@ namespace
 //コンストラクタ
 //---------------------------------------------------------
 SceneBase::SceneBase(eScene sceneType, const wchar_t* sceneName, Input& input) : m_input(input), m_sceneType(sceneType), m_sceneName(sceneName)
-{}
+{
+	//カメラに移す範囲を、画面の大きさに合わせる
+	m_camera.SetViewSize(
+		static_cast<float>(SpriteRenderer::GetInstance().GetScreenWidth()),
+		static_cast<float>(SpriteRenderer::GetInstance().GetScreenHeight()));
+}
 
 //---------------------------------------------------------
 //初期化
@@ -53,6 +59,9 @@ void SceneBase::UpdateGameObjects()
 //---------------------------------------------------------
 void SceneBase::DrawGameObjects()
 {
+	//このシーンのカメラで描画する
+	SpriteRenderer::GetInstance().SetViewProjection(m_camera.GetViewProjectionMatrix());
+
 	m_drawObjects.clear();
 
 	for (auto& gameObject : m_gameObjects)
