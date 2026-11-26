@@ -91,3 +91,8 @@ void Player::OnUpdate()
 
 void Player::OnDraw()
 {}
+
+void Player::OnUnInit()
+{
+	m_pPlayerTransform = nullptr;
+}

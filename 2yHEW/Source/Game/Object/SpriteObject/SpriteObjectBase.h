@@ -33,7 +33,10 @@ public:
 	/// 描画
 	/// </summary>
 	void Draw() override;
-
+	/// <summary>
+	/// 終了
+	/// </summary>
+	void UnInitialize() override;
 
 
 	/// <summary>
@@ -98,9 +101,10 @@ public:
 
 protected:
 
-	virtual void OnInit() {};	//派生用
-	virtual void OnUpdate() {};	//派生用
-	virtual void OnDraw() {};	//派生用
+	virtual void OnInit() {};			//派生用
+	virtual void OnUpdate() {};			//派生用
+	virtual void OnDraw() {};			//派生用
+	virtual void OnUnInit() {};	//派生用
 
 private:
 	//読み込んだTexture

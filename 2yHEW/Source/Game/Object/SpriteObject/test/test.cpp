@@ -76,3 +76,8 @@ void Test::OnDraw()
 {
 
 }
+
+void Test::OnUnInit()
+{
+	m_pShowComponent = nullptr;
+}

@@ -14,6 +14,7 @@ private:
 	void OnInit() override;
 	void OnUpdate() override;
 	void OnDraw() override;
+	void OnUnInit() override;
 
 private:
 	CShowObject* m_pShowComponent = nullptr;
