@@ -53,7 +53,7 @@ void GameScene::Update()
 	}
 
 	//エンターキーでタイトルに戻る
-	if (m_input.GetKeyTrigger(VK_RETURN))
+	if (m_input.GetKeyTrigger(VK_O))
 	{
 		ChangeScene(TITLE);
 	}

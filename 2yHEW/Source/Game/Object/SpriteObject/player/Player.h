@@ -1,5 +1,8 @@
 ﻿#pragma once
 #include "../SpriteObjectBase.h"
+
+class CTransform;
+
 class Player :
 	public SpriteObjectBase
 {
@@ -14,4 +17,6 @@ private:
 
 	//1フレームの動く量(ピクセル)
 	float m_moveSpeed = 4.0f;
+
+	CTransform* m_pPlayerTransform = nullptr;
 };
