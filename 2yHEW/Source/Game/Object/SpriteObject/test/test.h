@@ -3,12 +3,12 @@
 
 class CShowObject;
 
-class test :
+class Test :
 	public SpriteObjectBase
 {
 public:
-	test();
-	~test() override = default;
+	Test();
+	~Test() override = default;
 
 private:
 	void OnInit() override;

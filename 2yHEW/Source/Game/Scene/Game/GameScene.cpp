@@ -21,7 +21,7 @@ bool GameScene::Init()
 	//DebugLogWrite("GameScene初期化 / GameScene Init");
 
 	//追加した順番に描画される(後の者が手前)
-	AddGameObject<test>();
+	AddGameObject<Test>();
 	m_pPlayer = AddGameObject<Player>();
 
 	return InitGameObjects();

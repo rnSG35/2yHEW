@@ -8,12 +8,12 @@
 #ifdef _DEBUG
 #include "../../../../../thirdParty/imgui/include/imgui.h"
 #endif
-test::test()
+Test::Test()
 	: SpriteObjectBase(
 		"AppData/Assets/Textures/test.png")
 {}
 
-void test::OnInit()
+void Test::OnInit()
 {
 	//画面左上から見た表示位置
 	SetPosition(Float2(100.0f, 100.0f));
@@ -29,7 +29,7 @@ void test::OnInit()
 	}
 }
 
-void test::OnUpdate()
+void Test::OnUpdate()
 {
 
 	if (m_pInput && m_pInput->GetKeyTrigger(VK_SPACE))
@@ -71,7 +71,7 @@ void test::OnUpdate()
 
 }
 
-void test::OnDraw()
+void Test::OnDraw()
 {
 
 }
