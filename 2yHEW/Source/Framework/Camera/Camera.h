@@ -44,7 +44,7 @@ public:
 	/// </summary>
 	/// <param name="targetPosition">追いかける位置(プレイヤーの位置など)</param>
 	/// <param name="followRate">1フレームで近づく割合(0~1)、1ならすぐ追いつき、小さいほどゆっくり追う</param>
-	/// <remarks>舞フレーム呼ぶ。すぐ追いつくより、少し遅れて王法が画面の揺れが少なく見やすいため
+	/// <remarks>毎フレーム呼ぶ。すぐ追いつくより、少し遅れて追う方が画面の揺れが少なく見やすいため
 	void Follow(const Float2& targetPosition, float followRate);
 
 	/// <summary>

@@ -487,10 +487,6 @@ void SpriteRenderer::Draw(Texture* pTexture, float x, float y, float width, floa
 		return;
 	}
 
-	//画像(回転)の中心
-	const float centerX = x + width * 0.5f;
-	const float centerY = y + height * 0.5f;
-
 	//中心から見た、画像の半分の大きさ
 	const float halfWidth = width * 0.5f;
 	const float halfHeight = height * 0.5f;

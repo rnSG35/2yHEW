@@ -22,7 +22,7 @@ bool GameScene::Init()
 
 	//追加した順番に描画される(後の者が手前)
 	AddGameObject<test>();
-	m_pTest = AddGameObject<Player>();
+	m_pPlayer = AddGameObject<Player>();
 
 	return InitGameObjects();
 }
@@ -40,9 +40,9 @@ void GameScene::Update()
 //0.1は「1フレームで残りの距離の1割だけ近づく」という意味
 //すぐ追いつくより、少し遅れて追う方が画面の動きが滑らかに見える
 //---------------------------------------------------------
-	if (m_pTest)
+	if (m_pPlayer)
 	{
-		std::shared_ptr<CTransform> transform = m_pTest->GetComponent<CTransform>();
+		std::shared_ptr<CTransform> transform = m_pPlayer->GetComponent<CTransform>();
 
 		if (transform)
 
@@ -73,8 +73,7 @@ void GameScene::Draw()
 void GameScene::UnInit()
 {
 	//配列が解放される前に、参照を消しておく
-	m_pTestSpriteObject = nullptr;
-	m_pTest = nullptr;
+	m_pPlayer = nullptr;
 	//オブジェクトの解放は基底クラスに任せる
 	SceneBase::UnInit();
 }

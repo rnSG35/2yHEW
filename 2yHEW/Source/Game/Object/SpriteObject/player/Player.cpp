@@ -75,7 +75,7 @@ void Player::OnUpdate()
 
 		//座標を表示
 		const Float3& currentPosition = m_pPlayerTransform->GetPosition();
-		ImGui::Text("Player X:%.2f Y:%.2f Z:%.2f", currentPosition.x, currentPosition.y, currentPosition.z);;
+		ImGui::Text("Player X:%.2f Y:%.2f Z:%.2f", currentPosition.x, currentPosition.y, currentPosition.z);
 		
 		//テキスト入力で座標を変える
 		Float3 inputPosition = currentPosition;

@@ -51,8 +51,8 @@ public:
 	/// 表示位置設定(数値で指定)
 	/// </summary>
 	/// <param name="x">横位置：右がプラス</param>
-	/// <param name="y">縦位置：下がプラス</param>
-	/// <param name="z">前後：小さいほど手前</param>
+	/// <param name="y">縦位置：上がプラス</param>
+	/// <param name="z">前後：奥がプラス・位置は画像の中心</param>
 	void SetPosition(float x, float y,float z = 0.0f/*zは省略可能*/);
 
 

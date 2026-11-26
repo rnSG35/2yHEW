@@ -29,7 +29,5 @@ public:
 	void UnInit() override;
 
 private:
-	//スペースキーで表示を切り替えるオブジェクト
-	GameObject* m_pTestSpriteObject = nullptr;
-	GameObject* m_pTest = nullptr;
+	GameObject* m_pPlayer = nullptr;
 };
