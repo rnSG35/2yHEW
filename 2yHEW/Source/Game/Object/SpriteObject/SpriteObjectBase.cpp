@@ -15,6 +15,7 @@ SpriteObjectBase::SpriteObjectBase(const std::string& filePath) : m_filePath(fil
 	//画像表示には位置が必要なので先につけておく
 	//OnInit()、シーンからもすぐにCTransformを使える
 	AddComponent<CTransform>();
+	AddComponent<CShowObject>();
 }
 
 //---------------------------------------------------------
