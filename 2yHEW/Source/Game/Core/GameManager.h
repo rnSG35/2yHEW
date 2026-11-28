@@ -1,6 +1,4 @@
-﻿
-
-#pragma once
+﻿#pragma once
 
 #include "../../Framework/Input/Input.h"
 #include "../Scene/Base/SceneBase.h"

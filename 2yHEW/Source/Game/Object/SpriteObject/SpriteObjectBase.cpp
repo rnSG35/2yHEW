@@ -1,10 +1,12 @@
 ﻿#include "SpriteObjectBase.h"
 
-#include "../../Component/ShowObject/CShowObject.h"
-#include "../../Component/Transform/CTransform.h"
 #include "../../../Framework/Renderer/SpriteRenderer.h"
 #include "../../../Framework/Texture/Texture.h"
 #include "../../../Framework/Texture/TextureManager.h"
+
+#include "../../Component/ShowObject/CShowObject.h"
+#include "../../Component/Transform/CTransform.h"
+
 #include "../../../Framework/DebugSystem/DebugLog.h"
 
 //---------------------------------------------------------

@@ -1,6 +1,7 @@
 ﻿#include "Texture.h"
 #include "../Texture/TextureManager.h"
 #include "../Loader/TextureLoader.h"
+
 #include "../DebugSystem/DebugLog.h"
 
 //---------------------------------------------------------

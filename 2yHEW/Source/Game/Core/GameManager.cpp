@@ -2,10 +2,11 @@
 
 #include "../../Framework/Renderer/SpriteRenderer.h"
 #include "../../Framework/Texture/TextureManager.h"
-#include "../../Framework/DebugSystem/DebugLog.h"
 
 #include "../Scene/Title/TitleScene.h"
 #include "../Scene/Game/GameScene.h"
+
+#include "../../Framework/DebugSystem/DebugLog.h"
 
 //---------------------------------------------------------
 //初期化

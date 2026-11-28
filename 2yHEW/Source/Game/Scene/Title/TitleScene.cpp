@@ -1,5 +1,7 @@
 ﻿#include "TitleScene.h"
+
 #include "../../../Framework/Input/input.h"
+
 #include "../../../Framework/DebugSystem/DebugLog.h"
 
 //---------------------------------------------------------

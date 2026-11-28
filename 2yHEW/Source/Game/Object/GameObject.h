@@ -5,7 +5,7 @@
 #include <memory>
 #include <vector>
 #include <concepts>
-#include <utility>   // std::forward
+#include <utility>
 
 class Input;
 class SceneBase;

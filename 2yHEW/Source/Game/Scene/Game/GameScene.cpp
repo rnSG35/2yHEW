@@ -1,16 +1,12 @@
 ﻿#include "GameScene.h"
 
 #include "../../../Framework/Input/input.h"
+
 #include "../../Object/SpriteObject/test/test.h"
 #include "../../Object/SpriteObject/player/Player.h"
-#include "../../Component/ShowObject/CShowObject.h"
-#include "../../Component/KeyMove/CKeyMove.h"
+
 #include "../../Component/Transform/CTransform.h"
 
-#include "../../../Framework/DebugSystem/DebugLog.h"
-#ifdef _DEBUG
-#include "../../../../thirdParty/imgui/include/imgui.h"
-#endif
 
 //---------------------------------------------------------
 //初期化

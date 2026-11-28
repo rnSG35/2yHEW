@@ -1,5 +1,4 @@
-﻿#include"../../Framework/Pch.h"
-#include "SpriteRenderer.h"
+﻿#include "SpriteRenderer.h"
 #include "../Graphics/Graphics.h"
 #include "../Texture/Texture.h"
 #include "../DebugSystem/DebugLog.h"

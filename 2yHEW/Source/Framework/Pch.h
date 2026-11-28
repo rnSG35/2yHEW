@@ -27,10 +27,11 @@
 #include <unordered_map>//キーで価を探す表(TextureManagerの読み込み画像)
 #include <concepts>		//std::derived_from			テンプレートに渡せる値の制限(AddComponent・AddGameObject)	
 
-#include <fstream>			//std::ofstream					ファイルへの書き込み(DebugLogのlog.txt)	
-#include <source_location>	//std::source_location			ログを書いたファイル名と行番号の取得(DebugLog)	
-#include <cmath>			//std::sqrt・std::sin・std::cos	平方根や三角関数(MathTypesの正規化・SpriteRenderer)	
-#include <numbers>			//std::numbers::pi_v			円周率(度からラジアンへの変換)		
+#include <fstream>			//std::ofstream							ファイルへの書き込み(DebugLogのlog.txt)	
+#include <source_location>	//std::source_location					ログを書いたファイル名と行番号の取得(DebugLog)	
+#include <cmath>			//std::sqrt・std::sin・std::cos			平方根や三角関数(MathTypesの正規化・SpriteRenderer)	
+#include <numbers>			//std::numbers::pi_v					円周率(度からラジアンへの変換)		
+#include <algorithm>	//std::stable_sort・std::clamp・std::max		並べ替えや値の範囲の制限(SceneBase・Camera)
 
 //ほとんど変更する予定がない自作ヘッダファイル
 #include "../Framework/Math/MathTypes.h"	//Float2・Float3・Float4など、フレームワーク共通の数学の型

@@ -5,6 +5,7 @@
 #include <memory>
 #include <vector>
 #include <concepts>
+#include <algorithm>
 
 class Input;
 

@@ -1,7 +1,10 @@
 ﻿#include "CKeyMove.h"
-#include "../Transform/CTransform.h"
-#include "../../Object/GameObject.h"
+
 #include "../../../Framework/Input/input.h"
+#include "../../Object/GameObject.h"
+
+#include "../Transform/CTransform.h"
+
 #include "../../../Framework/DebugSystem/DebugLog.h"
 
 namespace

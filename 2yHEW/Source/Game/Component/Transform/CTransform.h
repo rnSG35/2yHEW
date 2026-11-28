@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "../Base/ComponentBase.h"
 
-#include "../../../Framework/Math/MathTypes.h"
+//#include "../../../Framework/Math/MathTypes.h"
 //#include "../../../../thirdParty/directxtk/include/SimpleMath.h"
 
 //位置を管理するコンポーネント、UnityのTransform

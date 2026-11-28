@@ -1,10 +1,11 @@
 ﻿#include "TextureLoader.h"
 
-#include "../DebugSystem/DebugLog.h"
 #include "../Graphics/Graphics.h"
 #include "../Texture/Texture.h"
+
 #include "../../../thirdParty/stb_image/stb_image.h"
 
+#include "../DebugSystem/DebugLog.h"
 //---------------------------------------------------------
 //テクスチャ読み込み
 //---------------------------------------------------------

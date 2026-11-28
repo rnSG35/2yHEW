@@ -1,6 +1,6 @@
 ﻿#include "SceneBase.h"
+
 #include "../../Component/Transform/CTransform.h"
-#include <algorithm>
 #include "../../../Framework/Renderer/SpriteRenderer.h"
 
 #include "../../../Framework/DebugSystem/DebugLog.h"

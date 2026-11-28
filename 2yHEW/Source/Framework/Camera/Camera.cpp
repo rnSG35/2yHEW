@@ -1,7 +1,5 @@
 ﻿#include "Camera.h"
 
-#include <algorithm>	//std::clamp std::max
-
 using namespace DirectX;
 namespace
 {

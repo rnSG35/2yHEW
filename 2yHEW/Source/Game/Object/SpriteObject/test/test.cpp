@@ -1,8 +1,10 @@
 ﻿#include "test.h"
+
+#include "../../../../Framework/Input/input.h"
+
 #include "../../../Component/ShowObject/CShowObject.h"
 #include "../../../Component/Transform/CTransform.h"
 
-#include "../../../../Framework/Input/input.h"
 #include "../../../../Framework/DebugSystem/DebugLog.h"
 
 #ifdef _DEBUG

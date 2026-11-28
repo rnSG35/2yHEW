@@ -2,7 +2,7 @@
 
 #include "../../../Component/Transform/CTransform.h"
 #include "../../../../Framework/Input/input.h"
-#include "../../../../Framework/Math/MathTypes.h"
+//#include "../../../../Framework/Math/MathTypes.h"
 
 #ifdef _DEBUG
 #include "../../../../../thirdParty/imgui/include/imgui.h"

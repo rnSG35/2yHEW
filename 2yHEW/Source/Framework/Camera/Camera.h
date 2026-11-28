@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include <DirectXMath.h>
+#include <algorithm>
 #include "../Math/MathTypes.h"
 
 //2D用のカメラ

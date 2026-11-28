@@ -3,7 +3,8 @@
 #include <d3d11.h>
 #include <wrl/client.h>
 #include <DirectXMath.h>
-//#include "../Math/MathTypes.h"
+#include <numbers>
+#include "../Math/MathTypes.h"
 
 class Texture;
 
