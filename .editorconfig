@@ -5,7 +5,7 @@ root = true
 [*.{cpp,h}]
 charset = utf-8-bom
 
-#HLSLファイルは、HTF-8(署名なし)で保存する
+#HLSLファイルは、UTF-8(署名なし)で保存する
 [*.{hlsl}]
 charset = utf-8
 end_of_line = crlf
