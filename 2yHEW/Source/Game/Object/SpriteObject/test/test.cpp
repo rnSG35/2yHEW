@@ -15,7 +15,7 @@ Test::Test()
 
 void Test::OnInit()
 {
-	//画面左上から見た表示位置
+	//画面中央から見た表示位置
 	SetPosition(Float2(100.0f, 100.0f));
 
 	//画面に表示する大きさ
