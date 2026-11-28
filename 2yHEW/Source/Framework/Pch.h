@@ -2,7 +2,7 @@
 
 //プリコンパイルヘッダ
 //ほとんど変更しない重いヘッダーだけをまとめている
-//自作ヘッダーは入れないこと
+//自作ヘッダーは基本的にb入れないこと
 
 //Windows
 #define WIN32_LEAN_AND_MEAN	//Windows.hの使わない部分を省いて軽くする
@@ -16,16 +16,16 @@
 #include <d3dcompiler.h>//D3DCompileFromFileなど		シェーダー(CSO・HLSL)の読み込み(SpriteRenderer)
 
 //入力・音声
-#include <Xinput.h>		//XInputを使うためのヘッダーファイル
-#include <xaudio2.h>
+#include <Xinput.h>		//XInputGetStateなど		XInputを使うため(Input)
+#include <xaudio2.h>	//IXAudio2など			XAudioを使うため(AudioManager)
 
 //標準ライブラリ
 #include <memory>		//std::shared_ptr・std::unique_ptr・std::weak_ptr		自動で解放されるポインタ
 #include <string>		//std::string				ファイルパスなどに使う文字列	
 #include <string_view>	//std::string_view			コピーせずに文字列の一部を扱う(DebugLogの相対パス変換用)	
-#include <vector>		//std::string				数が変わる配列(m_gameObjects・m_components)	
-#include <unordered_map>//キーで価を探す表(TextureManagerの読み込み画像)
-#include <concepts>		//std::derived_from			テンプレートに渡せる値の制限(AddComponent・AddGameObject)	
+#include <vector>		//std::vector				数が変わる配列(m_gameObjects・m_components)	
+#include <unordered_map>//キーで値を探す表(TextureManagerの読み込み画像)
+#include <concepts>		//std::derived_from			テンプレートに渡せる型の制限(AddComponent・AddGameObject)	
 
 #include <fstream>			//std::ofstream							ファイルへの書き込み(DebugLogのlog.txt)	
 #include <source_location>	//std::source_location					ログを書いたファイル名と行番号の取得(DebugLog)	
